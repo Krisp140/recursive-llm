@@ -1,0 +1,23 @@
+# Requirements for OOLONGBench evaluation
+# Install with: pip install -r requirements_oolongbench.txt
+
+# Core dependencies (should already be installed with RLM)
+litellm>=1.0.0
+python-dotenv>=1.0.0
+RestrictedPython>=6.0
+
+# Hugging Face datasets
+datasets>=2.14.0
+huggingface-hub>=0.16.0
+
+# Analysis and visualization
+matplotlib>=3.7.0
+numpy>=1.24.0
+
+# Optional: For better embeddings (if using semantic partitioning)
+sentence-transformers>=2.2.0  # Uncomment if needed
+# torch>=2.0.0  # Required for sentence-transformers
+
+# Optional: For progress bars
+tqdm>=4.65.0
+

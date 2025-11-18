@@ -1,0 +1,22 @@
+# Example .env file for OOLONGBench Evaluation
+# 
+# Copy this content to a .env file in the PROJECT ROOT directory
+# (not in oolongbench_eval/, but in the parent directory)
+#
+# File location should be: C:\Users\rdavi\recursive-llm\.env
+
+# Gemini API Key (preferred for this evaluation)
+GEMINI_API_KEY=your-gemini-api-key-here
+
+# Alternative: OpenAI API Key
+# OPENAI_API_KEY=your-openai-api-key-here
+
+# Alternative: Anthropic API Key
+# ANTHROPIC_API_KEY=your-anthropic-api-key-here
+
+# Instructions:
+# 1. Create a file named ".env" in C:\Users\rdavi\recursive-llm\
+# 2. Copy the line above with your actual API key
+# 3. Save the file
+# 4. Run: python oolongbench_eval/test_setup.py
+

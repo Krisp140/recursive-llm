@@ -138,3 +138,8 @@ benchmarks/
 
 # Internal documentation (development notes, not for distribution)
 docs/
+
+# OOLONGBench evaluation results
+oolongbench_results/
+*.log
+
