@@ -1,12 +1,17 @@
 """Type definitions for RLM."""
 
-from typing import TypedDict, Optional, Any, Callable, Awaitable
+from typing import TypedDict, Optional, Any, Callable, Awaitable, Literal
 
 
 class Message(TypedDict):
     """LLM message format."""
     role: str
     content: str
+
+
+# Partitioning and retrieval types
+PartitionStrategy = Literal["token", "structural", "semantic", "learned"]
+RetrievalMethod = Literal["regex", "embedding", "unfiltered"]
 
 
 class RLMConfig(TypedDict, total=False):
@@ -19,6 +24,13 @@ class RLMConfig(TypedDict, total=False):
     max_iterations: int
     temperature: float
     timeout: int
+    # Phase 1 additions
+    partition_strategy: Optional[PartitionStrategy]
+    retrieval_method: Optional[RetrievalMethod]
+    parallel_subqueries: bool
+    max_parallel_subqueries: int
+    max_partition_tokens: int
+    partition_overlap_tokens: int
 
 
 class REPLEnvironment(TypedDict, total=False):

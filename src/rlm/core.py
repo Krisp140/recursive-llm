@@ -10,6 +10,8 @@ from .types import Message
 from .repl import REPLExecutor, REPLError
 from .prompts import build_system_prompt
 from .parser import parse_response, is_final
+from .partitions import partition_text, Partition
+from .retrieval import PartitionRetriever
 
 
 class RLMError(Exception):
@@ -39,6 +41,13 @@ class RLM:
         max_depth: int = 5,
         max_iterations: int = 30,
         _current_depth: int = 0,
+        # Phase 1: Partitioning and retrieval config
+        partition_strategy: Optional[str] = None,
+        retrieval_method: Optional[str] = None,
+        parallel_subqueries: bool = False,
+        max_parallel_subqueries: int = 5,
+        max_partition_tokens: int = 4000,
+        partition_overlap_tokens: int = 200,
         **llm_kwargs: Any
     ):
         """
@@ -52,6 +61,12 @@ class RLM:
             max_depth: Maximum recursion depth
             max_iterations: Maximum REPL iterations per call
             _current_depth: Internal current depth tracker
+            partition_strategy: How to partition context ("token", "structural", "semantic", "learned")
+            retrieval_method: How to retrieve partitions ("regex", "embedding", "unfiltered")
+            parallel_subqueries: Whether to run recursive calls in parallel
+            max_parallel_subqueries: Maximum number of parallel recursive calls
+            max_partition_tokens: Maximum tokens per partition
+            partition_overlap_tokens: Token overlap between partitions
             **llm_kwargs: Additional LiteLLM parameters
         """
         self.model = model
@@ -62,6 +77,14 @@ class RLM:
         self.max_iterations = max_iterations
         self._current_depth = _current_depth
         self.llm_kwargs = llm_kwargs
+
+        # Phase 1: Partitioning config
+        self.partition_strategy = partition_strategy
+        self.retrieval_method = retrieval_method
+        self.parallel_subqueries = parallel_subqueries
+        self.max_parallel_subqueries = max_parallel_subqueries
+        self.max_partition_tokens = max_partition_tokens
+        self.partition_overlap_tokens = partition_overlap_tokens
 
         self.repl = REPLExecutor()
 
@@ -141,6 +164,11 @@ class RLM:
         if self._current_depth >= self.max_depth:
             raise MaxDepthError(f"Max recursion depth ({self.max_depth}) exceeded")
 
+        # Phase 1: Partition and delegate if configured (only at root level)
+        if self.partition_strategy is not None and self._current_depth == 0:
+            return await self._acompletion_with_partitions(query, context, **kwargs)
+
+        # Original behavior (no partitioning)
         # Initialize REPL environment
         repl_env = self._build_repl_env(query, context)
 
@@ -179,6 +207,126 @@ class RLM:
         raise MaxIterationsError(
             f"Max iterations ({self.max_iterations}) exceeded without FINAL()"
         )
+
+    async def _acompletion_with_partitions(
+        self,
+        query: str,
+        context: str,
+        **kwargs: Any
+    ) -> str:
+        """
+        Completion using partitioning strategy.
+
+        Args:
+            query: User query
+            context: Full context to partition
+            **kwargs: Additional LiteLLM parameters
+
+        Returns:
+            Final answer after processing partitions
+        """
+        # Partition the context
+        partitions = partition_text(
+            text=context,
+            strategy=self.partition_strategy,
+            max_tokens=self.max_partition_tokens,
+            overlap_tokens=self.partition_overlap_tokens,
+            model_name=self.model,
+            api_key=self.api_key  # For semantic partitioning
+        )
+
+        # Phase 3: Apply retrieval if configured
+        if self.retrieval_method is not None:
+            retriever = PartitionRetriever(
+                method=self.retrieval_method,
+                top_k=self.max_parallel_subqueries,
+                api_key=self.api_key
+            )
+            partitions = retriever.retrieve(query, partitions)
+        else:
+            # If no retrieval configured, limit to max_parallel_subqueries
+            partitions = partitions[:self.max_parallel_subqueries]
+
+        # Create child RLM with increased depth (to prevent infinite partitioning)
+        child_rlm = RLM(
+            model=self.recursive_model,
+            recursive_model=self.recursive_model,
+            api_base=self.api_base,
+            api_key=self.api_key,
+            max_depth=self.max_depth,
+            max_iterations=self.max_iterations,
+            _current_depth=self._current_depth + 1,
+            # Don't partition at child level (partitioning only happens at root)
+            partition_strategy=None,
+            retrieval_method=None,
+            parallel_subqueries=False,
+            max_parallel_subqueries=self.max_parallel_subqueries,
+            max_partition_tokens=self.max_partition_tokens,
+            partition_overlap_tokens=self.partition_overlap_tokens,
+            **self.llm_kwargs
+        )
+
+        # Process partitions (sequentially for now, parallel in Phase 4)
+        partial_answers: List[str] = []
+
+        for partition in partitions:
+            # Make recursive call on this partition
+            try:
+                answer = await child_rlm.acompletion(query, partition.text, **kwargs)
+                partial_answers.append(answer)
+            except Exception as e:
+                # Record error but continue with other partitions
+                partial_answers.append(f"[Error processing partition {partition.index}: {str(e)}]")
+
+        # Stitch answers together
+        # For Phase 1, use simple concatenation
+        # (more sophisticated stitching can be added later)
+        if len(partial_answers) == 1:
+            return partial_answers[0]
+
+        # Multiple answers - ask root LM to synthesize
+        stitched_answer = await self._stitch_answers(query, partial_answers, **kwargs)
+        return stitched_answer
+
+    async def _stitch_answers(
+        self,
+        query: str,
+        partial_answers: List[str],
+        **kwargs: Any
+    ) -> str:
+        """
+        Stitch together partial answers from multiple partitions.
+
+        Args:
+            query: Original query
+            partial_answers: Answers from each partition
+            **kwargs: Additional LiteLLM parameters
+
+        Returns:
+            Final synthesized answer
+        """
+        # Build stitching prompt
+        answers_text = "\n\n".join([
+            f"Answer from partition {i+1}:\n{answer}"
+            for i, answer in enumerate(partial_answers)
+        ])
+
+        stitching_prompt = f"""You received partial answers from different parts of a document. Synthesize them into a single coherent answer.
+
+Original question: {query}
+
+{answers_text}
+
+Provide a comprehensive answer that combines the information from all partitions."""
+
+        # Call LLM to synthesize
+        messages: List[Message] = [
+            {"role": "system", "content": "You are a helpful assistant that synthesizes information from multiple sources."},
+            {"role": "user", "content": stitching_prompt}
+        ]
+
+        response = await self._call_llm(messages, **kwargs)
+        return response
 
     async def _call_llm(
         self,
@@ -269,6 +417,13 @@ class RLM:
                 max_depth=self.max_depth,
                 max_iterations=self.max_iterations,
                 _current_depth=self._current_depth + 1,
+                # Pass partitioning config
+                partition_strategy=self.partition_strategy,
+                retrieval_method=self.retrieval_method,
+                parallel_subqueries=self.parallel_subqueries,
+                max_parallel_subqueries=self.max_parallel_subqueries,
+                max_partition_tokens=self.max_partition_tokens,
+                partition_overlap_tokens=self.partition_overlap_tokens,
                 **self.llm_kwargs
             )
 
