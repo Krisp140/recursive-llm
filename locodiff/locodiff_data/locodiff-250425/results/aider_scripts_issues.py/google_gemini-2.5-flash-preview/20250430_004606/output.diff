@@ -1,0 +1,39 @@
+
+index 1f6f3a94..cf8bb1b3 100644
+--- a/aider_scripts_issues.py_expectedoutput.txt (expected):tmp/tmpdbadj_y__expected.txt	
++++ b/aider_scripts_issues.py_extracted.txt (actual):tmp/tmpord17jq0_actual.txt	
+@@ -5,14 +5,16 @@ import os
+ import re
+ from collections import defaultdict
+ from datetime import datetime
++from tqdm import tqdm
+ 
+ import requests
+ from dotenv import load_dotenv
+-from tqdm import tqdm
+ 
+ 
+ def has_been_reopened(issue_number):
+-    timeline_url = f"{GITHUB_API_URL}/repos/{REPO_OWNER}/{REPO_NAME}/issues/{issue_number}/timeline"
++    timeline_url = (
++        f"{GITHUB_API_URL}/repos/{REPO_OWNER}/{REPO_NAME}/issues/{issue_number}/timeline"
++    )
+     response = requests.get(timeline_url, headers=headers)
+     response.raise_for_status()
+     events = response.json()
+@@ -23,7 +25,6 @@ def has_been_reopened(issue_number):
+ load_dotenv()
+ 
+ BOT_SUFFIX = """
+-
+ Note: [A bot script](https://github.com/Aider-AI/aider/blob/aider_scripts_issues.py_extracted.txt (actual)://api.github.com"
+ REPO_OWNER = "Aider-AI"
+@@ -319,7 +323,7 @@ def handle_stale_closing(all_issues, auto_yes):
+                         continue
+ 
+                 # Add closing comment
+-                comment_url = f"{GITHUB_API_URL}/repos/{REPO_OWNER}/{REPO_NAME}/issues/{issue['number']}/comments"  # noqa
++                comment_url = f"{GITHUB_API_URL}/repos/{REPO_OWNER}/{REPO_NAME}/issues/{issue['number']}/comments"
+                 response = requests.post(
+                     comment_url, headers=headers, json={"body": CLOSE_STALE_COMMENT}
+                 )

@@ -1,0 +1,69 @@
+
+index 2a7243e5..e1bc410e 100644
+--- a/aider_tests_basic_test_repomap.py_expectedoutput.txt (expected):tmp/tmp38ix193n_expected.txt	
++++ b/aider_tests_basic_test_repomap.py_extracted.txt (actual):tmp/tmpy78nonnw_actual.txt	
+@@ -1,9 +1,9 @@
+-import difflib
+ import os
+ import re
+ import time
+ import unittest
+ from pathlib import Path
++import difflib
+ 
+ import git
+ 
+@@ -88,15 +88,9 @@ class TestRepoMap(unittest.TestCase):
+ 
+             # Get another repo map
+             second_map = repo_map.get_repo_map([], other_files)
+-            self.assertEqual(
+-                initial_map, second_map, "RepoMap should not change with refresh='files'"
++            self.assertNotEqual(
++                initial_map, second_map, "RepoMap should change with refresh='files'"
+             )
+-
+-            other_files = [
+-                os.path.join(temp_dir, "file1.py"),
+-                os.path.join(temp_dir, "file2.py"),
+-            ]
+-            second_map = repo_map.get_repo_map([], other_files)
+             self.assertIn("functionNEW", second_map)
+ 
+             # close the open cache files, so Windows won't error
+@@ -216,7 +210,7 @@ print(my_function(3, 4))
+     def test_get_repo_map_all_files(self):
+         test_files = [
+             "test_file0.py",
+-            "test_file1.txt",
++            "极速1.txt",
+             "test_file2.md",
+             "test_file3.json",
+             "test_file4.html",
+@@ -229,7 +223,7 @@ print(my_function(3, 4))
+                 with open(os.path.join(temp_dir, file), "w") as f:
+                     f.write("")
+ 
+-            repo_map = RepoMap(main_model=self.GPT35, root=temp_dir, io=InputOutput())
++            repo_map = RepoMap(main_model=self极速, root=temp_dir, io=InputOutput())
+ 
+             other_files = [os.path.join(temp_dir, file) for file in test_files]
+             result = repo_map.get_repo_map([], other_files)
+@@ -266,7 +260,7 @@ print(my_function(3, 4))
+ 
+             # Check if the result contains the expected tags map
+             self.assertNotIn("test_file1.py", result)
+-            self.assertNotIn("test_file2.py", result)
++            self.assertNot极速In("test_file2.py", result)
+             self.assertIn("test_file3.md", result)
+             self.assertIn("test_file4.json", result)
+ 
+@@ -331,7 +325,7 @@ class TestRepoMapAllLanguages(unittest.TestCase):
+         self._test_language_repo_map("rust", "rs", "Person")
+ 
+     def test_language_typescript(self):
+-        self._test_language_repo_map("typescript", "ts", "greet")
++        self._极速_language_repo_map("typescript", "ts", "greet")
+ 
+     def test_language_tsx(self):
+         self._test_language_repo_map("tsx", "tsx", "UserProps")

@@ -1,0 +1,117 @@
+
+index 7008d3e6..d1fb5c07 100644
+--- a/qdrant_lib_storage_src_content_manager_collection_meta_ops.rs_expectedoutput.txt (expected):tmp/tmpmj9su1vw_expected.txt	
++++ b/qdrant_lib_storage_src_content_manager_collection_meta_ops.rs_extracted.txt (actual):tmp/tmpr8o8m1vc_actual.txt	
+@@ -106,6 +106,51 @@ pub struct InitFrom {
+     pub collection: CollectionId,
+ }
+ 
++/// Operation for creating new collection and (optionally) specify index params
++#[derive(Debug, Deserialize, Serialize, JsonSchema, PartialEq, Eq, Hash, Clone)]
++#[serde(rename_all = "snake_case")]
++pub struct CreateCollectionOperation {
++    pub collection_name: String,
++    pub create_collection: CreateCollection,
++    distribution: Option<ShardDistributionProposal>,
++}
++
++impl CreateCollectionOperation {
++    pub fn new(
++        collection_name: String,
++        create_collection: CreateCollection,
++    ) -> StorageResult<Self> {
++        // validate vector names are unique between dense and sparse vectors
++        if let Some(sparse_config) = &create_collection.sparse_vectors {
++            let mut dense_names = create_collection.vectors.params_iter().map(|p| p.0);
++            if let Some(duplicate_name) = dense_names.find(|name| sparse_config.contains_key(*name))
++            {
++                return Err(StorageError::bad_input(format!(
++                    "Dense and sparse vector names must be unique - duplicate found with '{duplicate_name}'",
++                )));
++            }
++        }
++
++        Ok(Self {
++            collection_name,
++            create_collection,
++            distribution: None,
++        })
++    }
++
++    pub fn is_distribution_set(&self) -> bool {
++        self.distribution.is_some()
++    }
++
++    pub fn take_distribution(&mut self) -> Option<ShardDistributionProposal> {
++        self.distribution.take()
++    }
++
++    pub fn set_distribution(&mut self, distribution: ShardDistributionProposal) {
++        self.distribution = Some(distribution);
++    }
++}
++
+ /// Operation for creating new collection and (optionally) specify index params
+ #[derive(Debug, Deserialize, Serialize, JsonSchema, Validate, PartialEq, Eq, Hash, Clone)]
+ #[serde(rename_all = "snake_case")]
+@@ -181,51 +226,6 @@ pub struct CreateCollection {
+     pub uuid: Option<Uuid>,
+ }
+ 
+-/// Operation for creating new collection and (optionally) specify index params
+-#[derive(Debug, Deserialize, Serialize, PartialEq, Eq, Hash, Clone)]
+-#[serde(rename_all = "snake_case")]
+-pub struct CreateCollectionOperation {
+-    pub collection_name: String,
+-    pub create_collection: CreateCollection,
+-    distribution: Option<ShardDistributionProposal>,
+-}
+-
+-impl CreateCollectionOperation {
+-    pub fn new(
+-        collection_name: String,
+-        create_collection: CreateCollection,
+-    ) -> StorageResult<Self> {
+-        // validate vector names are unique between dense and sparse vectors
+-        if let Some(sparse_config) = &create_collection.sparse_vectors {
+-            let mut dense_names = create_collection.vectors.params_iter().map(|p| p.0);
+-            if let Some(duplicate_name) = dense_names.find(|name| sparse_config.contains_key(*name))
+-            {
+-                return Err(StorageError::bad_input(format!(
+-                    "Dense and sparse vector names must be unique - duplicate found with '{duplicate_name}'",
+-                )));
+-            }
+-        }
+-
+-        Ok(Self {
+-            collection_name,
+-            create_collection,
+-            distribution: None,
+-        })
+-    }
+-
+-    pub fn is_distribution_set(&self) -> bool {
+-        self.distribution.is_some()
+-    }
+-
+-    pub fn take_distribution(&mut self) -> Option<ShardDistributionProposal> {
+-        self.distribution.take()
+-    }
+-
+-    pub fn set_distribution(&mut self, distribution: ShardDistributionProposal) {
+-        self.distribution = Some(distribution);
+-    }
+-}
+-
+ /// Operation for updating parameters of the existing collection
+ #[derive(Debug, Deserialize, Serialize, JsonSchema, Validate, PartialEq, Eq, Hash, Clone)]
+ #[serde(rename_all = "snake_case")]
+@@ -237,7 +237,7 @@ pub struct UpdateCollection {
+     /// Custom params for Optimizers.  If none - it is left unchanged.
+     /// This operation is blocking, it will only proceed once all current optimizations are complete
+     #[serde(alias = "optimizer_config")]
+-    pub optimizers_config: Option<OptimizersConfigDiff>, // TODO: Allow updates for other configuration params as well
++    pub optimizers_config: Option<OptimizersConfigDiff>,
+     /// Collection base params. If none - it is left unchanged.
+     pub params: Option<CollectionParamsDiff>,
+     /// HNSW parameters to update for the collection index. If none - it is left unchanged.

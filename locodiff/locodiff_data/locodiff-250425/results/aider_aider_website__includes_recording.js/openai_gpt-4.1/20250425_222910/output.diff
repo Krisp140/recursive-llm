@@ -1,0 +1,52 @@
+
+index 95a52a67..d0a94458 100644
+--- a/aider_aider_website__includes_recording.js_expectedoutput.txt (expected):tmp/tmp865u5d8x_expected.txt	
++++ b/aider_aider_website__includes_recording.js_extracted.txt (actual):tmp/tmp0zdrhdvn_actual.txt	
+@@ -1,7 +1,7 @@
+ document.addEventListener('DOMContentLoaded', function() {
+   let player; // Store player reference to make it accessible to click handlers
+   let globalAudio; // Global audio element to be reused
+-  
++
+   // Detect if device likely has no physical keyboard
+   function detectNoKeyboard() {
+     // Check if it's a touch device (most mobile devices)
+@@ -69,11 +69,6 @@ document.addEventListener('DOMContentLoaded', function() {
+               }
+             });
+             
+-            // Replace text with the link + message
+-            item.textContent = '';
+-            item.appendChild(timeLink);
+-            item.appendChild(document.createTextNode(' ' + message));
+-            
+             // Add class and click handler to the entire list item
+             item.classList.add('transcript-item');
+             item.dataset.time = timeInSeconds;
+@@ -98,6 +93,10 @@ document.addEventListener('DOMContentLoaded', function() {
+               }
+             });
+             
++            item.textContent = '';
++            item.appendChild(timeLink);
++            item.appendChild(document.createTextNode(' ' + message));
++            
+             markers.push([timeInSeconds, message]);
+           }
+         });
+@@ -105,7 +104,6 @@ document.addEventListener('DOMContentLoaded', function() {
+         currentElement = currentElement.nextElementSibling;
+       }
+     }
+-    
+     return markers;
+   }
+ 
+@@ -402,7 +400,6 @@ document.addEventListener('DOMContentLoaded', function() {
+       const listItem = activeLink.closest('li');
+       if (listItem) {
+         listItem.classList.add('active-marker');
+-        
+         // No longer scrolling into view to avoid shifting focus
+       }
+     }

@@ -1,0 +1,12 @@
+
+index 37fc273c..e6d14330 100644
+--- a/aider_scripts_blame.py_expectedoutput.txt (expected):tmp/tmp1b8g0dig_expected.txt	
++++ b/aider_scripts_blame.py_extracted.txt (actual):tmp/tmp2llzs6vq_actual.txt	
+@@ -80,7 +80,6 @@ def get_all_commit_hashes_between_tags(start_tag, end_tag=None):
+ 
+ 
+ def run(cmd):
+-    # Get all commit hashes since the specified tag
+     result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+     return result.stdout
+ 

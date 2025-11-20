@@ -1,0 +1,72 @@
+
+index 153c7d55..dea55db1 100644
+--- a/qdrant_lib_segment_src_index_field_index_numeric_index_mutable_numeric_index.rs_expectedoutput.txt (expected):tmp/tmpyl51lb_h_expected.txt	
++++ b/qdrant_lib_segment_src_index_field_index_numeric_index_mutable_numeric_index.rs_extracted.txt (actual):tmp/tmpvpplzfth_actual.txt	
+@@ -1,4 +1,5 @@
+ use std::collections::BTreeSet;
++use std::mem::size_of_val;
+ use std::ops::Bound;
+ use std::ops::Bound::{Excluded, Unbounded};
+ use std::sync::Arc;
+@@ -95,26 +96,6 @@ impl<T: Encodable + Numericable + Default> InMemoryNumericIndex<T> {
+         self.map.len()
+     }
+ 
+-    pub fn values_range(
+-        &self,
+-        start_bound: Bound<Point<T>>,
+-        end_bound: Bound<Point<T>>,
+-    ) -> impl Iterator<Item = PointOffsetType> {
+-        self.map
+-            .range((start_bound, end_bound))
+-            .map(|point| point.idx)
+-    }
+-
+-    pub fn orderable_values_range(
+-        &self,
+-        start_bound: Bound<Point<T>>,
+-        end_bound: Bound<Point<T>>,
+-    ) -> impl DoubleEndedIterator<Item = (T, PointOffsetType)> + '_ {
+-        self.map
+-            .range((start_bound, end_bound))
+-            .map(|point| (point.val, point.idx))
+-    }
+-
+     pub fn add_many_to_list(&mut self, idx: PointOffsetType, values: Vec<T>) {
+         if self.point_to_values.len() <= idx as usize {
+             self.point_to_values.resize_with(idx as usize + 1, Vec::new)
+@@ -187,6 +168,26 @@ impl<T: Encodable + Numericable + Default> InMemoryNumericIndex<T> {
+     pub fn get_max_values_per_point(&self) -> usize {
+         self.max_values_per_point
+     }
++
++    pub fn values_range(
++        &self,
++        start_bound: Bound<Point<T>>,
++        end_bound: Bound<Point<T>>,
++    ) -> impl Iterator<Item = PointOffsetType> {
++        self.map
++            .range((start_bound, end_bound))
++            .map(|point| point.idx)
++    }
++
++    pub fn orderable_values_range(
++        &self,
++        start_bound: Bound<Point<T>>,
++        end_bound: Bound<Point<T>>,
++    ) -> impl DoubleEndedIterator<Item = (T, PointOffsetType)> + '_ {
++        self.map
++            .range((start_bound, end_bound))
++            .map(|point| (point.val, point.idx))
++    }
+ }
+ 
+ impl<T: Encodable + Numericable + Default> MutableNumericIndex<T> {
+@@ -259,7 +260,6 @@ impl<T: Encodable + Numericable + Default> MutableNumericIndex<T> {
+             self.db_wrapper.put(&key, idx.to_be_bytes())?;
+             hw_cell_wb.incr_delta(size_of_val(&key) + size_of_val(&idx));
+         }
+-
+         self.in_memory_index.add_many_to_list(idx, values);
+         Ok(())
+     }

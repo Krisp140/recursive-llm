@@ -1,0 +1,19 @@
+
+index 312ad8ce..4b0e6fcf 100644
+--- a/ghostty_src_termio_Thread.zig_expectedoutput.txt (expected):tmp/tmpp8_xjxz9_expected.txt	
++++ b/ghostty_src_termio_Thread.zig_extracted.txt (actual):tmp/tmpr9d7rlw__actual.txt	
+@@ -56,13 +56,13 @@ stop_c: xev.Completion = .{},
+ coalesce: xev.Timer,
+ coalesce_c: xev.Completion = .{},
+ coalesce_cancel_c: xev.Completion = .{},
+-coalesce_data: Coalesce = .{},
+ 
+ /// This timer is used to reset synchronized output modes so that
+ /// the terminal doesn't freeze with a bad actor.
+ sync_reset: xev.Timer,
+ sync_reset_c: xev.Completion = .{},
+ sync_reset_cancel_c: xev.Completion = .{},
++coalesce_data: Coalesce = .{},
+ 
+ flags: packed struct {
+     /// This is set to true only when an abnormal exit is detected. It

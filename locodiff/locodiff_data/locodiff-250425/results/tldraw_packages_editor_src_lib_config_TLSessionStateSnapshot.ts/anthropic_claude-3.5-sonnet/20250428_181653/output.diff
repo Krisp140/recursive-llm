@@ -1,0 +1,19 @@
+
+index 1dbf9d1f..5f04b144 100644
+--- a/tldraw_packages_editor_src_lib_config_TLSessionStateSnapshot.ts_expectedoutput.txt (expected):tmp/tmpv8b1z5uw_expected.txt	
++++ b/tldraw_packages_editor_src_lib_config_TLSessionStateSnapshot.ts_extracted.txt (actual):tmp/tmpdu0j0wca_actual.txt	
+@@ -32,7 +32,6 @@ const window = globalThis.window as
+ 	  }
+ 	| undefined
+ 
+-// https://stackoverflow.com/a/tldraw_packages_editor_src_lib_config_TLSessionStateSnapshot.ts_expectedoutput.txt (expected): unknown): TLSessionStateS
+ 
+ 	try {
+ 		return sessionStateSnapshotValidator.validate(state)
+-	} catch (e) {
+-		console.warn(e)
++	} catch {
++		console.warn('Invalid instance state')
+ 		return null
+ 	}
+ }

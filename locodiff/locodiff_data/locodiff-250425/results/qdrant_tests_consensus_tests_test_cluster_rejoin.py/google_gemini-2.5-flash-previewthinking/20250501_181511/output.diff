@@ -1,0 +1,50 @@
+
+index 95fb168d..1ce6e3fc 100644
+--- a/qdrant_tests_consensus_tests_test_cluster_rejoin.py_expectedoutput.txt (expected):tmp/tmpf2ea9t7v_expected.txt	
++++ b/qdrant_tests_consensus_tests_test_cluster_rejoin.py_extracted.txt (actual):tmp/tmp4ur_3b3l_actual.txt	
+@@ -2,11 +2,12 @@ import io
+ import pathlib
+ import shutil
+ from time import sleep
+-from typing import Any
++from typing import Any, Callable
+ 
+ from consensus_tests.fixtures import create_collection, upsert_random_points, drop_collection
+ import requests
+ from .utils import *
++import pytest
+ 
+ N_PEERS = 3
+ N_REPLICA = 2
+@@ -100,6 +101,7 @@ def test_rejoin_origin_from_wal(tmp_path: pathlib.Path):
+ 
+     rejoin_cluster_test(tmp_path, start_cluster, overwrite_first_voter)
+ 
++
+ def test_rejoin_origin_from_state(tmp_path: pathlib.Path):
+     """
+     This test checks that Qdrant persists origin peer ID (`first_voter` field in `raft_state.json`)
+@@ -121,6 +123,7 @@ def test_rejoin_origin_from_state(tmp_path: pathlib.Path):
+ 
+     rejoin_cluster_test(tmp_path, start_preconfigured_cluster, assert_first_voter)
+ 
++
+ @pytest.mark.skip("this test simulates and asserts past, incorrect behavior")
+ def test_rejoin_no_origin(tmp_path: pathlib.Path):
+     """
+@@ -188,6 +191,7 @@ def test_rejoin_recover_origin(tmp_path: pathlib.Path):
+     remove_peer(peer_uris[0])
+     processes.pop(0).kill()
+ 
++
+     # Wait a few seconds for new leader
+     sleep(5)
+ 
+@@ -253,6 +257,7 @@ def rejoin_cluster_test(
+     info = get_collection_cluster_info(new_peer_uri, collection)
+     assert len(info["remote_shards"]) == expected_shards
+ 
++
+ def start_preconfigured_cluster(tmp_path: pathlib.Path, peers: int = 3):
+     assert_project_root()
+ 

@@ -1,0 +1,26 @@
+
+index 1f6f3a94..a39bcf26 100644
+--- a/aider_scripts_issues.py_expectedoutput.txt (expected):tmp/tmpvvhjsne4_expected.txt	
++++ b/aider_scripts_issues.py_extracted.txt (actual):tmp/tmpougutpom_actual.txt	
+@@ -23,7 +23,6 @@ def has_been_reopened(issue_number):
+ load_dotenv()
+ 
+ BOT_SUFFIX = """
+-
+ Note: [A bot script](https://github.com/Aider-AI/aider/blob/aider_scripts_issues.py_extracted.txt (actual):
+                         continue
+ 
+                 # Add closing comment
+-                comment_url = f"{GITHUB_API_URL}/repos/{REPO_OWNER}/{REPO_NAME}/issues/{issue['number']}/comments"  # noqa
++                comment_url = f"{GITHUB_API_URL}/repos/{REPO_OWNER}/{REPO_NAME}/issues/{issue['number']}/comments"
+                 response = requests.post(
+                     comment_url, headers=headers, json={"body": CLOSE_STALE_COMMENT}
+                 )
+@@ -426,6 +425,7 @@ def handle_duplicate_issues(all_issues, auto_yes):
+                 print("Skipping this group of issues.")
+                 continue
+ 
++        # Comment and close duplicate issues
+         for issue in issues:
+             if issue["number"] != oldest_issue["number"]:
+                 comment_and_close_duplicate(issue, oldest_issue)

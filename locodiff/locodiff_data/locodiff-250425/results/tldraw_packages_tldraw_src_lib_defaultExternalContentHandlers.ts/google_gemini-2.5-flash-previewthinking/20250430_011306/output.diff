@@ -1,0 +1,55 @@
+
+index 419f10c6..257d15bc 100644
+--- a/tldraw_packages_tldraw_src_lib_defaultExternalContentHandlers.ts_expectedoutput.txt (expected):tmp/tmpuer33e_3_expected.txt	
++++ b/tldraw_packages_tldraw_src_lib_defaultExternalContentHandlers.ts_extracted.txt (actual):tmp/tmp40qfoc_t_actual.txt	
+@@ -3,6 +3,8 @@ import {
+ 	DEFAULT_SUPPORTED_IMAGE_TYPES,
+ 	DEFAULT_SUPPORT_VIDEO_TYPES,
+ 	Editor,
++	fetch,
++	FileHelpers,
+ 	MediaHelpers,
+ 	TLAsset,
+ 	TLAssetId,
+@@ -21,7 +23,6 @@ import {
+ 	VecLike,
+ 	assert,
+ 	createShapeId,
+-	fetch,
+ 	getHashForBuffer,
+ 	getHashForString,
+ 	toRichText,
+@@ -664,9 +665,9 @@ export async function getMediaAssetInfoPartial(
+ 	} as TLImageAsset | TLVideoAsset
+ 
+ 	if (maxImageDimension && isFinite(maxImageDimension)) {
+-		const size = { w: assetInfo.props.w, h: assetInfo.props.h }
+-		const resizedSize = containBoxSize(size, { w: maxImageDimension, h: maxImageDimension })
+-		if (size !== resizedSize && MediaHelpers.isStaticImageType(file.type)) {
++		const sizeInner = { w: assetInfo.props.w, h: assetInfo.props.h }
++		const resizedSize = containBoxSize(sizeInner, { w: maxImageDimension, h: maxImageDimension })
++		if (sizeInner !== resizedSize && MediaHelpers.isStaticImageType(file.type)) {
+ 			assetInfo.props.w = resizedSize.w
+ 			assetInfo.props.h = resizedSize.h
+ 		}
+@@ -687,11 +688,7 @@ export async function getMediaAssetInfoPartial(
+  *
+  * @public
+  */
+-export async function createShapesForAssets(
+-	editor: Editor,
+-	assets: TLAsset[],
+-	position: VecLike
+-): Promise<TLShapeId[]> {
++export async function createShapesForAssets(editor: Editor, assets: TLAsset[], position: VecLike): Promise<TLShapeId[]> {
+ 	if (!assets.length) return []
+ 
+ 	const currentPoint = Vec.From(position)
+@@ -732,6 +729,7 @@ export async function createShapesForAssets(
+ 				})
+ 
+ 				currentPoint.x += asset.props.w
++				break
+ 			}
+ 		}
+ 	}

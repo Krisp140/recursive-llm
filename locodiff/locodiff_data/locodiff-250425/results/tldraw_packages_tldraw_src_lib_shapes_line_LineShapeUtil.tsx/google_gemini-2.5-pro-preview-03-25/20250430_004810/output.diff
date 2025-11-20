@@ -1,0 +1,146 @@
+
+index 1529ad14..f8d25a1d 100644
+--- a/tldraw_packages_tldraw_src_lib_shapes_line_LineShapeUtil.tsx_expectedoutput.txt (expected):tmp/tmph_4v8h55_expected.txt	
++++ b/tldraw_packages_tldraw_src_lib_shapes_line_LineShapeUtil.tsx_extracted.txt (actual):tmp/tmpde4u8q5g_actual.txt	
+@@ -163,6 +163,70 @@ export class LineShapeUtil extends ShapeUtil<TLLineShape> {
+ 			},
+ 		}
+ 	}
++	override getInterpolatedProps(
++		startShape: TLLineShape,
++		endShape: TLLineShape,
++		t: number
++	): TLLineShape['props'] {
++		const startPoints = linePointsToArray(startShape)
++		const endPoints = linePointsToArray(endShape)
++
++		const pointsToUseStart: TLLineShapePoint[] = []
++		const pointsToUseEnd: TLLineShapePoint[] = []
++
++		let index = ZERO_INDEX_KEY
++
++		if (startPoints.length > endPoints.length) {
++			// we'll need to expand points
++			for (let i = 0; i < startPoints.length; i++) {
++				pointsToUseStart[i] = { ...startPoints[i] }
++				if (endPoints[i] === undefined) {
++					pointsToUseEnd[i] = { ...endPoints[endPoints.length - 1], id: index }
++				} else {
++					pointsToUseEnd[i] = { ...endPoints[i], id: index }
++				}
++				index = getIndexAbove(index)
++			}
++		} else if (endPoints.length > startPoints.length) {
++			// we'll need to converge points
++			for (let i = 0; i < endPoints.length; i++) {
++				pointsToUseEnd[i] = { ...endPoints[i] }
++				if (startPoints[i] === undefined) {
++					pointsToUseStart[i] = {
++						...startPoints[startPoints.length - 1],
++						id: index,
++					}
++				} else {
++					pointsToUseStart[i] = { ...startPoints[i], id: index }
++				}
++				index = getIndexAbove(index)
++			}
++		} else {
++			// noop, easy
++			for (let i = 0; i < endPoints.length; i++) {
++				pointsToUseStart[i] = startPoints[i]
++				pointsToUseEnd[i] = endPoints[i]
++			}
++		}
++
++		return {
++			...(t > 0.5 ? endShape.props : startShape.props),
++			points: Object.fromEntries(
++				pointsToUseStart.map((point, i) => {
++					const endPoint = pointsToUseEnd[i]
++					return [
++						point.id,
++						{
++							...point,
++							x: lerp(point.x, endPoint.x, t),
++							y: lerp(point.y, endPoint.y, t),
++						},
++					]
++				})
++			),
++			scale: lerp(startShape.props.scale, endShape.props.scale, t),
++		}
++	}
+ 
+ 	component(shape: TLLineShape) {
+ 		return (
+@@ -228,70 +292,6 @@ export class LineShapeUtil extends ShapeUtil<TLLineShape> {
+ 			},
+ 		}
+ 	}
+-	override getInterpolatedProps(
+-		startShape: TLLineShape,
+-		endShape: TLLineShape,
+-		t: number
+-	): TLLineShape['props'] {
+-		const startPoints = linePointsToArray(startShape)
+-		const endPoints = linePointsToArray(endShape)
+-
+-		const pointsToUseStart: TLLineShapePoint[] = []
+-		const pointsToUseEnd: TLLineShapePoint[] = []
+-
+-		let index = ZERO_INDEX_KEY
+-
+-		if (startPoints.length > endPoints.length) {
+-			// we'll need to expand points
+-			for (let i = 0; i < startPoints.length; i++) {
+-				pointsToUseStart[i] = { ...startPoints[i] }
+-				if (endPoints[i] === undefined) {
+-					pointsToUseEnd[i] = { ...endPoints[endPoints.length - 1], id: index }
+-				} else {
+-					pointsToUseEnd[i] = { ...endPoints[i], id: index }
+-				}
+-				index = getIndexAbove(index)
+-			}
+-		} else if (endPoints.length > startPoints.length) {
+-			// we'll need to converge points
+-			for (let i = 0; i < endPoints.length; i++) {
+-				pointsToUseEnd[i] = { ...endPoints[i] }
+-				if (startPoints[i] === undefined) {
+-					pointsToUseStart[i] = {
+-						...startPoints[startPoints.length - 1],
+-						id: index,
+-					}
+-				} else {
+-					pointsToUseStart[i] = { ...startPoints[i], id: index }
+-				}
+-				index = getIndexAbove(index)
+-			}
+-		} else {
+-			// noop, easy
+-			for (let i = 0; i < endPoints.length; i++) {
+-				pointsToUseStart[i] = startPoints[i]
+-				pointsToUseEnd[i] = endPoints[i]
+-			}
+-		}
+-
+-		return {
+-			...(t > 0.5 ? endShape.props : startShape.props),
+-			points: Object.fromEntries(
+-				pointsToUseStart.map((point, i) => {
+-					const endPoint = pointsToUseEnd[i]
+-					return [
+-						point.id,
+-						{
+-							...point,
+-							x: lerp(point.x, endPoint.x, t),
+-							y: lerp(point.y, endPoint.y, t),
+-						},
+-					]
+-				})
+-			),
+-			scale: lerp(startShape.props.scale, endShape.props.scale, t),
+-		}
+-	}
+ }
+ 
+ function linePointsToArray(shape: TLLineShape) {

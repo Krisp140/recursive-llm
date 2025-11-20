@@ -1,0 +1,138 @@
+
+index c73d0a5b..d5f44fa6 100644
+--- a/react_packages_react-dom_src___tests___ReactCompositeComponentState-test.js_expectedoutput.txt (expected):tmp/tmpnyugl0ho_expected.txt	
++++ b/react_packages_react-dom_src___tests___ReactCompositeComponentState-test.js_extracted.txt (actual):tmp/tmpdht_9vjd_actual.txt	
+@@ -539,7 +539,74 @@ describe('ReactCompositeComponent-state', () => {
+     ]);
+   });
+ 
+-  it('should not support setState in componentWillUnmount', async () => {
++  if (!require('shared/ReactFeatureFlags').disableModulePatternComponents) {
++    it('should support stateful module pattern components', async () => {
++      function Child() {
++        return {
++          state: {
++            count: 123,
++          },
++          render() {
++            return <div>{`count:${this.state.count}`}</div>;
++          },
++        };
++      }
++
++      const el = document.createElement('div');
++      const root = ReactDOMClient.createRoot(el);
++      expect(() => {
++        ReactDOM.flushSync(() => {
++          root.render(<Child />);
++        });
++      }).toErrorDev(
++        'Warning: The <Child /> component appears to be a function component that returns a class instance. ' +
++          'Change Child to a class that extends React.Component instead. ' +
++          "If you can't use a class try assigning the prototype on the function as a workaround. " +
++          '`Child.prototype = React.Component.prototype`. ' +
++          "Don't use an arrow function since it cannot be called with `new` by React.",
++      );
++
++      expect(el.textContent).toBe('count:123');
++    });
++
++    it('should support getDerivedStateFromProps for module pattern components', async () => {
++      function Child() {
++        return {
++          state: {
++            count: 1,
++          },
++          render() {
++            return <div>{`count:${this.state.count}`}</div>;
++          },
++        };
++      }
++      Child.getDerivedStateFromProps = (props, prevState) => {
++        return {
++          count: prevState.count + props.incrementBy,
++        };
++      };
++
++      const el = document.createElement('div');
++      const root = ReactDOMClient.createRoot(el);
++      await act(() => {
++        root.render(<Child incrementBy={0} />);
++      });
++
++      expect(el.textContent).toBe('count:1');
++      await act(() => {
++        root.render(<Child incrementBy={2} />);
++      });
++      expect(el.textContent).toBe('count:3');
++
++      await act(() => {
++        root.render(<Child incrementBy={1} />);
++      });
++      expect(el.textContent).toBe('count:4');
++    });
++  }
++
++  // @gate !disableLegacyMode
++  it('Legacy mode should support setState in componentWillUnmount (#18851)', () => {
+     let subscription;
+     class A extends React.Component {
+       componentWillUnmount() {
+@@ -561,26 +628,15 @@ describe('ReactCompositeComponent-state', () => {
+     }
+ 
+     const el = document.createElement('div');
+-    const root = ReactDOMClient.createRoot(el);
+-    await act(() => {
+-      root.render(<A />);
+-    });
++    const root = ReactDOM.createRoot(el);
++    root.render(<A />);
+     expect(el.textContent).toBe('A');
+ 
+-    ReactDOM.flushSync(() => {
+-      root.render(<B />);
+-    });
+-    assertConsoleErrorDev([
+-      "Can't perform a React state update on a component that hasn't mounted yet. " +
+-        'This indicates that you have a side-effect in your render function that ' +
+-        'asynchronously later calls tries to update the component. ' +
+-        'Move this work to useEffect instead.\n' +
+-        '    in B (at **)',
+-    ]);
++    root.render(<B />);
++    expect(el.textContent).toBe('B No Sibling');
+   });
+ 
+-  // @gate !disableLegacyMode
+-  it('Legacy mode should support setState in componentWillUnmount (#18851)', () => {
++  it('should not support setState in componentWillUnmount', async () => {
+     let subscription;
+     class A extends React.Component {
+       componentWillUnmount() {
+@@ -602,10 +658,21 @@ describe('ReactCompositeComponent-state', () => {
+     }
+ 
+     const el = document.createElement('div');
+-    ReactDOM.render(<A />, el);
++    const root = ReactDOMClient.createRoot(el);
++    await act(() => {
++      root.render(<A />);
++    });
+     expect(el.textContent).toBe('A');
+ 
+-    ReactDOM.render(<B />, el);
+-    expect(el.textContent).toBe('B No Sibling');
++    ReactDOM.flushSync(() => {
++      root.render(<B />);
++    });
++    assertConsoleErrorDev([
++      "Can't perform a React state update on a component that hasn't mounted yet. " +
++        'This indicates that you have a side-effect in your render function that ' +
++        'asynchronously later calls tries to update the component. ' +
++        'Move this work to useEffect instead.\n' +
++        '    in B (at **)',
++    ]);
+   });
+ });
+\ No newline at end of file

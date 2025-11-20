@@ -1,0 +1,17 @@
+
+index 303988af..7bfc7a7a 100644
+--- a/aider_tests_basic_test_repo.py_expectedoutput.txt (expected):tmp/tmpamh15ped_expected.txt	
++++ b/aider_tests_basic_test_repo.py_extracted.txt (actual):tmp/tmpfv8cxc4t_actual.txt	
+@@ -125,7 +125,11 @@ class TestRepo(unittest.TestCase):
+         # Check that simple_send_with_retries was called twice
+         self.assertEqual(mock_send.call_count, 2)
+ 
+-        # Check that both calls were made with the same messages
++        # Check that it was called with the correct models
++        self.assertEqual(mock_send.call_args_list[0][0][0], model1)
++        self.assertEqual(mock_send.call_args_list[1][0][0], model2)
++
++        # Check that the content of the messages is the same for both calls
+         first_call_messages = mock_send.call_args_list[0][0][0]  # Get messages from first call
+         second_call_messages = mock_send.call_args_list[1][0][0]  # Get messages from second call
+         self.assertEqual(first_call_messages, second_call_messages)

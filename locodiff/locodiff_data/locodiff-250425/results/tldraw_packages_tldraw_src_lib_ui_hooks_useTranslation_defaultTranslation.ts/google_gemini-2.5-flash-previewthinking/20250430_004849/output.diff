@@ -1,0 +1,12 @@
+
+index 9f6788f9..bb5edb5d 100644
+--- a/tldraw_packages_tldraw_src_lib_ui_hooks_useTranslation_defaultTranslation.ts_expectedoutput.txt (expected):tmp/tmp0220ixdk_expected.txt	
++++ b/tldraw_packages_tldraw_src_lib_ui_hooks_useTranslation_defaultTranslation.ts_extracted.txt (actual):tmp/tmpsozm9jn4_actual.txt	
+@@ -218,7 +218,6 @@ export const DEFAULT_TRANSLATION = {
+ 	'tool.cloud': 'Cloud',
+ 	'tool.diamond': 'Diamond',
+ 	'tool.ellipse': 'Ellipse',
+-	'tool.heart': 'Heart',
+ 	'tool.hexagon': 'Hexagon',
+ 	'tool.highlight': 'Highlight',
+ 	'tool.line': 'Line',

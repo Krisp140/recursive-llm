@@ -1,0 +1,108 @@
+
+index 1f6f3a94..b1efee0a 100644
+--- a/aider_scripts_issues.py_expectedoutput.txt (expected):tmp/tmp67ou373j_expected.txt	
++++ b/aider_scripts_issues.py_extracted.txt (actual):tmp/tmpiyuxeamr_actual.txt	
+@@ -1,5 +1,4 @@
+ #!/usr/bin/env python3
+-
+ import argparse
+ import os
+ import re
+@@ -12,7 +11,9 @@ from tqdm import tqdm
+ 
+ 
+ def has_been_reopened(issue_number):
+-    timeline_url = f"{GITHUB_API_URL}/repos/{REPO_OWNER}/{REPO_NAME}/issues/{issue_number}/timeline"
++    timeline_url = (
++        f"{GITHUB_API_URL}/repos/{REPO_OWNER}/{REPO_NAME}/issues/{issue_number}/timeline"
++    )
+     response = requests.get(timeline_url, headers=headers)
+     response.raise_for_status()
+     events = response.json()
+@@ -22,9 +23,7 @@ def has_been_reopened(issue_number):
+ # Load environment variables from .env file
+ load_dotenv()
+ 
+-BOT_SUFFIX = """
+-
+-Note: [A bot script](https://github.com/Aider-AI/aider/blob/aider_scripts_issues.py_extracted.txt (actual): [A bot script](https://github.com/Aider-AI/aider/blob/aider_scripts_issues.py_extracted.txt (actual): f"token {TOKEN}", "Accept": "application/vnd.github.v3+json"}
+ 
+ 
+-def get_issues(state="open"):
++def get_issues(state: str = "open"):
+     issues = []
+     page = 1
+     per_page = 100
+@@ -205,7 +206,7 @@ def handle_stale_issues(all_issues, auto_yes):
+     print("\nChecking for stale question issues...")
+ 
+     for issue in all_issues:
+-        # Skip if not open, not a question, already stale, or has been reopened
++        # Skip if not open, not a question, already stale, priority, or reopened
+         labels = [label["name"] for label in issue["labels"]]
+         if (
+             issue["state"] != "open"
+@@ -250,7 +251,7 @@ def handle_stale_closing(all_issues, auto_yes):
+     print("\nChecking for issues to close or unstale...")
+ 
+     for issue in all_issues:
+-        # Skip if not open, not stale, or is priority
++        # Skip if not open, not stale, or priority
+         labels = [label["name"] for label in issue["labels"]]
+         if issue["state"] != "open" or "stale" not in labels or "priority" in labels:
+             continue
+@@ -309,7 +310,9 @@ def handle_stale_closing(all_issues, auto_yes):
+             # Check if it's been 7 days since stale label
+             days_stale = (datetime.now() - latest_stale).days
+             if days_stale >= 7:
+-                print(f"\nStale issue ready for closing #{issue['number']}: {issue['title']}")
++                print(
++                    f"\nStale issue ready for closing #{issue['number']}: {issue['title']}"
++                )
+                 print(f"  No activity for {days_stale} days since stale label")
+ 
+                 if not auto_yes:
+@@ -319,7 +322,9 @@ def handle_stale_closing(all_issues, auto_yes):
+                         continue
+ 
+                 # Add closing comment
+-                comment_url = f"{GITHUB_API_URL}/repos/{REPO_OWNER}/{REPO_NAME}/issues/{issue['number']}/comments"  # noqa
++                comment_url = (
++                    f"{GITHUB_API_URL}/repos/{REPO_OWNER}/{REPO_NAME}/issues/{issue['number']}/comments"
++                )
+                 response = requests.post(
+                     comment_url, headers=headers, json={"body": CLOSE_STALE_COMMENT}
+                 )
+@@ -355,7 +360,6 @@ def handle_fixed_issues(all_issues, auto_yes):
+         response.raise_for_status()
+         events = response.json()
+ 
+-        # Find the most recent fixed label addition
+         fixed_events = [
+             event
+             for event in events
+@@ -383,7 +387,9 @@ def handle_fixed_issues(all_issues, auto_yes):
+             comment_url = (
+                 f"{GITHUB_API_URL}/repos/{REPO_OWNER}/{REPO_NAME}/issues/{issue['number']}/comments"
+             )
+-            comment = CLOSE_FIXED_ENHANCEMENT_COMMENT if is_enhancement else CLOSE_FIXED_BUG_COMMENT
++            comment = (
++                CLOSE_FIXED_ENHANCEMENT_COMMENT if is_enhancement else CLOSE_FIXED_BUG_COMMENT
++            )
+             response = requests.post(comment_url, headers=headers, json={"body": comment})
+             response.raise_for_status()
+ 
+@@ -421,11 +427,13 @@ def handle_duplicate_issues(all_issues, auto_yes):
+         )
+ 
+         if not auto_yes:
++            # Confirmation prompt
+             confirm = input("Do you want to comment and close duplicate issues? (y/n): ")
+             if confirm.lower() != "y":
+                 print("Skipping this group of issues.")
+                 continue
+ 
++        # Comment and close duplicate issues
+         for issue in issues:
+             if issue["number"] != oldest_issue["number"]:
+                 comment_and_close_duplicate(issue, oldest_issue)

@@ -1,0 +1,55 @@
+
+index 2048a82a..8d70fddd 100644
+--- a/react_packages_react-debug-tools_src_ReactDebugHooks.js_expectedoutput.txt (expected):tmp/tmpmsmzu_vy_expected.txt	
++++ b/react_packages_react-debug-tools_src_ReactDebugHooks.js_extracted.txt (actual):tmp/tmpukzwtx7a_actual.txt	
+@@ -10,6 +10,7 @@
+ import type {
+   Awaited,
+   ReactContext,
++  ReactProviderType,
+   StartTransitionOptions,
+   Usable,
+   Thenable,
+@@ -26,17 +27,17 @@ import type {TransitionStatus} from 'react-reconciler/src/ReactFiberConfig';
+ import ErrorStackParser from 'error-stack-parser';
+ import assign from 'shared/assign';
+ import ReactSharedInternals from 'shared/ReactSharedInternals';
++import {
++  REACT_MEMO_CACHE_SENTINEL,
++  REACT_CONTEXT_TYPE,
++} from 'shared/ReactSymbols';
++import hasOwnProperty from 'shared/hasOwnProperty';
+ import {
+   FunctionComponent,
+   SimpleMemoComponent,
+   ContextProvider,
+   ForwardRef,
+ } from 'react-reconciler/src/ReactWorkTags';
+-import {
+-  REACT_MEMO_CACHE_SENTINEL,
+-  REACT_CONTEXT_TYPE,
+-} from 'shared/ReactSymbols';
+-import hasOwnProperty from 'shared/hasOwnProperty';
+ 
+ type CurrentDispatcherRef = typeof ReactSharedInternals;
+ 
+@@ -66,6 +67,10 @@ type Hook = {
+   next: Hook | null,
+ };
+ 
++type TimeoutConfig = {
++  timeoutMs: number,
++};
++
+ function getPrimitiveStackCache(): Map<string, Array<any>> {
+   // This initializes a cache of all primitive hooks so that the top
+   // most stack frames added by calling the primitive hook can be removed.
+@@ -540,7 +545,7 @@ function useMemoCache(size: number): Array<mixed> {
+ 
+   let data = memoCache.data[memoCache.index];
+   if (data === undefined) {
+-    data = memoCache.data[memoCache.index] = new Array(size);
++    data = new Array(size);
+     for (let i = 0; i < size; i++) {
+       data[i] = REACT_MEMO_CACHE_SENTINEL;
+     }

@@ -1,0 +1,28 @@
+
+index 3485b4b0..15c95592 100644
+--- a/aider_aider_mdstream.py_expectedoutput.txt (expected):tmp/tmp6imbd37e_expected.txt	
++++ b/aider_aider_mdstream.py_extracted.txt (actual):tmp/tmp07np5_kr_actual.txt	
+@@ -27,6 +27,7 @@ including versions of Lorem Ipsum.
+ 
+ 
+ 
++
+ ## Sub header
+ 
+ - List 1
+@@ -45,7 +46,6 @@ _text_suffix = """
+ ## Sub header too
+ 
+ The end.
+-
+ """  # noqa: E501
+ 
+ 
+@@ -186,6 +186,7 @@ class MarkdownStream:
+ 
+         # If we have stable content to display...
+         if final or num_lines > 0:
++
+             # How many stable lines do we need to newly show above the live window?
+             num_printed = len(self.printed)
+             show = num_lines - num_printed

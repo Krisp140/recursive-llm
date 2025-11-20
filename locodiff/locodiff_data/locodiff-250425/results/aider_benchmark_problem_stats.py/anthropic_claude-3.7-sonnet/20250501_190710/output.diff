@@ -1,0 +1,13 @@
+
+index 36481d11..fcb766c2 100644
+--- a/aider_benchmark_problem_stats.py_expectedoutput.txt (expected):tmp/tmpfzfmyzlr_expected.txt	
++++ b/aider_benchmark_problem_stats.py_extracted.txt (actual):tmp/tmppta9cn_5_actual.txt	
+@@ -156,7 +156,7 @@ def analyze_exercise_solutions(dirs=None, topn=None, copy_hard_set=False):
+ 
+     for testcase in all_exercises:
+         # Language is already in the testcase string
+-        lang = testcase.split("/")[0]  # First part is the language
++        lang = testcase.split("/")[1]  # First part is the language
+         models = exercise_solutions[testcase]
+         num_solved = len(models)
+         percent = (num_solved / total_models) * 100

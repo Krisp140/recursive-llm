@@ -1,0 +1,338 @@
+
+index e34dd981..5750731a 100644
+--- a/tldraw_packages_tldraw_src_lib_shapes_arrow_ArrowShapeUtil.tsx_expectedoutput.txt (expected):tmp/tmpkoik4_pc_expected.txt	
++++ b/tldraw_packages_tldraw_src_lib_shapes_arrow_ArrowShapeUtil.tsx_extracted.txt (actual):tmp/tmpb715ff2m_actual.txt	
+@@ -31,6 +31,7 @@ import {
+ 	lerp,
+ 	mapObjectMapValues,
+ 	maybeSnapToGrid,
++	sanitizeId,
+ 	structuredClone,
+ 	toDomPrecision,
+ 	track,
+@@ -41,6 +42,7 @@ import {
+ } from '@tldraw/editor'
+ import React from 'react'
+ import { updateArrowTerminal } from '../../bindings/arrow/ArrowBindingUtil'
++
+ import { PlainTextLabel } from '../shared/PlainTextLabel'
+ import { ShapeFill } from '../shared/ShapeFill'
+ import { SvgTextLabel } from '../shared/SvgTextLabel'
+@@ -135,7 +137,6 @@ export class ArrowShapeUtil extends ShapeUtil<TLArrowShape> {
+ 			arrowheadEnd: 'arrow',
+ 			text: '',
+ 			labelPosition: 0.5,
+-			font: 'draw',
+ 			scale: 1,
+ 		}
+ 	}
+@@ -230,7 +231,7 @@ export class ArrowShapeUtil extends ShapeUtil<TLArrowShape> {
+ 			const point = Vec.NearestPointOnLineSegment(A, B, handle, false)
+ 			let bend = Vec.Dist(point, med)
+ 			if (Vec.Clockwise(point, end, med)) bend *= -1
+-			return { id: shape.id, type: shape.type, props: { bend } }
++			return { id: shape.id, type: 'arrow', props: { bend } }
+ 		}
+ 
+ 		// Start or end, pointing the arrow...
+@@ -247,9 +248,10 @@ export class ArrowShapeUtil extends ShapeUtil<TLArrowShape> {
+ 			// Skip binding
+ 			removeArrowBinding(this.editor, shape, handleId)
+ 
++			const newPoint = maybeSnapToGrid(new Vec(handle.x, handle.y), this.editor)
+ 			update.props![handleId] = {
+-				x: handle.x,
+-				y: handle.y,
++				x: newPoint.x,
++				y: newPoint.y,
+ 			}
+ 			return update
+ 		}
+@@ -257,20 +259,21 @@ export class ArrowShapeUtil extends ShapeUtil<TLArrowShape> {
+ 		const point = this.editor.getShapePageTransform(shape.id)!.applyToPoint(handle)
+ 
+ 		const target = this.editor.getShapeAtPoint(point, {
+-			hitInside: true,
+-			hitFrameInside: true,
+-			margin: 0,
+ 			filter: (targetShape) => {
+ 				return (
+ 					!targetShape.isLocked &&
+ 					this.editor.canBindShapes({ fromShape: shape, toShape: targetShape, binding: 'arrow' })
+ 				)
+ 			},
++			hitInside: true,
++			hitFrameInside: true,
++			margin: 0,
+ 		})
+ 
+ 		if (!target) {
+ 			// todo: maybe double check that this isn't equal to the other handle too?
+ 			removeArrowBinding(this.editor, shape, handleId)
++
+ 			const newPoint = maybeSnapToGrid(new Vec(handle.x, handle.y), this.editor)
+ 			update.props![handleId] = {
+ 				x: newPoint.x,
+@@ -296,6 +299,19 @@ export class ArrowShapeUtil extends ShapeUtil<TLArrowShape> {
+ 			}
+ 		}
+ 
++		if (precise) {
++			// Turn off precision if we're within a certain distance to the center of the shape.
++			// Funky math but we want the snap distance to be 4 at the minimum and either
++			// 16 or 15% of the smaller dimension of the target shape, whichever is smaller
++			if (
++				Vec.Dist(pointInTargetSpace, targetBounds.center) <
++				Math.max(4, Math.min(Math.min(targetBounds.width, targetBounds.height) * 0.15, 16)) /
++					this.editor.getZoomLevel()
++			) {
++				precise = false
++			}
++		}
++
+ 		if (!isPrecise) {
+ 			if (!targetGeometry.isClosed) {
+ 				precise = true
+@@ -313,20 +329,6 @@ export class ArrowShapeUtil extends ShapeUtil<TLArrowShape> {
+ 			y: (pointInTargetSpace.y - targetBounds.minY) / targetBounds.height,
+ 		}
+ 
+-		if (precise) {
+-			// Turn off precision if we're within a certain distance to the center of the shape.
+-			// Funky math but we want the snap distance to be 4 at the minimum and either
+-			// 16 or 15% of the smaller dimension of the target shape, whichever is smaller
+-			if (
+-				Vec.Dist(pointInTargetSpace, targetBounds.center) <
+-				Math.max(4, Math.min(Math.min(targetBounds.width, targetBounds.height) * 0.15, 16)) /
+-					this.editor.getZoomLevel()
+-			) {
+-				normalizedAnchor.x = 0.5
+-				normalizedAnchor.y = 0.5
+-			}
+-		}
+-
+ 		const b = {
+ 			terminal: handleId,
+ 			normalizedAnchor,
+@@ -366,16 +368,20 @@ export class ArrowShapeUtil extends ShapeUtil<TLArrowShape> {
+ 		// If no bound shapes are in the selection, unbind any bound shapes
+ 
+ 		const selectedShapeIds = this.editor.getSelectedShapeIds()
+-
+-		if (
+-			(bindings.start &&
+-				(selectedShapeIds.includes(bindings.start.toId) ||
+-					this.editor.isAncestorSelected(bindings.start.toId))) ||
+-			(bindings.end &&
+-				(selectedShapeIds.includes(bindings.end.toId) ||
+-					this.editor.isAncestorSelected(bindings.end.toId)))
+-		) {
+-			return
++		const shapesToCheck = new Set<string>()
++		if (bindings.start) {
++			// Add shape and all ancestors to set
++			shapesToCheck.add(bindings.start.toId)
++			this.editor.getShapeAncestors(bindings.start.toId).forEach((a) => shapesToCheck.add(a.id))
++		}
++		if (bindings.end) {
++			// Add shape and all ancestors to set
++			shapesToCheck.add(bindings.end.toId)
++			this.editor.getShapeAncestors(bindings.end.toId).forEach((a) => shapesToCheck.add(a.id))
++		}
++		// If any of the shapes are selected, return
++		for (const id of selectedShapeIds) {
++			if (shapesToCheck.has(id)) return
+ 		}
+ 
+ 		// When we start translating shapes, record where their bindings were in page space so we
+@@ -412,16 +418,6 @@ export class ArrowShapeUtil extends ShapeUtil<TLArrowShape> {
+ 			})
+ 		}
+ 
+-		for (const handleName of [ARROW_HANDLES.START, ARROW_HANDLES.END] as const) {
+-			const binding = bindings[handleName]
+-			if (!binding) continue
+-
+-			this.editor.updateBinding({
+-				...binding,
+-				props: { ...binding.props, isPrecise: true },
+-			})
+-		}
+-
+ 		return
+ 	}
+ 
+@@ -440,15 +436,15 @@ export class ArrowShapeUtil extends ShapeUtil<TLArrowShape> {
+ 
+ 			const newPagePoint = Vec.Add(terminalBinding.pagePosition, Vec.Mul(pageDelta, 0.5))
+ 			const newTarget = this.editor.getShapeAtPoint(newPagePoint, {
+-				hitInside: true,
+-				hitFrameInside: true,
+-				margin: 0,
+ 				filter: (targetShape) => {
+ 					return (
+ 						!targetShape.isLocked &&
+ 						this.editor.canBindShapes({ fromShape: shape, toShape: targetShape, binding: 'arrow' })
+ 					)
+ 				},
++				hitInside: true,
++				hitFrameInside: true,
++				margin: 0,
+ 			})
+ 
+ 			if (newTarget?.id === terminalBinding.binding.toId) {
+@@ -603,6 +599,26 @@ export class ArrowShapeUtil extends ShapeUtil<TLArrowShape> {
+ 		}
+ 	}
+ 
++	override onEditEnd(shape: TLArrowShape) {
++		const {
++			id,
++			type,
++			props: { text },
++		} = shape
++
++		if (text.trimEnd() !== shape.props.text) {
++			this.editor.updateShapes<TLArrowShape>([
++				{
++					id,
++					type,
++					props: {
++						text: text.trimEnd(),
++					},
++				},
++			])
++		}
++	}
++
+ 	component(shape: TLArrowShape) {
+ 		// eslint-disable-next-line react-hooks/rules-of-hooks
+ 		const theme = useDefaultColorTheme()
+@@ -706,13 +722,15 @@ export class ArrowShapeUtil extends ShapeUtil<TLArrowShape> {
+ 			<g>
+ 				{includeClipPath && (
+ 					<defs>
+-						<ArrowClipPath
+-							hasText={shape.props.text.trim().length > 0}
+-							bounds={bounds}
+-							labelBounds={labelGeometry ? labelGeometry.getBounds() : new Box(0, 0, 0, 0)}
+-							as={clipStartArrowhead && as ? as : ''}
+-							ae={clipEndArrowhead && ae ? ae : ''}
+-						/>
++						<clipPath id={clipPathId}>
++							<ArrowClipPath
++								hasText={shape.props.text.trim().length > 0}
++								bounds={bounds}
++								labelBounds={labelGeometry ? labelGeometry.getBounds() : new Box(0, 0, 0, 0)}
++								as={clipStartArrowhead && as ? as : ''}
++								ae={clipEndArrowhead && ae ? ae : ''}
++							/>
++						</clipPath>
+ 					</defs>
+ 				)}
+ 				<g
+@@ -731,7 +749,6 @@ export class ArrowShapeUtil extends ShapeUtil<TLArrowShape> {
+ 							opacity={0}
+ 						/>
+ 					)}
+-
+ 					<path d={path} />
+ 				</g>
+ 				{as && <path d={as} />}
+@@ -742,34 +759,14 @@ export class ArrowShapeUtil extends ShapeUtil<TLArrowShape> {
+ 						y={toDomPrecision(labelGeometry.y)}
+ 						width={labelGeometry.w}
+ 						height={labelGeometry.h}
+-						rx={3.5}
+-						ry={3.5}
++						rx={3.5 * shape.props.scale}
++						ry={3.5 * shape.props.scale}
+ 					/>
+ 				)}
+ 			</g>
+ 		)
+ 	}
+ 
+-	override onEditEnd(shape: TLArrowShape) {
+-		const {
+-			id,
+-			type,
+-			props: { text },
+-		} = shape
+-
+-		if (text.trimEnd() !== shape.props.text) {
+-			this.editor.updateShapes<TLArrowShape>([
+-				{
+-					id,
+-					type,
+-					props: {
+-						text: text.trimEnd(),
+-					},
+-				},
+-			])
+-		}
+-	}
+-
+ 	override toSvg(shape: TLArrowShape, ctx: SvgExportContext) {
+ 		ctx.addExportDef(getFillDefForExport(shape.props.fill))
+ 		const theme = getDefaultColorTheme(ctx)
+@@ -849,6 +846,7 @@ const ArrowSvg = track(function ArrowSvg({
+ 	const info = getArrowInfo(editor, shape)
+ 	const bounds = Box.ZeroFix(editor.getShapeGeometry(shape).bounds)
+ 	const bindings = getArrowBindings(editor, shape)
++
+ 	const isForceSolid = useValue(
+ 		'force solid',
+ 		() => {
+@@ -857,10 +855,6 @@ const ArrowSvg = track(function ArrowSvg({
+ 		[editor]
+ 	)
+ 
+-	const clipPathId = useSharedSafeId(shape.id + '_clip')
+-	const arrowheadDotId = useSharedSafeId('arrowhead-dot')
+-	const arrowheadCrossId = useSharedSafeId('arrowhead-cross')
+-
+ 	if (!info?.isValid) return null
+ 
+ 	const strokeWidth = STROKE_SIZES[shape.props.size] * shape.props.scale
+@@ -897,8 +891,8 @@ const ArrowSvg = track(function ArrowSvg({
+ 							? bindings.start.props.isExact
+ 								? ''
+ 								: bindings.start.props.isPrecise
+-									? `url(#${arrowheadCrossId})`
+-									: `url(#${arrowheadDotId})`
++									? `url(#${useSharedSafeId('arrowhead-cross')})`
++									: `url(#${useSharedSafeId('arrowhead-dot')})`
+ 							: ''
+ 					}
+ 					markerEnd={
+@@ -906,8 +900,8 @@ const ArrowSvg = track(function ArrowSvg({
+ 							? bindings.end.props.isExact
+ 								? ''
+ 								: bindings.end.props.isPrecise
+-									? `url(#${arrowheadCrossId})`
+-									: `url(#${arrowheadDotId})`
++									? `url(#${useSharedSafeId('arrowhead-cross')})`
++									: `url(#${useSharedSafeId('arrowhead-dot')})`
+ 							: ''
+ 					}
+ 					opacity={0.16}
+@@ -929,6 +923,8 @@ const ArrowSvg = track(function ArrowSvg({
+ 	const clipStartArrowhead = !(info.start.arrowhead === 'none' || info.start.arrowhead === 'arrow')
+ 	const clipEndArrowhead = !(info.end.arrowhead === 'none' || info.end.arrowhead === 'arrow')
+ 
++	const clipPathId = useSharedSafeId(shape.id + '_clip')
++
+ 	return (
+ 		<>
+ 			{/* Yep */}
+@@ -958,6 +954,9 @@ const ArrowSvg = track(function ArrowSvg({
+ 						WebkitClipPath: `url(#${clipPathId})`,
+ 					}}
+ 				>
++					{/* This rect needs to be here if we're creating a mask due to an svg quirk on Chrome */}
++					{/* The rect serves to force repaint, making sure the clip-paths are re-evaluated. */}
++					{/* It's specifically for Safari and can cause performance issues */}
+ 					<rect
+ 						x={toDomPrecision(bounds.minX - 100)}
+ 						y={toDomPrecision(bounds.minY - 100)}

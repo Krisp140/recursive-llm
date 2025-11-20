@@ -1,0 +1,139 @@
+
+index a0ae1d6e..95e46088 100644
+--- a/tldraw_packages_editor_src_index.ts_expectedoutput.txt (expected):tmp/tmp1tg13enk_expected.txt	
++++ b/tldraw_packages_editor_src_index.ts_extracted.txt (actual):tmp/tmpljmzq2zp_actual.txt	
+@@ -1,9 +1,12 @@
+-import { registerTldrawLibraryVersion } from '@tldraw/utils'
++// Important! don't move this tlschema re-export to lib/tldraw_packages_editor_src_index.ts_extracted.txt (actual)://github.com/evanw/esbuild/issues/1737
++
+ import 'core-js/stable/array/at.js'
+ import 'core-js/stable/array/flat-map.js'
+ import 'core-js/stable/array/flat.js'
+ import 'core-js/stable/string/at.js'
+ import 'core-js/stable/string/replace-all.js'
++
+ export {
+ 	EMPTY_ARRAY,
+ 	EffectScheduler,
+@@ -119,12 +122,6 @@ export {
+ } from './lib/components/default-components/DefaultSnapIndictor'
+ export { DefaultSpinner } from './lib/components/default-components/DefaultSpinner'
+ export { DefaultSvgDefs } from './lib/components/default-components/DefaultSvgDefs'
+-export {
+-	getSnapshot,
+-	loadSnapshot,
+-	type TLEditorSnapshot,
+-	type TLLoadSnapshotOptions,
+-} from './lib/config/TLEditorSnapshot'
+ export {
+ 	TAB_ID,
+ 	createSessionStateSnapshotSignal,
+@@ -133,6 +130,12 @@ export {
+ 	type TLLoadSessionStateSnapshotOptions,
+ 	type TLSessionStateSnapshot,
+ } from './lib/config/TLSessionStateSnapshot'
++export {
++	getSnapshot,
++	loadSnapshot,
++	type TLEditorSnapshot,
++	type TLLoadSnapshotOptions,
++} from './lib/config/TLEditorSnapshot'
+ export {
+ 	USER_COLORS,
+ 	defaultUserPreferences,
+@@ -155,20 +158,13 @@ export { createTLUser, useTldrawUser, type TLUser } from './lib/config/createTLU
+ export { type TLAnyBindingUtilConstructor } from './lib/config/defaultBindings'
+ export { coreShapes, type TLAnyShapeUtilConstructor } from './lib/config/defaultShapes'
+ export { DEFAULT_ANIMATION_OPTIONS, DEFAULT_CAMERA_OPTIONS, SIDES } from './lib/constants'
+-export {
+-	Editor,
+-	type TLEditorOptions,
+-	type TLEditorRunOptions,
+-	type TLRenderingShape,
+-	type TLResizeShapeOptions,
+-} from './lib/editor/Editor'
++export { Editor, type TLEditorOptions, type TLEditorRunOptions, type TLRenderingShape, type TLResizeShapeOptions } from './lib/editor/Editor'
+ export {
+ 	BindingUtil,
+ 	type BindingOnChangeOptions,
+ 	type BindingOnCreateOptions,
+ 	type BindingOnDeleteOptions,
+ 	type BindingOnShapeChangeOptions,
+-	type BindingOnShapeDeleteOptions,
+ 	type BindingOnShapeIsolateOptions,
+ 	type TLBindingUtilConstructor,
+ } from './lib/editor/bindings/BindingUtil'
+@@ -223,6 +219,25 @@ export {
+ } from './lib/editor/types/SvgExportContext'
+ export { type TLContent } from './lib/editor/types/clipboard-types'
+ export { type TLEventMap, type TLEventMapHandler } from './lib/editor/types/emit-types'
++export {
++	type TLBaseExternalContent,
++	type TLEmbedExternalContent,
++	type TLErrorExternalContentSource,
++	type TLExcalidrawExternalContent,
++	type TLExcalidrawExternalContentSource,
++	type TLExternalAsset,
++	type TLExternalContent,
++	type TLExternalContentSource,
++	type TLFileExternalAsset,
++	type TLFilesExternalContent,
++	type TLSvgTextExternalContent,
++	type TLTextExternalContent,
++	type TLTextExternalContentSource,
++	type TLTldrawExternalContent,
++	type TLTldrawExternalContentSource,
++	type TLUrlExternalAsset,
++	type TLUrlExternalContent,
++} from './lib/editor/types/external-content'
+ export {
+ 	EVENT_NAME_MAP,
+ 	type TLBaseEventInfo,
+@@ -257,25 +272,6 @@ export {
+ 	type UiEvent,
+ 	type UiEventType,
+ } from './lib/editor/types/event-types'
+-export {
+-	type TLBaseExternalContent,
+-	type TLEmbedExternalContent,
+-	type TLErrorExternalContentSource,
+-	type TLExcalidrawExternalContent,
+-	type TLExcalidrawExternalContentSource,
+-	type TLExternalAsset,
+-	type TLExternalContent,
+-	type TLExternalContentSource,
+-	type TLFileExternalAsset,
+-	type TLFilesExternalContent,
+-	type TLSvgTextExternalContent,
+-	type TLTextExternalContent,
+-	type TLTextExternalContentSource,
+-	type TLTldrawExternalContent,
+-	type TLTldrawExternalContentSource,
+-	type TLUrlExternalAsset,
+-	type TLUrlExternalContent,
+-} from './lib/editor/types/external-content'
+ export {
+ 	type TLHistoryBatchOptions,
+ 	type TLHistoryDiff,
+@@ -283,8 +279,10 @@ export {
+ 	type TLHistoryMark,
+ } from './lib/editor/types/history-types'
+ export {
++	type AssetContextProps,
+ 	type OptionalKeys,
+ 	type RequiredKeys,
++	type TLAssetOptions,
+ 	type TLCameraConstraints,
+ 	type TLCameraMoveOptions,
+ 	type TLCameraOptions,
+@@ -419,10 +417,6 @@ export {
+ 	radiansToDegrees,
+ 	rangeIntersection,
+ 	shortAngleDist,
+-	snapAngle,
+-	toDomPrecision,
+-	toFixed,
+-	toPrecision,
+ } from './lib/primitives/utils'
+ export {
+ 	ReadonlySharedStyleMap,

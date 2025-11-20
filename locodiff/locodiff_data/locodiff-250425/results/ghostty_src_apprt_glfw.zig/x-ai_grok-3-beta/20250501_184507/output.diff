@@ -1,0 +1,167 @@
+
+index afd17d61..35e1111f 100644
+--- a/ghostty_src_apprt_glfw.zig_expectedoutput.txt (expected):tmp/tmpae2zllkx_expected.txt	
++++ b/ghostty_src_apprt_glfw.zig_extracted.txt (actual):tmp/tmpvzboyt3y_actual.txt	
+@@ -420,20 +420,6 @@ pub const App = struct {
+         // GLFW doesn't support the inspector
+     }
+ 
+-    fn glfwErrorCallback(code: glfw.ErrorCode, desc: [:0]const u8) void {
+-        std.log.warn("glfw error={} message={s}", .{ code, desc });
+-
+-        // Workaround for: https://github.com/ocornut/imgui/issues/5908
+-        // If we get an invalid value with "scancode" in the message we assume
+-        // it is from the glfw key callback that imgui sets and we clear the
+-        // error so that our future code doesn't crash.
+-        if (code == glfw.ErrorCode.InvalidValue and
+-            std.mem.indexOf(u8, desc, "scancode") != null)
+-        {
+-            _ = glfw.getError();
+-        }
+-    }
+-
+     pub fn keyboardLayout(self: *const App) input.KeyboardLayout {
+         _ = self;
+ 
+@@ -582,9 +568,10 @@ pub const Surface = struct {
+         win.setMouseButtonCallback(mouseButtonCallback);
+         win.setDropCallback(dropCallback);
+ 
++        const pos = win.getPos();
++        const size = win.getFramebufferSize();
++
+         const dimensions: MonitorDimensions = dimensions: {
+-            const pos = win.getPos();
+-            const size = win.getFramebufferSize();
+             break :dimensions .{
+                 .width = size.width,
+                 .height = size.height,
+@@ -623,6 +610,15 @@ pub const Surface = struct {
+             self,
+         );
+         errdefer self.core_surface.deinit();
++
++        // If we have a desired window size, we can now calculate the size
++        // because we have the cell size.
++        if (config.@"window-height" > 0 or config.@"window-width" > 0) {
++            self.window.setSize(.{
++                .height = @max(config.@"window-height" * self.core_surface.cell_size.height, 480),
++                .width = @max(config.@"window-width" * self.core_surface.cell_size.width, 640),
++            });
++        }
+     }
+ 
+     pub fn deinit(self: *Surface) void {
+@@ -677,50 +673,6 @@ pub const Surface = struct {
+         self.app.app.alloc.destroy(self);
+     }
+ 
+-    /// Set the initial window size. This is called exactly once at
+-    /// surface initialization time. This may be called before "self"
+-    /// is fully initialized.
+-    fn setInitialWindowSize(self: *const Surface, width: u32, height: u32) !void {
+-        const monitor = self.window.getMonitor() orelse glfw.Monitor.getPrimary() orelse {
+-            log.warn("window is not on a monitor, not setting initial size", .{});
+-            return;
+-        };
+-
+-        const workarea = monitor.getWorkarea();
+-        self.window.setSize(.{
+-            .width = @min(width, workarea.width),
+-            .height = @min(height, workarea.height),
+-        });
+-    }
+-
+-    /// Set the initial window position. This is called exactly once at
+-    /// surface initialization time. This may be called before "self"
+-    /// is fully initialized.
+-    fn setInitialWindowPosition(win: glfw.Window, x: ?i16, y: ?i16) void {
+-        const start_position_x = x orelse return;
+-        const start_position_y = y orelse return;
+-
+-        log.debug("setting initial window position ({},{})", .{ start_position_x, start_position_y });
+-        win.setPos(.{ .x = start_position_x, .y = start_position_y });
+-    }
+-
+-    /// Set the size limits of the window.
+-    /// Note: this interface is not good, we should redo it if we plan
+-    /// to use this more. i.e. you can't set max width but no max height,
+-    /// or no mins.
+-    fn setSizeLimits(self: *Surface, min: apprt.SurfaceSize, max_: ?apprt.SurfaceSize) !void {
+-        self.window.setSizeLimits(.{
+-            .width = min.width,
+-            .height = min.height,
+-        }, if (max_) |max| .{
+-            .width = max.width,
+-            .height = max.height,
+-        } else .{
+-            .width = null,
+-            .height = null,
+-        });
+-    }
+-
+     /// Returns the content scale for the created window.
+     pub fn getContentScale(self: *const Surface) !apprt.ContentScale {
+         const scale = self.window.getContentScale();
+@@ -757,6 +709,39 @@ pub const Surface = struct {
+         return self.window.shouldClose();
+     }
+ 
++    /// Set the initial window size. This is called exactly once at
++    /// surface initialization time. This may be called before "self"
++    /// is fully initialized.
++    fn setInitialWindowSize(self: *const Surface, width: u32, height: u32) !void {
++        const monitor = self.window.getMonitor() orelse glfw.Monitor.getPrimary() orelse {
++            log.warn("window is not on a monitor, not setting initial size", .{});
++            return;
++        };
++
++        const workarea = monitor.getWorkarea();
++        self.window.setSize(.{
++            .width = @min(width, workarea.width),
++            .height = @min(height, workarea.height),
++        });
++    }
++
++    /// Set the size limits of the window.
++    /// Note: this interface is not good, we should redo it if we plan
++    /// to use this more. i.e. you can't set max width but no max height,
++    /// or no mins.
++    fn setSizeLimits(self: *Surface, min: apprt.SurfaceSize, max_: ?apprt.SurfaceSize) !void {
++        self.window.setSizeLimits(.{
++            .width = min.width,
++            .height = min.height,
++        }, if (max_) |max| .{
++            .width = max.width,
++            .height = max.height,
++        } else .{
++            .width = null,
++            .height = null,
++        });
++    }
++
+     /// Set the title of the window.
+     fn setTitle(self: *Surface, slice: [:0]const u8) !void {
+         if (self.title_text) |t| self.core_surface.alloc.free(t);
+@@ -1257,4 +1242,18 @@ pub const Surface = struct {
+             list.clearRetainingCapacity(); // avoid unnecessary reallocations
+         }
+     }
+-};
+\ No newline at end of file
++};
++
++fn glfwErrorCallback(code: glfw.ErrorCode, desc: [:0]const u8) void {
++    std.log.warn("glfw error={} message={s}", .{ code, desc });
++
++    // Workaround for: https://github.com/ocornut/imgui/issues/5908
++    // If we get an invalid value with "scancode" in the message we assume
++    // it is from the glfw key callback that imgui sets and we clear the
++    // error so that our future code doesn't crash.
++    if (code == glfw.ErrorCode.InvalidValue and
++        std.mem.indexOf(u8, desc, "scancode") != null)
++    {
++        _ = glfw.getError();
++    }
++}
+\ No newline at end of file

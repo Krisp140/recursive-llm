@@ -1,0 +1,99 @@
+The Core Issue: Task Mismatch
+
+  LoCoDiff is asking for sequential reconstruction, but RLM is trying to solve it programmatically.
+
+  What Baseline Does (Works Perfectly ✅)
+
+  1. Gets the full prompt with instructions: "Read this git history and output the exact final state"
+  2. Directly reads through the git log sequentially (commit 1 → commit 2 → commit 3...)
+  3. Mentally applies each diff to track the file's evolution
+  4. Outputs the final reconstructed file in a code block
+  5. Simple, direct, no interpretation
+
+  What RLM Does (Fails Completely ❌)
+
+  1. Receives query: "Reconstruct the current state based on git history"
+  2. Enters REPL loop thinking this is a problem to be solved programmatically
+  3. Tries to use Python to parse/extract information from git diffs
+  4. But git diff reconstruction isn't really a computational task - it's a reading comprehension task
+  5. The REPL loop adds layers of interpretation that deviate from exact reconstruction
+  6. Returns something with only 1-2% similarity (probably code fragments or parsing attempts)
+
+  Why This Happens
+
+  RLM was designed for tasks where programmatic exploration helps:
+  - ✅ "Find all mentions of X in this document" → use regex, extract, return
+  - ✅ "Count occurrences across sections" → partition, count, sum
+  - ✅ "What does character Y do in chapter 5?" → search for Y, find relevant passages
+
+  But LoCoDiff requires sequential, interpretive reconstruction:
+  - ❌ Read diff: + added this line
+  - ❌ Read diff: - removed that line
+  - ❌ Apply changes mentally in sequence
+  - ❌ Output final state
+
+  This is closer to narrative reading than data extraction. You can't easily write Python code to "apply git diffs" without essentially implementing git apply -
+  which is complex and not what the REPL environment provides.
+
+  The 1-2% Similarity Mystery
+
+  That extremely low similarity suggests RLM is returning something fundamentally wrong:
+  - Maybe fragments of the git log itself
+  - Maybe Python code attempting to parse diffs
+  - Maybe incomplete/hallucinated file content
+  - Definitely not the actual reconstructed file
+
+  The REPL loop is probably trying things like:
+  # RLM might be doing something like this internally:
+  context.split('diff --git')[0]  # Try to extract parts
+  re.findall(r'\+.*', context)     # Find added lines
+  # But this doesn't actually RECONSTRUCT the file correctly
+
+  Why Partitioning Might Not Help
+
+  Here's the critical insight: Git diffs are inherently sequential and path-dependent.
+
+  - Commit 3 depends on Commit 2 depends on Commit 1
+  - You can't understand "what changed" without knowing the prior state
+  - Partitioning by "relevance" breaks this sequential dependency
+  - You need to process ALL commits IN ORDER
+
+  Unless:
+  - You partition by commit boundaries (structural partitioning)
+  - Process partitions sequentially while maintaining state
+  - But this still has the REPL interpretation problem
+
+  The Longer Context Hypothesis
+
+  You might see different results at 25k+ tokens where baseline degrades:
+
+  Possible scenario:
+  - Short prompts (2k tokens): Baseline 100%, RLM 0% ← we're here
+  - Medium prompts (10-25k): Baseline 70%, RLM 40% ← REPL overhead
+  - Long prompts (50k+): Baseline 20%, RLM 35% ← partitioning finally helps?
+
+  The question is whether partitioning can overcome the REPL interpretation penalty.
+
+  What Would Fix This?
+
+  For RLM to succeed on LoCoDiff, you'd need:
+
+  1. Skip REPL for this task type: Recognize git diff reconstruction doesn't benefit from programmatic exploration
+  2. Specialized REPL functions: Add apply_diff() or reconstruct_from_git_log() to the REPL environment
+  3. Sequential partition processing:
+    - Partition by commits (structural)
+    - Process in strict chronological order
+    - Maintain cumulative state across partitions
+  4. Hybrid approach: Use baseline for reconstruction, RLM only for very long histories where baseline fails
+
+  Bottom Line
+
+  This is a beautiful example of task mismatch. RLM's strength (programmatic context exploration) becomes a liability when the task requires straightforward
+  sequential reading and reconstruction. The REPL loop adds complexity without value, and actually interferes with exact output.
+
+  The baseline works because it's elegantly simple: read → understand → output. RLM tries to be clever and fails.
+
+  The real test will be on longer contexts (25k+ tokens) to see if partitioning can eventually overcome baseline's context length degradation. But I'm skeptical the
+  benefit will outweigh the REPL overhead on this particular task type.
+
+  MIGHT BE BUGGY

@@ -1,0 +1,39 @@
+
+index 52bccce2..20869d5d 100644
+--- a/react_packages_react-dom_src___tests___ReactCompositeComponent-test.js_expectedoutput.txt (expected):tmp/tmpu0isjqal_expected.txt	
++++ b/react_packages_react-dom_src___tests___ReactCompositeComponent-test.js_extracted.txt (actual):tmp/tmp6ret03d3_actual.txt	
+@@ -28,7 +28,7 @@ describe('ReactCompositeComponent', () => {
+    * when any key has values which are not strictly equal between the arguments.
+    * Returns true when the values of all keys are strictly equal.
+    */
+-  function shallowEqual(objA: mixed, objB: mixed): boolean {
++  function shallowEqual(objA, objB) {
+     if (Object.is(objA, objB)) {
+       return true;
+     }
+@@ -446,7 +446,7 @@ describe('ReactCompositeComponent', () => {
+ 
+       componentWillUnmount() {
+         expect(() => {
+-          this.setState({value: 2}, function () {
++          this.setState({value: 2}, function() {
+             cbCalled = true;
+           });
+         }).not.toThrow();
+@@ -613,6 +613,7 @@ describe('ReactCompositeComponent', () => {
+         return <div />;
+       }
+     }
++
+     let instance;
+     const root = ReactDOMClient.createRoot(document.createElement('div'));
+     await act(() => {
+@@ -1139,7 +1140,7 @@ describe('ReactCompositeComponent', () => {
+         };
+       }
+ 
+-      UNSAFE_componentWillMount() {
++      componentWillMount() {
+         instance = this;
+       }
+ 

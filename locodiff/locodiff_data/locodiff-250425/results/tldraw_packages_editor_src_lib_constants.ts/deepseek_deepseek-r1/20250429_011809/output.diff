@@ -1,0 +1,28 @@
+
+index f16c0afd..e203ead2 100644
+--- a/tldraw_packages_editor_src_lib_constants.ts_expectedoutput.txt (expected):tmp/tmps2_ni8vp_expected.txt	
++++ b/tldraw_packages_editor_src_lib_constants.ts_extracted.txt (actual):tmp/tmpt_sftplz_actual.txt	
+@@ -16,20 +16,7 @@ export const DEFAULT_ANIMATION_OPTIONS = {
+ 	easing: EASINGS.easeInOutCubic,
+ }
+ 
+-/**
+- * Negative pointer ids are reserved for internal use.
+- *
+- * @internal */
+-export const INTERNAL_POINTER_IDS = {
+-	CAMERA_MOVE: -10,
+-} as const
+-
+-/** @public */
+-export const SIDES = ['top', 'right', 'bottom', 'left'] as const
+-
+ export const LEFT_MOUSE_BUTTON = 0
+ export const RIGHT_MOUSE_BUTTON = 2
+ export const MIDDLE_MOUSE_BUTTON = 1
+-export const STYLUS_ERASER_BUTTON = 5
+-
+-export const ZOOM_TO_FIT_PADDING = 128
+\ No newline at end of file
++export const STYLUS_ERASER_BUTTON = 5
+\ No newline at end of file

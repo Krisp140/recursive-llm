@@ -1,0 +1,2249 @@
+[
+    {
+        "run_timestamp_utc": "2025-04-25T21:25:51.118040+00:00",
+        "language_config_content": {
+            "python": {
+                "extensions": [
+                    ".py"
+                ]
+            },
+            "javascript": {
+                "extensions": [
+                    ".js",
+                    ".jsx"
+                ]
+            },
+            "typescript": {
+                "extensions": [
+                    ".ts",
+                    ".tsx"
+                ]
+            },
+            "zig": {
+                "extensions": [
+                    ".zig"
+                ]
+            }
+        },
+        "generation_parameters": {
+            "benchmark_run_dir": "locodiff-250425",
+            "min_prompt_tokens": 0,
+            "max_prompt_tokens": 75000,
+            "add_prompts": 30,
+            "modified_within_months": 6,
+            "max_expected_tokens": 12000
+        },
+        "benchmark_cases_added": [
+            {
+                "benchmark_case_prefix": "aider_aider___init__.py",
+                "original_filename": "aider/__init__.py",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "25a303935cd928098d1b399878c6458cabc20015",
+                "prompt_tokens": 59517,
+                "expected_tokens": 122,
+                "num_commits": 350
+            },
+            {
+                "benchmark_case_prefix": "aider_aider_args.py",
+                "original_filename": "aider/args.py",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "25a303935cd928098d1b399878c6458cabc20015",
+                "prompt_tokens": 61543,
+                "expected_tokens": 5545,
+                "num_commits": 200
+            },
+            {
+                "benchmark_case_prefix": "aider_scripts_issues.py",
+                "original_filename": "scripts/issues.py",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "25a303935cd928098d1b399878c6458cabc20015",
+                "prompt_tokens": 31218,
+                "expected_tokens": 4014,
+                "num_commits": 78
+            },
+            {
+                "benchmark_case_prefix": "aider_tests_basic_test_exceptions.py",
+                "original_filename": "tests/basic/test_exceptions.py",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "25a303935cd928098d1b399878c6458cabc20015",
+                "prompt_tokens": 3360,
+                "expected_tokens": 606,
+                "num_commits": 10
+            },
+            {
+                "benchmark_case_prefix": "aider_tests_basic_test_reasoning.py",
+                "original_filename": "tests/basic/test_reasoning.py",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "25a303935cd928098d1b399878c6458cabc20015",
+                "prompt_tokens": 19336,
+                "expected_tokens": 4963,
+                "num_commits": 43
+            },
+            {
+                "benchmark_case_prefix": "aider_aider_mdstream.py",
+                "original_filename": "aider/mdstream.py",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "25a303935cd928098d1b399878c6458cabc20015",
+                "prompt_tokens": 14962,
+                "expected_tokens": 1618,
+                "num_commits": 40
+            },
+            {
+                "benchmark_case_prefix": "aider_aider_utils.py",
+                "original_filename": "aider/utils.py",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "25a303935cd928098d1b399878c6458cabc20015",
+                "prompt_tokens": 57219,
+                "expected_tokens": 2377,
+                "num_commits": 165
+            },
+            {
+                "benchmark_case_prefix": "aider_scripts_blame.py",
+                "original_filename": "scripts/blame.py",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "25a303935cd928098d1b399878c6458cabc20015",
+                "prompt_tokens": 47383,
+                "expected_tokens": 2250,
+                "num_commits": 101
+            },
+            {
+                "benchmark_case_prefix": "aider_aider_coders_editblock_coder.py",
+                "original_filename": "aider/coders/editblock_coder.py",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "25a303935cd928098d1b399878c6458cabc20015",
+                "prompt_tokens": 56338,
+                "expected_tokens": 4511,
+                "num_commits": 130
+            },
+            {
+                "benchmark_case_prefix": "aider_aider_watch.py",
+                "original_filename": "aider/watch.py",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "25a303935cd928098d1b399878c6458cabc20015",
+                "prompt_tokens": 56211,
+                "expected_tokens": 2151,
+                "num_commits": 176
+            },
+            {
+                "benchmark_case_prefix": "aider_tests_basic_test_coder.py",
+                "original_filename": "tests/basic/test_coder.py",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "25a303935cd928098d1b399878c6458cabc20015",
+                "prompt_tokens": 37799,
+                "expected_tokens": 9795,
+                "num_commits": 79
+            },
+            {
+                "benchmark_case_prefix": "aider_aider_coders_wholefile_coder.py",
+                "original_filename": "aider/coders/wholefile_coder.py",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "25a303935cd928098d1b399878c6458cabc20015",
+                "prompt_tokens": 20299,
+                "expected_tokens": 977,
+                "num_commits": 57
+            },
+            {
+                "benchmark_case_prefix": "aider_benchmark_problem_stats.py",
+                "original_filename": "benchmark/problem_stats.py",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "25a303935cd928098d1b399878c6458cabc20015",
+                "prompt_tokens": 29665,
+                "expected_tokens": 3123,
+                "num_commits": 78
+            },
+            {
+                "benchmark_case_prefix": "aider_aider_website__includes_leaderboard_table.js",
+                "original_filename": "aider/website/_includes/leaderboard_table.js",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "25a303935cd928098d1b399878c6458cabc20015",
+                "prompt_tokens": 18588,
+                "expected_tokens": 4597,
+                "num_commits": 26
+            },
+            {
+                "benchmark_case_prefix": "aider_scripts_redact-cast.py",
+                "original_filename": "scripts/redact-cast.py",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "25a303935cd928098d1b399878c6458cabc20015",
+                "prompt_tokens": 13688,
+                "expected_tokens": 400,
+                "num_commits": 28
+            },
+            {
+                "benchmark_case_prefix": "aider_tests_basic_test_repomap.py",
+                "original_filename": "tests/basic/test_repomap.py",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "25a303935cd928098d1b399878c6458cabc20015",
+                "prompt_tokens": 52975,
+                "expected_tokens": 4104,
+                "num_commits": 92
+            },
+            {
+                "benchmark_case_prefix": "aider_aider_website__includes_recording.js",
+                "original_filename": "aider/website/_includes/recording.js",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "25a303935cd928098d1b399878c6458cabc20015",
+                "prompt_tokens": 10768,
+                "expected_tokens": 2946,
+                "num_commits": 21
+            },
+            {
+                "benchmark_case_prefix": "aider_aider_analytics.py",
+                "original_filename": "aider/analytics.py",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "25a303935cd928098d1b399878c6458cabc20015",
+                "prompt_tokens": 24542,
+                "expected_tokens": 1600,
+                "num_commits": 79
+            },
+            {
+                "benchmark_case_prefix": "aider_aider_repo.py",
+                "original_filename": "aider/repo.py",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "25a303935cd928098d1b399878c6458cabc20015",
+                "prompt_tokens": 51983,
+                "expected_tokens": 3012,
+                "num_commits": 149
+            },
+            {
+                "benchmark_case_prefix": "aider_aider_sendchat.py",
+                "original_filename": "aider/sendchat.py",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "25a303935cd928098d1b399878c6458cabc20015",
+                "prompt_tokens": 36327,
+                "expected_tokens": 385,
+                "num_commits": 120
+            },
+            {
+                "benchmark_case_prefix": "aider_tests_basic_test_models.py",
+                "original_filename": "tests/basic/test_models.py",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "25a303935cd928098d1b399878c6458cabc20015",
+                "prompt_tokens": 34611,
+                "expected_tokens": 4560,
+                "num_commits": 91
+            },
+            {
+                "benchmark_case_prefix": "aider_benchmark_over_time.py",
+                "original_filename": "benchmark/over_time.py",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "25a303935cd928098d1b399878c6458cabc20015",
+                "prompt_tokens": 35454,
+                "expected_tokens": 1312,
+                "num_commits": 71
+            },
+            {
+                "benchmark_case_prefix": "aider_aider_coders_editblock_prompts.py",
+                "original_filename": "aider/coders/editblock_prompts.py",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "25a303935cd928098d1b399878c6458cabc20015",
+                "prompt_tokens": 35371,
+                "expected_tokens": 1745,
+                "num_commits": 81
+            },
+            {
+                "benchmark_case_prefix": "aider_tests_basic_test_onboarding.py",
+                "original_filename": "tests/basic/test_onboarding.py",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "25a303935cd928098d1b399878c6458cabc20015",
+                "prompt_tokens": 16586,
+                "expected_tokens": 4355,
+                "num_commits": 12
+            },
+            {
+                "benchmark_case_prefix": "aider_aider_prompts.py",
+                "original_filename": "aider/prompts.py",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "25a303935cd928098d1b399878c6458cabc20015",
+                "prompt_tokens": 24230,
+                "expected_tokens": 521,
+                "num_commits": 66
+            },
+            {
+                "benchmark_case_prefix": "aider_aider_linter.py",
+                "original_filename": "aider/linter.py",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "25a303935cd928098d1b399878c6458cabc20015",
+                "prompt_tokens": 35338,
+                "expected_tokens": 1862,
+                "num_commits": 92
+            },
+            {
+                "benchmark_case_prefix": "aider_aider_voice.py",
+                "original_filename": "aider/voice.py",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "25a303935cd928098d1b399878c6458cabc20015",
+                "prompt_tokens": 23587,
+                "expected_tokens": 1360,
+                "num_commits": 54
+            },
+            {
+                "benchmark_case_prefix": "aider_aider_scrape.py",
+                "original_filename": "aider/scrape.py",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "25a303935cd928098d1b399878c6458cabc20015",
+                "prompt_tokens": 23410,
+                "expected_tokens": 1732,
+                "num_commits": 64
+            },
+            {
+                "benchmark_case_prefix": "aider_aider_special.py",
+                "original_filename": "aider/special.py",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "25a303935cd928098d1b399878c6458cabc20015",
+                "prompt_tokens": 23015,
+                "expected_tokens": 1214,
+                "num_commits": 26
+            },
+            {
+                "benchmark_case_prefix": "aider_scripts_versionbump.py",
+                "original_filename": "scripts/versionbump.py",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "25a303935cd928098d1b399878c6458cabc20015",
+                "prompt_tokens": 22874,
+                "expected_tokens": 1426,
+                "num_commits": 49
+            }
+        ]
+    },
+    {
+        "run_timestamp_utc": "2025-04-26T05:58:15.849964+00:00",
+        "language_config_content": {
+            "python": {
+                "extensions": [
+                    ".py"
+                ]
+            },
+            "javascript": {
+                "extensions": [
+                    ".js",
+                    ".jsx"
+                ]
+            },
+            "typescript": {
+                "extensions": [
+                    ".ts",
+                    ".tsx"
+                ]
+            },
+            "zig": {
+                "extensions": [
+                    ".zig"
+                ]
+            }
+        },
+        "generation_parameters": {
+            "benchmark_run_dir": "locodiff-250425",
+            "min_prompt_tokens": 0,
+            "max_prompt_tokens": 75000,
+            "add_prompts": 30,
+            "modified_within_months": 6,
+            "max_expected_tokens": 12000
+        },
+        "benchmark_cases_added": [
+            {
+                "benchmark_case_prefix": "ghostty_src_build_Config.zig",
+                "original_filename": "src/build/Config.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "38445dca2ac2af176c7f3b205d88d697cf8c89c8",
+                "prompt_tokens": 12222,
+                "expected_tokens": 4229,
+                "num_commits": 17
+            },
+            {
+                "benchmark_case_prefix": "ghostty_src_font_face_freetype.zig",
+                "original_filename": "src/font/face/freetype.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "38445dca2ac2af176c7f3b205d88d697cf8c89c8",
+                "prompt_tokens": 57124,
+                "expected_tokens": 9165,
+                "num_commits": 73
+            },
+            {
+                "benchmark_case_prefix": "ghostty_src_apprt_glfw.zig",
+                "original_filename": "src/apprt/glfw.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "38445dca2ac2af176c7f3b205d88d697cf8c89c8",
+                "prompt_tokens": 62392,
+                "expected_tokens": 10037,
+                "num_commits": 144
+            },
+            {
+                "benchmark_case_prefix": "ghostty_src_App.zig",
+                "original_filename": "src/App.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "38445dca2ac2af176c7f3b205d88d697cf8c89c8",
+                "prompt_tokens": 66425,
+                "expected_tokens": 4780,
+                "num_commits": 132
+            },
+            {
+                "benchmark_case_prefix": "ghostty_src_config_formatter.zig",
+                "original_filename": "src/config/formatter.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "38445dca2ac2af176c7f3b205d88d697cf8c89c8",
+                "prompt_tokens": 7491,
+                "expected_tokens": 2201,
+                "num_commits": 9
+            },
+            {
+                "benchmark_case_prefix": "ghostty_src_build_gtk.zig",
+                "original_filename": "src/build/gtk.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "38445dca2ac2af176c7f3b205d88d697cf8c89c8",
+                "prompt_tokens": 2123,
+                "expected_tokens": 207,
+                "num_commits": 3
+            },
+            {
+                "benchmark_case_prefix": "ghostty_src_font_shaper_harfbuzz.zig",
+                "original_filename": "src/font/shaper/harfbuzz.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "38445dca2ac2af176c7f3b205d88d697cf8c89c8",
+                "prompt_tokens": 66334,
+                "expected_tokens": 10282,
+                "num_commits": 46
+            },
+            {
+                "benchmark_case_prefix": "ghostty_src_terminal_kitty_graphics_image.zig",
+                "original_filename": "src/terminal/kitty/graphics_image.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "38445dca2ac2af176c7f3b205d88d697cf8c89c8",
+                "prompt_tokens": 40215,
+                "expected_tokens": 6824,
+                "num_commits": 51
+            },
+            {
+                "benchmark_case_prefix": "ghostty_src_os_flatpak.zig",
+                "original_filename": "src/os/flatpak.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "38445dca2ac2af176c7f3b205d88d697cf8c89c8",
+                "prompt_tokens": 11975,
+                "expected_tokens": 4171,
+                "num_commits": 12
+            },
+            {
+                "benchmark_case_prefix": "ghostty_src_main.zig",
+                "original_filename": "src/main.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "38445dca2ac2af176c7f3b205d88d697cf8c89c8",
+                "prompt_tokens": 57778,
+                "expected_tokens": 313,
+                "num_commits": 149
+            },
+            {
+                "benchmark_case_prefix": "ghostty_src_Command.zig",
+                "original_filename": "src/Command.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "38445dca2ac2af176c7f3b205d88d697cf8c89c8",
+                "prompt_tokens": 36609,
+                "expected_tokens": 7066,
+                "num_commits": 58
+            },
+            {
+                "benchmark_case_prefix": "ghostty_pkg_libintl_build.zig",
+                "original_filename": "pkg/libintl/build.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "38445dca2ac2af176c7f3b205d88d697cf8c89c8",
+                "prompt_tokens": 10885,
+                "expected_tokens": 810,
+                "num_commits": 5
+            },
+            {
+                "benchmark_case_prefix": "ghostty_src_config_c_get.zig",
+                "original_filename": "src/config/c_get.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "38445dca2ac2af176c7f3b205d88d697cf8c89c8",
+                "prompt_tokens": 8022,
+                "expected_tokens": 1678,
+                "num_commits": 16
+            },
+            {
+                "benchmark_case_prefix": "ghostty_src_apprt_gtk_Tab.zig",
+                "original_filename": "src/apprt/gtk/Tab.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "38445dca2ac2af176c7f3b205d88d697cf8c89c8",
+                "prompt_tokens": 36565,
+                "expected_tokens": 1288,
+                "num_commits": 68
+            },
+            {
+                "benchmark_case_prefix": "ghostty_src_renderer_Thread.zig",
+                "original_filename": "src/renderer/Thread.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "38445dca2ac2af176c7f3b205d88d697cf8c89c8",
+                "prompt_tokens": 34445,
+                "expected_tokens": 4844,
+                "num_commits": 65
+            },
+            {
+                "benchmark_case_prefix": "ghostty_src_terminal_color.zig",
+                "original_filename": "src/terminal/color.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "38445dca2ac2af176c7f3b205d88d697cf8c89c8",
+                "prompt_tokens": 10446,
+                "expected_tokens": 3886,
+                "num_commits": 19
+            },
+            {
+                "benchmark_case_prefix": "ghostty_src_inspector_Inspector.zig",
+                "original_filename": "src/inspector/Inspector.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "38445dca2ac2af176c7f3b205d88d697cf8c89c8",
+                "prompt_tokens": 34432,
+                "expected_tokens": 10349,
+                "num_commits": 39
+            },
+            {
+                "benchmark_case_prefix": "ghostty_src_cli_args.zig",
+                "original_filename": "src/cli/args.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "38445dca2ac2af176c7f3b205d88d697cf8c89c8",
+                "prompt_tokens": 33658,
+                "expected_tokens": 11487,
+                "num_commits": 41
+            },
+            {
+                "benchmark_case_prefix": "ghostty_src_terminal_Parser.zig",
+                "original_filename": "src/terminal/Parser.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "38445dca2ac2af176c7f3b205d88d697cf8c89c8",
+                "prompt_tokens": 32616,
+                "expected_tokens": 8169,
+                "num_commits": 51
+            },
+            {
+                "benchmark_case_prefix": "ghostty_src_build_bash_completions.zig",
+                "original_filename": "src/build/bash_completions.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "38445dca2ac2af176c7f3b205d88d697cf8c89c8",
+                "prompt_tokens": 16286,
+                "expected_tokens": 3174,
+                "num_commits": 12
+            },
+            {
+                "benchmark_case_prefix": "ghostty_src_termio_shell_integration.zig",
+                "original_filename": "src/termio/shell_integration.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "38445dca2ac2af176c7f3b205d88d697cf8c89c8",
+                "prompt_tokens": 30862,
+                "expected_tokens": 5205,
+                "num_commits": 36
+            },
+            {
+                "benchmark_case_prefix": "ghostty_src_terminal_sgr.zig",
+                "original_filename": "src/terminal/sgr.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "38445dca2ac2af176c7f3b205d88d697cf8c89c8",
+                "prompt_tokens": 30022,
+                "expected_tokens": 7414,
+                "num_commits": 37
+            },
+            {
+                "benchmark_case_prefix": "ghostty_src_font_discovery.zig",
+                "original_filename": "src/font/discovery.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "38445dca2ac2af176c7f3b205d88d697cf8c89c8",
+                "prompt_tokens": 28721,
+                "expected_tokens": 6701,
+                "num_commits": 53
+            },
+            {
+                "benchmark_case_prefix": "ghostty_src_renderer_metal_shaders.zig",
+                "original_filename": "src/renderer/metal/shaders.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "38445dca2ac2af176c7f3b205d88d697cf8c89c8",
+                "prompt_tokens": 28708,
+                "expected_tokens": 6146,
+                "num_commits": 34
+            },
+            {
+                "benchmark_case_prefix": "ghostty_pkg_oniguruma_build.zig",
+                "original_filename": "pkg/oniguruma/build.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "38445dca2ac2af176c7f3b205d88d697cf8c89c8",
+                "prompt_tokens": 8362,
+                "expected_tokens": 1338,
+                "num_commits": 14
+            },
+            {
+                "benchmark_case_prefix": "ghostty_src_font_shaper_run.zig",
+                "original_filename": "src/font/shaper/run.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "38445dca2ac2af176c7f3b205d88d697cf8c89c8",
+                "prompt_tokens": 18593,
+                "expected_tokens": 3380,
+                "num_commits": 30
+            },
+            {
+                "benchmark_case_prefix": "ghostty_pkg_sentry_build.zig",
+                "original_filename": "pkg/sentry/build.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "38445dca2ac2af176c7f3b205d88d697cf8c89c8",
+                "prompt_tokens": 6938,
+                "expected_tokens": 1686,
+                "num_commits": 9
+            },
+            {
+                "benchmark_case_prefix": "ghostty_src_font_DeferredFace.zig",
+                "original_filename": "src/font/DeferredFace.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "38445dca2ac2af176c7f3b205d88d697cf8c89c8",
+                "prompt_tokens": 28340,
+                "expected_tokens": 3737,
+                "num_commits": 48
+            },
+            {
+                "benchmark_case_prefix": "ghostty_src_termio_Thread.zig",
+                "original_filename": "src/termio/Thread.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "38445dca2ac2af176c7f3b205d88d697cf8c89c8",
+                "prompt_tokens": 27810,
+                "expected_tokens": 3339,
+                "num_commits": 49
+            },
+            {
+                "benchmark_case_prefix": "ghostty_src_font_sprite_underline.zig",
+                "original_filename": "src/font/sprite/underline.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "38445dca2ac2af176c7f3b205d88d697cf8c89c8",
+                "prompt_tokens": 27262,
+                "expected_tokens": 2891,
+                "num_commits": 45
+            }
+        ]
+    },
+    {
+        "run_timestamp_utc": "2025-04-26T20:52:39.539012+00:00",
+        "language_config_content": {
+            "python": {
+                "extensions": [
+                    ".py"
+                ]
+            },
+            "javascript": {
+                "extensions": [
+                    ".js",
+                    ".jsx"
+                ]
+            },
+            "typescript": {
+                "extensions": [
+                    ".ts",
+                    ".tsx"
+                ]
+            },
+            "zig": {
+                "extensions": [
+                    ".zig"
+                ]
+            }
+        },
+        "generation_parameters": {
+            "benchmark_run_dir": "locodiff-250425",
+            "min_prompt_tokens": 0,
+            "max_prompt_tokens": 75000,
+            "add_prompts": 30,
+            "modified_within_months": 6,
+            "max_expected_tokens": 12000
+        },
+        "benchmark_cases_added": [
+            {
+                "benchmark_case_prefix": "tldraw_packages_editor_src_lib_config_TLSessionStateSnapshot.ts",
+                "original_filename": "packages/editor/src/lib/config/TLSessionStateSnapshot.ts",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "37377fbef46d63ba2e0677a2a2ed0086d3931d74",
+                "prompt_tokens": 19363,
+                "expected_tokens": 2430,
+                "num_commits": 20
+            },
+            {
+                "benchmark_case_prefix": "tldraw_packages_tldraw_src_lib_ui_components_PageMenu_PageItemInput.tsx",
+                "original_filename": "packages/tldraw/src/lib/ui/components/PageMenu/PageItemInput.tsx",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "37377fbef46d63ba2e0677a2a2ed0086d3931d74",
+                "prompt_tokens": 10079,
+                "expected_tokens": 390,
+                "num_commits": 13
+            },
+            {
+                "benchmark_case_prefix": "tldraw_apps_dotcom_sync-worker_src_TLUserDurableObject.ts",
+                "original_filename": "apps/dotcom/sync-worker/src/TLUserDurableObject.ts",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "37377fbef46d63ba2e0677a2a2ed0086d3931d74",
+                "prompt_tokens": 54499,
+                "expected_tokens": 4776,
+                "num_commits": 48
+            },
+            {
+                "benchmark_case_prefix": "tldraw_packages_tldraw_src_lib_canvas_TldrawSelectionForeground.tsx",
+                "original_filename": "packages/tldraw/src/lib/canvas/TldrawSelectionForeground.tsx",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "37377fbef46d63ba2e0677a2a2ed0086d3931d74",
+                "prompt_tokens": 46410,
+                "expected_tokens": 4646,
+                "num_commits": 28
+            },
+            {
+                "benchmark_case_prefix": "tldraw_packages_tldraw_src_lib_shapes_video_VideoShapeUtil.tsx",
+                "original_filename": "packages/tldraw/src/lib/shapes/video/VideoShapeUtil.tsx",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "37377fbef46d63ba2e0677a2a2ed0086d3931d74",
+                "prompt_tokens": 26964,
+                "expected_tokens": 1289,
+                "num_commits": 24
+            },
+            {
+                "benchmark_case_prefix": "tldraw_packages_tldraw_src_lib_shapes_geo_GeoShapeUtil.tsx",
+                "original_filename": "packages/tldraw/src/lib/shapes/geo/GeoShapeUtil.tsx",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "37377fbef46d63ba2e0677a2a2ed0086d3931d74",
+                "prompt_tokens": 67029,
+                "expected_tokens": 6785,
+                "num_commits": 48
+            },
+            {
+                "benchmark_case_prefix": "tldraw_packages_tldraw_src_lib_shapes_note_NoteShapeUtil.tsx",
+                "original_filename": "packages/tldraw/src/lib/shapes/note/NoteShapeUtil.tsx",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "37377fbef46d63ba2e0677a2a2ed0086d3931d74",
+                "prompt_tokens": 39824,
+                "expected_tokens": 4131,
+                "num_commits": 38
+            },
+            {
+                "benchmark_case_prefix": "tldraw_packages_editor_src_lib_utils_debug-flags.ts",
+                "original_filename": "packages/editor/src/lib/utils/debug-flags.ts",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "37377fbef46d63ba2e0677a2a2ed0086d3931d74",
+                "prompt_tokens": 24766,
+                "expected_tokens": 1592,
+                "num_commits": 32
+            },
+            {
+                "benchmark_case_prefix": "tldraw_packages_store_src_lib_Store.ts",
+                "original_filename": "packages/store/src/lib/Store.ts",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "37377fbef46d63ba2e0677a2a2ed0086d3931d74",
+                "prompt_tokens": 51786,
+                "expected_tokens": 7208,
+                "num_commits": 36
+            },
+            {
+                "benchmark_case_prefix": "tldraw_packages_tldraw_src_lib_defaultExternalContentHandlers.ts",
+                "original_filename": "packages/tldraw/src/lib/defaultExternalContentHandlers.ts",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "37377fbef46d63ba2e0677a2a2ed0086d3931d74",
+                "prompt_tokens": 60046,
+                "expected_tokens": 5841,
+                "num_commits": 54
+            },
+            {
+                "benchmark_case_prefix": "tldraw_apps_dotcom_client_src_routes.tsx",
+                "original_filename": "apps/dotcom/client/src/routes.tsx",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "37377fbef46d63ba2e0677a2a2ed0086d3931d74",
+                "prompt_tokens": 32209,
+                "expected_tokens": 1036,
+                "num_commits": 40
+            },
+            {
+                "benchmark_case_prefix": "tldraw_packages_editor_src_lib_constants.ts",
+                "original_filename": "packages/editor/src/lib/constants.ts",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "37377fbef46d63ba2e0677a2a2ed0086d3931d74",
+                "prompt_tokens": 26239,
+                "expected_tokens": 245,
+                "num_commits": 33
+            },
+            {
+                "benchmark_case_prefix": "tldraw_packages_tldraw_src_test_TestEditor.ts",
+                "original_filename": "packages/tldraw/src/test/TestEditor.ts",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "37377fbef46d63ba2e0677a2a2ed0086d3931d74",
+                "prompt_tokens": 46019,
+                "expected_tokens": 6124,
+                "num_commits": 43
+            },
+            {
+                "benchmark_case_prefix": "tldraw_packages_tldraw_src_lib_shapes_shared_defaultStyleDefs.tsx",
+                "original_filename": "packages/tldraw/src/lib/shapes/shared/defaultStyleDefs.tsx",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "37377fbef46d63ba2e0677a2a2ed0086d3931d74",
+                "prompt_tokens": 23429,
+                "expected_tokens": 2097,
+                "num_commits": 24
+            },
+            {
+                "benchmark_case_prefix": "tldraw_apps_dotcom_sync-worker_src_TLPostgresReplicator.ts",
+                "original_filename": "apps/dotcom/sync-worker/src/TLPostgresReplicator.ts",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "37377fbef46d63ba2e0677a2a2ed0086d3931d74",
+                "prompt_tokens": 73132,
+                "expected_tokens": 8343,
+                "num_commits": 39
+            },
+            {
+                "benchmark_case_prefix": "tldraw_packages_tldraw_src_lib_ui_hooks_useTranslation_TLUiTranslationKey.ts",
+                "original_filename": "packages/tldraw/src/lib/ui/hooks/useTranslation/TLUiTranslationKey.ts",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "37377fbef46d63ba2e0677a2a2ed0086d3931d74",
+                "prompt_tokens": 31453,
+                "expected_tokens": 3450,
+                "num_commits": 45
+            },
+            {
+                "benchmark_case_prefix": "tldraw_packages_sync-core_src_lib_TLSyncRoom.ts",
+                "original_filename": "packages/sync-core/src/lib/TLSyncRoom.ts",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "37377fbef46d63ba2e0677a2a2ed0086d3931d74",
+                "prompt_tokens": 30839,
+                "expected_tokens": 10063,
+                "num_commits": 16
+            },
+            {
+                "benchmark_case_prefix": "tldraw_packages_tldraw_src_lib_shapes_image_ImageShapeUtil.tsx",
+                "original_filename": "packages/tldraw/src/lib/shapes/image/ImageShapeUtil.tsx",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "37377fbef46d63ba2e0677a2a2ed0086d3931d74",
+                "prompt_tokens": 49213,
+                "expected_tokens": 3717,
+                "num_commits": 45
+            },
+            {
+                "benchmark_case_prefix": "tldraw_packages_editor_src_lib_editor_shapes_ShapeUtil.ts",
+                "original_filename": "packages/editor/src/lib/editor/shapes/ShapeUtil.ts",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "37377fbef46d63ba2e0677a2a2ed0086d3931d74",
+                "prompt_tokens": 54090,
+                "expected_tokens": 5231,
+                "num_commits": 43
+            },
+            {
+                "benchmark_case_prefix": "tldraw_packages_tldraw_src_index.ts",
+                "original_filename": "packages/tldraw/src/index.ts",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "37377fbef46d63ba2e0677a2a2ed0086d3931d74",
+                "prompt_tokens": 73593,
+                "expected_tokens": 5242,
+                "num_commits": 106
+            },
+            {
+                "benchmark_case_prefix": "tldraw_apps_dotcom_sync-worker_src_TLDrawDurableObject.ts",
+                "original_filename": "apps/dotcom/sync-worker/src/TLDrawDurableObject.ts",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "37377fbef46d63ba2e0677a2a2ed0086d3931d74",
+                "prompt_tokens": 47089,
+                "expected_tokens": 7011,
+                "num_commits": 43
+            },
+            {
+                "benchmark_case_prefix": "tldraw_packages_tlschema_src_shapes_TLImageShape.ts",
+                "original_filename": "packages/tlschema/src/shapes/TLImageShape.ts",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "37377fbef46d63ba2e0677a2a2ed0086d3931d74",
+                "prompt_tokens": 12477,
+                "expected_tokens": 659,
+                "num_commits": 18
+            },
+            {
+                "benchmark_case_prefix": "tldraw_apps_dotcom_client_src_tla_components_TlaEditor_TlaEditor.tsx",
+                "original_filename": "apps/dotcom/client/src/tla/components/TlaEditor/TlaEditor.tsx",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "37377fbef46d63ba2e0677a2a2ed0086d3931d74",
+                "prompt_tokens": 47510,
+                "expected_tokens": 2034,
+                "num_commits": 50
+            },
+            {
+                "benchmark_case_prefix": "tldraw_packages_assets_imports.js",
+                "original_filename": "packages/assets/imports.js",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "37377fbef46d63ba2e0677a2a2ed0086d3931d74",
+                "prompt_tokens": 46496,
+                "expected_tokens": 5711,
+                "num_commits": 32
+            },
+            {
+                "benchmark_case_prefix": "tldraw_packages_tldraw_src_test_Editor.test.tsx",
+                "original_filename": "packages/tldraw/src/test/Editor.test.tsx",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "37377fbef46d63ba2e0677a2a2ed0086d3931d74",
+                "prompt_tokens": 44460,
+                "expected_tokens": 7518,
+                "num_commits": 36
+            },
+            {
+                "benchmark_case_prefix": "tldraw_packages_editor_src_lib_components_Shape.tsx",
+                "original_filename": "packages/editor/src/lib/components/Shape.tsx",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "37377fbef46d63ba2e0677a2a2ed0086d3931d74",
+                "prompt_tokens": 43052,
+                "expected_tokens": 1680,
+                "num_commits": 45
+            },
+            {
+                "benchmark_case_prefix": "tldraw_packages_tldraw_src_lib_ui_hooks_useTranslation_defaultTranslation.ts",
+                "original_filename": "packages/tldraw/src/lib/ui/hooks/useTranslation/defaultTranslation.ts",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "37377fbef46d63ba2e0677a2a2ed0086d3931d74",
+                "prompt_tokens": 37751,
+                "expected_tokens": 4855,
+                "num_commits": 49
+            },
+            {
+                "benchmark_case_prefix": "tldraw_packages_assets_imports.vite.js",
+                "original_filename": "packages/assets/imports.vite.js",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "37377fbef46d63ba2e0677a2a2ed0086d3931d74",
+                "prompt_tokens": 40682,
+                "expected_tokens": 5975,
+                "num_commits": 21
+            },
+            {
+                "benchmark_case_prefix": "tldraw_packages_tldraw_src_lib_shapes_line_LineShapeUtil.tsx",
+                "original_filename": "packages/tldraw/src/lib/shapes/line/LineShapeUtil.tsx",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "37377fbef46d63ba2e0677a2a2ed0086d3931d74",
+                "prompt_tokens": 40485,
+                "expected_tokens": 3171,
+                "num_commits": 33
+            },
+            {
+                "benchmark_case_prefix": "tldraw_apps_dotcom_client_vite.config.ts",
+                "original_filename": "apps/dotcom/client/vite.config.ts",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "37377fbef46d63ba2e0677a2a2ed0086d3931d74",
+                "prompt_tokens": 2704,
+                "expected_tokens": 954,
+                "num_commits": 4
+            }
+        ]
+    },
+    {
+        "run_timestamp_utc": "2025-04-30T18:40:40.045722+00:00",
+        "language_config_content": {
+            "python": {
+                "extensions": [
+                    ".py"
+                ]
+            },
+            "javascript": {
+                "extensions": [
+                    ".js",
+                    ".jsx"
+                ]
+            },
+            "typescript": {
+                "extensions": [
+                    ".ts",
+                    ".tsx"
+                ]
+            },
+            "zig": {
+                "extensions": [
+                    ".zig"
+                ]
+            },
+            "rust": {
+                "extensions": [
+                    ".rs"
+                ]
+            }
+        },
+        "generation_parameters": {
+            "benchmark_run_dir": "locodiff-250425",
+            "min_prompt_tokens": 0,
+            "max_prompt_tokens": 100000,
+            "add_prompts": 40,
+            "modified_within_months": 6,
+            "max_expected_tokens": 12000
+        },
+        "benchmark_cases_added": [
+            {
+                "benchmark_case_prefix": "qdrant_lib_segment_src_vector_storage_tests_custom_query_scorer_equivalency.rs",
+                "original_filename": "lib/segment/src/vector_storage/tests/custom_query_scorer_equivalency.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 18634,
+                "expected_tokens": 2218,
+                "num_commits": 24
+            },
+            {
+                "benchmark_case_prefix": "qdrant_lib_collection_src_collection_manager_optimizers_segment_optimizer.rs",
+                "original_filename": "lib/collection/src/collection_manager/optimizers/segment_optimizer.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 56534,
+                "expected_tokens": 6122,
+                "num_commits": 79
+            },
+            {
+                "benchmark_case_prefix": "qdrant_lib_segment_src_vector_storage_vector_storage_base.rs",
+                "original_filename": "lib/segment/src/vector_storage/vector_storage_base.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 81726,
+                "expected_tokens": 11715,
+                "num_commits": 72
+            },
+            {
+                "benchmark_case_prefix": "qdrant_lib_segment_src_vector_storage_dense_memmap_dense_vector_storage.rs",
+                "original_filename": "lib/segment/src/vector_storage/dense/memmap_dense_vector_storage.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 31464,
+                "expected_tokens": 7031,
+                "num_commits": 27
+            },
+            {
+                "benchmark_case_prefix": "qdrant_tests_consensus_tests_test_cluster_rejoin.py",
+                "original_filename": "tests/consensus_tests/test_cluster_rejoin.py",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 7673,
+                "expected_tokens": 3259,
+                "num_commits": 9
+            },
+            {
+                "benchmark_case_prefix": "qdrant_lib_segment_src_index_struct_payload_index.rs",
+                "original_filename": "lib/segment/src/index/struct_payload_index.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 82321,
+                "expected_tokens": 5527,
+                "num_commits": 111
+            },
+            {
+                "benchmark_case_prefix": "qdrant_lib_sparse_src_index_search_context.rs",
+                "original_filename": "lib/sparse/src/index/search_context.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 73797,
+                "expected_tokens": 3601,
+                "num_commits": 46
+            },
+            {
+                "benchmark_case_prefix": "qdrant_lib_segment_benches_vector_search.rs",
+                "original_filename": "lib/segment/benches/vector_search.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 20990,
+                "expected_tokens": 866,
+                "num_commits": 42
+            },
+            {
+                "benchmark_case_prefix": "qdrant_lib_segment_src_index_field_index_full_text_index_inverted_index.rs",
+                "original_filename": "lib/segment/src/index/field_index/full_text_index/inverted_index.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 33649,
+                "expected_tokens": 3053,
+                "num_commits": 28
+            },
+            {
+                "benchmark_case_prefix": "qdrant_lib_segment_src_spaces_metric_f16_avx_euclid.rs",
+                "original_filename": "lib/segment/src/spaces/metric_f16/avx/euclid.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 7064,
+                "expected_tokens": 3688,
+                "num_commits": 3
+            },
+            {
+                "benchmark_case_prefix": "qdrant_lib_collection_src_collection_manager_optimizers_indexing_optimizer.rs",
+                "original_filename": "lib/collection/src/collection_manager/optimizers/indexing_optimizer.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 58760,
+                "expected_tokens": 7331,
+                "num_commits": 77
+            },
+            {
+                "benchmark_case_prefix": "qdrant_src_main.rs",
+                "original_filename": "src/main.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 72898,
+                "expected_tokens": 4450,
+                "num_commits": 151
+            },
+            {
+                "benchmark_case_prefix": "qdrant_lib_segment_src_vector_storage_raw_scorer.rs",
+                "original_filename": "lib/segment/src/vector_storage/raw_scorer.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 62596,
+                "expected_tokens": 8283,
+                "num_commits": 58
+            },
+            {
+                "benchmark_case_prefix": "qdrant_lib_segment_src_segment_constructor_segment_constructor_base.rs",
+                "original_filename": "lib/segment/src/segment_constructor/segment_constructor_base.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 72082,
+                "expected_tokens": 6890,
+                "num_commits": 99
+            },
+            {
+                "benchmark_case_prefix": "qdrant_src_actix_api_snapshot_api.rs",
+                "original_filename": "src/actix/api/snapshot_api.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 49904,
+                "expected_tokens": 4192,
+                "num_commits": 45
+            },
+            {
+                "benchmark_case_prefix": "qdrant_lib_storage_src_content_manager_collection_meta_ops.rs",
+                "original_filename": "lib/storage/src/content_manager/collection_meta_ops.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 42605,
+                "expected_tokens": 3694,
+                "num_commits": 73
+            },
+            {
+                "benchmark_case_prefix": "qdrant_lib_collection_src_update_handler.rs",
+                "original_filename": "lib/collection/src/update_handler.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 61348,
+                "expected_tokens": 6670,
+                "num_commits": 78
+            },
+            {
+                "benchmark_case_prefix": "qdrant_lib_segment_src_index_hnsw_index_graph_links.rs",
+                "original_filename": "lib/segment/src/index/hnsw_index/graph_links.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 65935,
+                "expected_tokens": 2783,
+                "num_commits": 38
+            },
+            {
+                "benchmark_case_prefix": "qdrant_lib_collection_tests_integration_collection_test.rs",
+                "original_filename": "lib/collection/tests/integration/collection_test.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 36828,
+                "expected_tokens": 7372,
+                "num_commits": 33
+            },
+            {
+                "benchmark_case_prefix": "qdrant_src_tonic_api_points_api.rs",
+                "original_filename": "src/tonic/api/points_api.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 67500,
+                "expected_tokens": 4619,
+                "num_commits": 58
+            },
+            {
+                "benchmark_case_prefix": "qdrant_lib_segment_src_index_hnsw_index_graph_layers.rs",
+                "original_filename": "lib/segment/src/index/hnsw_index/graph_layers.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 69134,
+                "expected_tokens": 4386,
+                "num_commits": 74
+            },
+            {
+                "benchmark_case_prefix": "qdrant_lib_segment_src_index_field_index_full_text_index_text_index.rs",
+                "original_filename": "lib/segment/src/index/field_index/full_text_index/text_index.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 34279,
+                "expected_tokens": 3197,
+                "num_commits": 46
+            },
+            {
+                "benchmark_case_prefix": "qdrant_lib_segment_src_vector_storage_mod.rs",
+                "original_filename": "lib/segment/src/vector_storage/mod.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 12530,
+                "expected_tokens": 129,
+                "num_commits": 35
+            },
+            {
+                "benchmark_case_prefix": "qdrant_lib_collection_src_collection_manager_segments_searcher.rs",
+                "original_filename": "lib/collection/src/collection_manager/segments_searcher.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 67928,
+                "expected_tokens": 7987,
+                "num_commits": 90
+            },
+            {
+                "benchmark_case_prefix": "qdrant_lib_segment_tests_integration_payload_index_test.rs",
+                "original_filename": "lib/segment/tests/integration/payload_index_test.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 65192,
+                "expected_tokens": 9702,
+                "num_commits": 62
+            },
+            {
+                "benchmark_case_prefix": "qdrant_lib_segment_src_segment_constructor_segment_builder.rs",
+                "original_filename": "lib/segment/src/segment_constructor/segment_builder.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 67813,
+                "expected_tokens": 5577,
+                "num_commits": 91
+            },
+            {
+                "benchmark_case_prefix": "qdrant_lib_collection_src_collection_mod.rs",
+                "original_filename": "lib/collection/src/collection/mod.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 58627,
+                "expected_tokens": 7231,
+                "num_commits": 78
+            },
+            {
+                "benchmark_case_prefix": "qdrant_lib_segment_src_entry_entry_point.rs",
+                "original_filename": "lib/segment/src/entry/entry_point.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 59831,
+                "expected_tokens": 2558,
+                "num_commits": 124
+            },
+            {
+                "benchmark_case_prefix": "qdrant_lib_segment_src_id_tracker_immutable_id_tracker.rs",
+                "original_filename": "lib/segment/src/id_tracker/immutable_id_tracker.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 29271,
+                "expected_tokens": 7357,
+                "num_commits": 21
+            },
+            {
+                "benchmark_case_prefix": "qdrant_lib_collection_src_shards_replica_set_mod.rs",
+                "original_filename": "lib/collection/src/shards/replica_set/mod.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 57397,
+                "expected_tokens": 9835,
+                "num_commits": 80
+            },
+            {
+                "benchmark_case_prefix": "qdrant_lib_collection_benches_batch_search_bench.rs",
+                "original_filename": "lib/collection/benches/batch_search_bench.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 24820,
+                "expected_tokens": 1523,
+                "num_commits": 49
+            },
+            {
+                "benchmark_case_prefix": "qdrant_lib_collection_src_shards_local_shard_mod.rs",
+                "original_filename": "lib/collection/src/shards/local_shard/mod.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 59828,
+                "expected_tokens": 9691,
+                "num_commits": 77
+            },
+            {
+                "benchmark_case_prefix": "qdrant_lib_segment_src_payload_storage_query_checker.rs",
+                "original_filename": "lib/segment/src/payload_storage/query_checker.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 59599,
+                "expected_tokens": 5101,
+                "num_commits": 67
+            },
+            {
+                "benchmark_case_prefix": "qdrant_lib_segment_src_spaces_simple.rs",
+                "original_filename": "lib/segment/src/spaces/simple.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 47305,
+                "expected_tokens": 2053,
+                "num_commits": 48
+            },
+            {
+                "benchmark_case_prefix": "qdrant_lib_segment_src_index_field_index_numeric_index_mmap_numeric_index.rs",
+                "original_filename": "lib/segment/src/index/field_index/numeric_index/mmap_numeric_index.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 11917,
+                "expected_tokens": 2865,
+                "num_commits": 17
+            },
+            {
+                "benchmark_case_prefix": "qdrant_lib_segment_src_index_field_index_map_index_mod.rs",
+                "original_filename": "lib/segment/src/index/field_index/map_index/mod.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 56553,
+                "expected_tokens": 10806,
+                "num_commits": 48
+            },
+            {
+                "benchmark_case_prefix": "qdrant_lib_segment_tests_integration_sparse_vector_index_search_tests.rs",
+                "original_filename": "lib/segment/tests/integration/sparse_vector_index_search_tests.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 56319,
+                "expected_tokens": 6148,
+                "num_commits": 54
+            },
+            {
+                "benchmark_case_prefix": "qdrant_lib_segment_src_index_field_index_numeric_index_mutable_numeric_index.rs",
+                "original_filename": "lib/segment/src/index/field_index/numeric_index/mutable_numeric_index.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 20896,
+                "expected_tokens": 2551,
+                "num_commits": 25
+            },
+            {
+                "benchmark_case_prefix": "qdrant_lib_segment_src_index_field_index_field_index_base.rs",
+                "original_filename": "lib/segment/src/index/field_index/field_index_base.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 54941,
+                "expected_tokens": 6468,
+                "num_commits": 69
+            },
+            {
+                "benchmark_case_prefix": "qdrant_lib_collection_src_collection_manager_segments_updater.rs",
+                "original_filename": "lib/collection/src/collection_manager/segments_updater.rs",
+                "repo_name": "qdrant/qdrant",
+                "repo_commit_hash": "7558f67a479f6b4db2bdd5e04b520772d1ed5fe6",
+                "prompt_tokens": 54879,
+                "expected_tokens": 5680,
+                "num_commits": 70
+            }
+        ]
+    },
+    {
+        "run_timestamp_utc": "2025-04-30T21:17:43.975808+00:00",
+        "language_config_content": {
+            "python": {
+                "extensions": [
+                    ".py"
+                ]
+            },
+            "javascript": {
+                "extensions": [
+                    ".js",
+                    ".jsx"
+                ]
+            },
+            "typescript": {
+                "extensions": [
+                    ".ts",
+                    ".tsx"
+                ]
+            },
+            "zig": {
+                "extensions": [
+                    ".zig"
+                ]
+            },
+            "rust": {
+                "extensions": [
+                    ".rs"
+                ]
+            }
+        },
+        "generation_parameters": {
+            "benchmark_run_dir": "locodiff-250425",
+            "min_prompt_tokens": 75000,
+            "max_prompt_tokens": 100000,
+            "add_prompts": 10,
+            "modified_within_months": 6,
+            "max_expected_tokens": 12000
+        },
+        "benchmark_cases_added": [
+            {
+                "benchmark_case_prefix": "aider_tests_basic_test_main.py",
+                "original_filename": "tests/basic/test_main.py",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "e205629a94dae0b98e4d598109be39467a88b49e",
+                "prompt_tokens": 77009,
+                "expected_tokens": 11482,
+                "num_commits": 182
+            }
+        ]
+    },
+    {
+        "run_timestamp_utc": "2025-04-30T21:23:07.435432+00:00",
+        "language_config_content": {
+            "python": {
+                "extensions": [
+                    ".py"
+                ]
+            },
+            "javascript": {
+                "extensions": [
+                    ".js",
+                    ".jsx"
+                ]
+            },
+            "typescript": {
+                "extensions": [
+                    ".ts",
+                    ".tsx"
+                ]
+            },
+            "zig": {
+                "extensions": [
+                    ".zig"
+                ]
+            },
+            "rust": {
+                "extensions": [
+                    ".rs"
+                ]
+            }
+        },
+        "generation_parameters": {
+            "benchmark_run_dir": "locodiff-250425",
+            "min_prompt_tokens": 0,
+            "max_prompt_tokens": 100000,
+            "add_prompts": 9,
+            "modified_within_months": 6,
+            "max_expected_tokens": 12000
+        },
+        "benchmark_cases_added": [
+            {
+                "benchmark_case_prefix": "aider_aider_coders_patch_coder.py",
+                "original_filename": "aider/coders/patch_coder.py",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "e205629a94dae0b98e4d598109be39467a88b49e",
+                "prompt_tokens": 22441,
+                "expected_tokens": 5832,
+                "num_commits": 14
+            },
+            {
+                "benchmark_case_prefix": "aider_tests_basic_test_io.py",
+                "original_filename": "tests/basic/test_io.py",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "e205629a94dae0b98e4d598109be39467a88b49e",
+                "prompt_tokens": 21186,
+                "expected_tokens": 4087,
+                "num_commits": 49
+            },
+            {
+                "benchmark_case_prefix": "aider_aider_exceptions.py",
+                "original_filename": "aider/exceptions.py",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "e205629a94dae0b98e4d598109be39467a88b49e",
+                "prompt_tokens": 7265,
+                "expected_tokens": 834,
+                "num_commits": 23
+            },
+            {
+                "benchmark_case_prefix": "aider_aider_history.py",
+                "original_filename": "aider/history.py",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "e205629a94dae0b98e4d598109be39467a88b49e",
+                "prompt_tokens": 18915,
+                "expected_tokens": 989,
+                "num_commits": 53
+            },
+            {
+                "benchmark_case_prefix": "aider_aider_onboarding.py",
+                "original_filename": "aider/onboarding.py",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "e205629a94dae0b98e4d598109be39467a88b49e",
+                "prompt_tokens": 17935,
+                "expected_tokens": 3449,
+                "num_commits": 34
+            },
+            {
+                "benchmark_case_prefix": "aider_aider_run_cmd.py",
+                "original_filename": "aider/run_cmd.py",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "e205629a94dae0b98e4d598109be39467a88b49e",
+                "prompt_tokens": 11571,
+                "expected_tokens": 885,
+                "num_commits": 35
+            },
+            {
+                "benchmark_case_prefix": "aider_tests_basic_test_repo.py",
+                "original_filename": "tests/basic/test_repo.py",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "e205629a94dae0b98e4d598109be39467a88b49e",
+                "prompt_tokens": 11472,
+                "expected_tokens": 3561,
+                "num_commits": 19
+            },
+            {
+                "benchmark_case_prefix": "aider_tests_basic_test_sendchat.py",
+                "original_filename": "tests/basic/test_sendchat.py",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "e205629a94dae0b98e4d598109be39467a88b49e",
+                "prompt_tokens": 10544,
+                "expected_tokens": 1321,
+                "num_commits": 29
+            },
+            {
+                "benchmark_case_prefix": "aider_tests_basic_test_editblock.py",
+                "original_filename": "tests/basic/test_editblock.py",
+                "repo_name": "aider-ai/aider",
+                "repo_commit_hash": "e205629a94dae0b98e4d598109be39467a88b49e",
+                "prompt_tokens": 10489,
+                "expected_tokens": 4155,
+                "num_commits": 18
+            }
+        ]
+    },
+    {
+        "run_timestamp_utc": "2025-04-30T22:08:31.929791+00:00",
+        "language_config_content": {
+            "python": {
+                "extensions": [
+                    ".py"
+                ]
+            },
+            "javascript": {
+                "extensions": [
+                    ".js",
+                    ".jsx"
+                ]
+            },
+            "typescript": {
+                "extensions": [
+                    ".ts",
+                    ".tsx"
+                ]
+            },
+            "zig": {
+                "extensions": [
+                    ".zig"
+                ]
+            },
+            "rust": {
+                "extensions": [
+                    ".rs"
+                ]
+            }
+        },
+        "generation_parameters": {
+            "benchmark_run_dir": "locodiff-250425",
+            "min_prompt_tokens": 75000,
+            "max_prompt_tokens": 100000,
+            "add_prompts": 10,
+            "modified_within_months": 6,
+            "max_expected_tokens": 12000
+        },
+        "benchmark_cases_added": [
+            {
+                "benchmark_case_prefix": "ghostty_src_config.zig",
+                "original_filename": "src/config.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "2b4f1f8b84ac7960ecd4b9d06bc11cf47f0b9ee9",
+                "prompt_tokens": 90986,
+                "expected_tokens": 443,
+                "num_commits": 151
+            },
+            {
+                "benchmark_case_prefix": "ghostty_src_font_face_coretext.zig",
+                "original_filename": "src/font/face/coretext.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "2b4f1f8b84ac7960ecd4b9d06bc11cf47f0b9ee9",
+                "prompt_tokens": 78070,
+                "expected_tokens": 9202,
+                "num_commits": 106
+            },
+            {
+                "benchmark_case_prefix": "ghostty_src_termio_Termio.zig",
+                "original_filename": "src/termio/Termio.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "2b4f1f8b84ac7960ecd4b9d06bc11cf47f0b9ee9",
+                "prompt_tokens": 83028,
+                "expected_tokens": 5248,
+                "num_commits": 43
+            }
+        ]
+    },
+    {
+        "run_timestamp_utc": "2025-04-30T22:10:07.746389+00:00",
+        "language_config_content": {
+            "python": {
+                "extensions": [
+                    ".py"
+                ]
+            },
+            "javascript": {
+                "extensions": [
+                    ".js",
+                    ".jsx"
+                ]
+            },
+            "typescript": {
+                "extensions": [
+                    ".ts",
+                    ".tsx"
+                ]
+            },
+            "zig": {
+                "extensions": [
+                    ".zig"
+                ]
+            },
+            "rust": {
+                "extensions": [
+                    ".rs"
+                ]
+            }
+        },
+        "generation_parameters": {
+            "benchmark_run_dir": "locodiff-250425",
+            "min_prompt_tokens": 0,
+            "max_prompt_tokens": 100000,
+            "add_prompts": 7,
+            "modified_within_months": 6,
+            "max_expected_tokens": 12000
+        },
+        "benchmark_cases_added": [
+            {
+                "benchmark_case_prefix": "ghostty_src_terminal_kitty_graphics_exec.zig",
+                "original_filename": "src/terminal/kitty/graphics_exec.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "2b4f1f8b84ac7960ecd4b9d06bc11cf47f0b9ee9",
+                "prompt_tokens": 27122,
+                "expected_tokens": 4495,
+                "num_commits": 56
+            },
+            {
+                "benchmark_case_prefix": "ghostty_pkg_freetype_build.zig",
+                "original_filename": "pkg/freetype/build.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "2b4f1f8b84ac7960ecd4b9d06bc11cf47f0b9ee9",
+                "prompt_tokens": 14490,
+                "expected_tokens": 1617,
+                "num_commits": 24
+            },
+            {
+                "benchmark_case_prefix": "ghostty_src_build_SharedDeps.zig",
+                "original_filename": "src/build/SharedDeps.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "2b4f1f8b84ac7960ecd4b9d06bc11cf47f0b9ee9",
+                "prompt_tokens": 26602,
+                "expected_tokens": 6391,
+                "num_commits": 25
+            },
+            {
+                "benchmark_case_prefix": "ghostty_src_font_sprite_canvas.zig",
+                "original_filename": "src/font/sprite/canvas.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "2b4f1f8b84ac7960ecd4b9d06bc11cf47f0b9ee9",
+                "prompt_tokens": 25637,
+                "expected_tokens": 2184,
+                "num_commits": 27
+            },
+            {
+                "benchmark_case_prefix": "ghostty_src_terminal_modes.zig",
+                "original_filename": "src/terminal/modes.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "2b4f1f8b84ac7960ecd4b9d06bc11cf47f0b9ee9",
+                "prompt_tokens": 12161,
+                "expected_tokens": 2518,
+                "num_commits": 29
+            },
+            {
+                "benchmark_case_prefix": "ghostty_src_apprt_gtk_Split.zig",
+                "original_filename": "src/apprt/gtk/Split.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "2b4f1f8b84ac7960ecd4b9d06bc11cf47f0b9ee9",
+                "prompt_tokens": 24834,
+                "expected_tokens": 3238,
+                "num_commits": 37
+            },
+            {
+                "benchmark_case_prefix": "ghostty_src_font_Collection.zig",
+                "original_filename": "src/font/Collection.zig",
+                "repo_name": "ghostty-org/ghostty",
+                "repo_commit_hash": "2b4f1f8b84ac7960ecd4b9d06bc11cf47f0b9ee9",
+                "prompt_tokens": 24732,
+                "expected_tokens": 7868,
+                "num_commits": 30
+            }
+        ]
+    },
+    {
+        "run_timestamp_utc": "2025-04-30T22:16:44.537733+00:00",
+        "language_config_content": {
+            "python": {
+                "extensions": [
+                    ".py"
+                ]
+            },
+            "javascript": {
+                "extensions": [
+                    ".js",
+                    ".jsx"
+                ]
+            },
+            "typescript": {
+                "extensions": [
+                    ".ts",
+                    ".tsx"
+                ]
+            },
+            "zig": {
+                "extensions": [
+                    ".zig"
+                ]
+            },
+            "rust": {
+                "extensions": [
+                    ".rs"
+                ]
+            }
+        },
+        "generation_parameters": {
+            "benchmark_run_dir": "locodiff-250425",
+            "min_prompt_tokens": 75000,
+            "max_prompt_tokens": 100000,
+            "add_prompts": 10,
+            "modified_within_months": 6,
+            "max_expected_tokens": 12000
+        },
+        "benchmark_cases_added": [
+            {
+                "benchmark_case_prefix": "tldraw_apps_dotcom_client_src_tla_app_TldrawApp.ts",
+                "original_filename": "apps/dotcom/client/src/tla/app/TldrawApp.ts",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "fd867adaa211b93b5bdccc84cca0280365ad4316",
+                "prompt_tokens": 77021,
+                "expected_tokens": 6772,
+                "num_commits": 58
+            },
+            {
+                "benchmark_case_prefix": "tldraw_packages_editor_src_index.ts",
+                "original_filename": "packages/editor/src/index.ts",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "fd867adaa211b93b5bdccc84cca0280365ad4316",
+                "prompt_tokens": 94781,
+                "expected_tokens": 3742,
+                "num_commits": 129
+            },
+            {
+                "benchmark_case_prefix": "tldraw_packages_editor_src_lib_TldrawEditor.tsx",
+                "original_filename": "packages/editor/src/lib/TldrawEditor.tsx",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "fd867adaa211b93b5bdccc84cca0280365ad4316",
+                "prompt_tokens": 78980,
+                "expected_tokens": 4839,
+                "num_commits": 88
+            },
+            {
+                "benchmark_case_prefix": "tldraw_packages_tldraw_src_lib_shapes_arrow_ArrowShapeUtil.tsx",
+                "original_filename": "packages/tldraw/src/lib/shapes/arrow/ArrowShapeUtil.tsx",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "fd867adaa211b93b5bdccc84cca0280365ad4316",
+                "prompt_tokens": 97521,
+                "expected_tokens": 8183,
+                "num_commits": 74
+            }
+        ]
+    },
+    {
+        "run_timestamp_utc": "2025-04-30T22:23:52.544526+00:00",
+        "language_config_content": {
+            "python": {
+                "extensions": [
+                    ".py"
+                ]
+            },
+            "javascript": {
+                "extensions": [
+                    ".js",
+                    ".jsx"
+                ]
+            },
+            "typescript": {
+                "extensions": [
+                    ".ts",
+                    ".tsx"
+                ]
+            },
+            "zig": {
+                "extensions": [
+                    ".zig"
+                ]
+            },
+            "rust": {
+                "extensions": [
+                    ".rs"
+                ]
+            }
+        },
+        "generation_parameters": {
+            "benchmark_run_dir": "locodiff-250425",
+            "min_prompt_tokens": 0,
+            "max_prompt_tokens": 100000,
+            "add_prompts": 6,
+            "modified_within_months": 6,
+            "max_expected_tokens": 12000
+        },
+        "benchmark_cases_added": [
+            {
+                "benchmark_case_prefix": "tldraw_apps_dotcom_client_src_tla_components_TlaFileShareMenu_Tabs_TlaExportTab.tsx",
+                "original_filename": "apps/dotcom/client/src/tla/components/TlaFileShareMenu/Tabs/TlaExportTab.tsx",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "fd867adaa211b93b5bdccc84cca0280365ad4316",
+                "prompt_tokens": 13190,
+                "expected_tokens": 2653,
+                "num_commits": 13
+            },
+            {
+                "benchmark_case_prefix": "tldraw_packages_validate_src_lib_validation.ts",
+                "original_filename": "packages/validate/src/lib/validation.ts",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "fd867adaa211b93b5bdccc84cca0280365ad4316",
+                "prompt_tokens": 27845,
+                "expected_tokens": 6885,
+                "num_commits": 26
+            },
+            {
+                "benchmark_case_prefix": "tldraw_apps_docs_components_marketing_installation-section.tsx",
+                "original_filename": "apps/docs/components/marketing/installation-section.tsx",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "fd867adaa211b93b5bdccc84cca0280365ad4316",
+                "prompt_tokens": 4189,
+                "expected_tokens": 423,
+                "num_commits": 9
+            },
+            {
+                "benchmark_case_prefix": "tldraw_packages_tldraw_src_lib_shapes_text_TextShapeTool.test.ts",
+                "original_filename": "packages/tldraw/src/lib/shapes/text/TextShapeTool.test.ts",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "fd867adaa211b93b5bdccc84cca0280365ad4316",
+                "prompt_tokens": 15569,
+                "expected_tokens": 1667,
+                "num_commits": 10
+            },
+            {
+                "benchmark_case_prefix": "tldraw_packages_tldraw_src_lib_ui_hooks_useClipboardEvents.ts",
+                "original_filename": "packages/tldraw/src/lib/ui/hooks/useClipboardEvents.ts",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "fd867adaa211b93b5bdccc84cca0280365ad4316",
+                "prompt_tokens": 40274,
+                "expected_tokens": 5936,
+                "num_commits": 40
+            },
+            {
+                "benchmark_case_prefix": "tldraw_packages_editor_src_lib_hooks_useDocumentEvents.ts",
+                "original_filename": "packages/editor/src/lib/hooks/useDocumentEvents.ts",
+                "repo_name": "tldraw/tldraw",
+                "repo_commit_hash": "fd867adaa211b93b5bdccc84cca0280365ad4316",
+                "prompt_tokens": 28894,
+                "expected_tokens": 2548,
+                "num_commits": 42
+            }
+        ]
+    },
+    {
+        "run_timestamp_utc": "2025-05-01T23:33:26.129458+00:00",
+        "language_config_content": {
+            "python": {
+                "extensions": [
+                    ".py"
+                ]
+            },
+            "javascript": {
+                "extensions": [
+                    ".js",
+                    ".jsx"
+                ]
+            },
+            "typescript": {
+                "extensions": [
+                    ".ts",
+                    ".tsx"
+                ]
+            },
+            "zig": {
+                "extensions": [
+                    ".zig"
+                ]
+            },
+            "rust": {
+                "extensions": [
+                    ".rs"
+                ]
+            }
+        },
+        "generation_parameters": {
+            "benchmark_run_dir": "locodiff-250425",
+            "min_prompt_tokens": 0,
+            "max_prompt_tokens": 100000,
+            "add_prompts": 40,
+            "modified_within_months": 6,
+            "max_expected_tokens": 12000
+        },
+        "benchmark_cases_added": [
+            {
+                "benchmark_case_prefix": "react_packages_react-dom_src___tests___ReactUpdates-test.js",
+                "original_filename": "packages/react-dom/src/__tests__/ReactUpdates-test.js",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 81665,
+                "expected_tokens": 11311,
+                "num_commits": 75
+            },
+            {
+                "benchmark_case_prefix": "react_packages_react-dom_src___tests___ReactDOMFiber-test.js",
+                "original_filename": "packages/react-dom/src/__tests__/ReactDOMFiber-test.js",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 57044,
+                "expected_tokens": 8365,
+                "num_commits": 51
+            },
+            {
+                "benchmark_case_prefix": "react_compiler_packages_babel-plugin-react-compiler_src_ReactiveScopes_index.ts",
+                "original_filename": "compiler/packages/babel-plugin-react-compiler/src/ReactiveScopes/index.ts",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 5760,
+                "expected_tokens": 453,
+                "num_commits": 8
+            },
+            {
+                "benchmark_case_prefix": "react_packages_react-reconciler_src_ReactFiberHydrationContext.js",
+                "original_filename": "packages/react-reconciler/src/ReactFiberHydrationContext.js",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 82014,
+                "expected_tokens": 6944,
+                "num_commits": 62
+            },
+            {
+                "benchmark_case_prefix": "react_packages_react_src_jsx_ReactJSXElement.js",
+                "original_filename": "packages/react/src/jsx/ReactJSXElement.js",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 62194,
+                "expected_tokens": 6657,
+                "num_commits": 52
+            },
+            {
+                "benchmark_case_prefix": "react_packages_react-native-renderer_src___tests___ReactFabric-test.internal.js",
+                "original_filename": "packages/react-native-renderer/src/__tests__/ReactFabric-test.internal.js",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 87707,
+                "expected_tokens": 10112,
+                "num_commits": 72
+            },
+            {
+                "benchmark_case_prefix": "react_packages_react-devtools-shared_src_devtools_views_Components_SelectedTreeHighlight.js",
+                "original_filename": "packages/react-devtools-shared/src/devtools/views/Components/SelectedTreeHighlight.js",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 4993,
+                "expected_tokens": 628,
+                "num_commits": 12
+            },
+            {
+                "benchmark_case_prefix": "react_packages_react-server_src_ReactServerStreamConfigBun.js",
+                "original_filename": "packages/react-server/src/ReactServerStreamConfigBun.js",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 9566,
+                "expected_tokens": 726,
+                "num_commits": 13
+            },
+            {
+                "benchmark_case_prefix": "react_packages_react-reconciler_src___tests___ReactIncrementalSideEffects-test.js",
+                "original_filename": "packages/react-reconciler/src/__tests__/ReactIncrementalSideEffects-test.js",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 65671,
+                "expected_tokens": 8607,
+                "num_commits": 42
+            },
+            {
+                "benchmark_case_prefix": "react_packages_react-devtools-shared_src_devtools_views_DevTools.js",
+                "original_filename": "packages/react-devtools-shared/src/devtools/views/DevTools.js",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 31584,
+                "expected_tokens": 2416,
+                "num_commits": 42
+            },
+            {
+                "benchmark_case_prefix": "react_packages_react-dom_src___tests___DOMPropertyOperations-test.js",
+                "original_filename": "packages/react-dom/src/__tests__/DOMPropertyOperations-test.js",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 41803,
+                "expected_tokens": 11431,
+                "num_commits": 32
+            },
+            {
+                "benchmark_case_prefix": "react_packages_react_index.js",
+                "original_filename": "packages/react/index.js",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 35974,
+                "expected_tokens": 483,
+                "num_commits": 78
+            },
+            {
+                "benchmark_case_prefix": "react_packages_react_src___tests___ReactStrictMode-test.js",
+                "original_filename": "packages/react/src/__tests__/ReactStrictMode-test.js",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 66309,
+                "expected_tokens": 8204,
+                "num_commits": 52
+            },
+            {
+                "benchmark_case_prefix": "react_packages_react-dom_src___tests___ReactCompositeComponentState-test.js",
+                "original_filename": "packages/react-dom/src/__tests__/ReactCompositeComponentState-test.js",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 29345,
+                "expected_tokens": 3786,
+                "num_commits": 28
+            },
+            {
+                "benchmark_case_prefix": "react_packages_react-dom_src___tests___ReactDOMRoot-test.js",
+                "original_filename": "packages/react-dom/src/__tests__/ReactDOMRoot-test.js",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 61902,
+                "expected_tokens": 3172,
+                "num_commits": 69
+            },
+            {
+                "benchmark_case_prefix": "react_packages_react-devtools-shared_src_devtools_store.js",
+                "original_filename": "packages/react-devtools-shared/src/devtools/store.js",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 55115,
+                "expected_tokens": 10993,
+                "num_commits": 55
+            },
+            {
+                "benchmark_case_prefix": "react_packages_react-devtools-shared_src___tests___storeComponentFilters-test.js",
+                "original_filename": "packages/react-devtools-shared/src/__tests__/storeComponentFilters-test.js",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 24747,
+                "expected_tokens": 4221,
+                "num_commits": 26
+            },
+            {
+                "benchmark_case_prefix": "react_packages_react-dom_src___tests___ReactDOMOption-test.js",
+                "original_filename": "packages/react-dom/src/__tests__/ReactDOMOption-test.js",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 22603,
+                "expected_tokens": 1989,
+                "num_commits": 30
+            },
+            {
+                "benchmark_case_prefix": "react_packages_react-reconciler_src___tests___ReactExpiration-test.js",
+                "original_filename": "packages/react-reconciler/src/__tests__/ReactExpiration-test.js",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 61130,
+                "expected_tokens": 5455,
+                "num_commits": 43
+            },
+            {
+                "benchmark_case_prefix": "react_packages_react-dom_src_client_ReactDOMRoot.js",
+                "original_filename": "packages/react-dom/src/client/ReactDOMRoot.js",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 56912,
+                "expected_tokens": 2621,
+                "num_commits": 87
+            },
+            {
+                "benchmark_case_prefix": "react_ReactVersions.js",
+                "original_filename": "ReactVersions.js",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 15905,
+                "expected_tokens": 565,
+                "num_commits": 37
+            },
+            {
+                "benchmark_case_prefix": "react_babel.config.js",
+                "original_filename": "babel.config.js",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 1994,
+                "expected_tokens": 229,
+                "num_commits": 4
+            },
+            {
+                "benchmark_case_prefix": "react_packages_shared_forks_ReactFeatureFlags.www-dynamic.js",
+                "original_filename": "packages/shared/forks/ReactFeatureFlags.www-dynamic.js",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 70486,
+                "expected_tokens": 507,
+                "num_commits": 200
+            },
+            {
+                "benchmark_case_prefix": "react_packages_react-dom_src___tests___ReactCompositeComponent-test.js",
+                "original_filename": "packages/react-dom/src/__tests__/ReactCompositeComponent-test.js",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 86495,
+                "expected_tokens": 8467,
+                "num_commits": 60
+            },
+            {
+                "benchmark_case_prefix": "react_packages_react-reconciler_src_ReactFiberLane.js",
+                "original_filename": "packages/react-reconciler/src/ReactFiberLane.js",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 84652,
+                "expected_tokens": 10662,
+                "num_commits": 56
+            },
+            {
+                "benchmark_case_prefix": "react_packages_react-reconciler_src_ReactFiberUnwindWork.js",
+                "original_filename": "packages/react-reconciler/src/ReactFiberUnwindWork.js",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 80001,
+                "expected_tokens": 2243,
+                "num_commits": 78
+            },
+            {
+                "benchmark_case_prefix": "react_packages_react-dom_src___tests___ReactDOMServerIntegrationElements-test.js",
+                "original_filename": "packages/react-dom/src/__tests__/ReactDOMServerIntegrationElements-test.js",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 35359,
+                "expected_tokens": 7705,
+                "num_commits": 38
+            },
+            {
+                "benchmark_case_prefix": "react_scripts_rollup_forks.js",
+                "original_filename": "scripts/rollup/forks.js",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 60956,
+                "expected_tokens": 3697,
+                "num_commits": 117
+            },
+            {
+                "benchmark_case_prefix": "react_packages_react-debug-tools_src_ReactDebugHooks.js",
+                "original_filename": "packages/react-debug-tools/src/ReactDebugHooks.js",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 79648,
+                "expected_tokens": 9705,
+                "num_commits": 118
+            },
+            {
+                "benchmark_case_prefix": "react_packages_react-reconciler_src_ReactInternalTypes.js",
+                "original_filename": "packages/react-reconciler/src/ReactInternalTypes.js",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 78042,
+                "expected_tokens": 3815,
+                "num_commits": 136
+            },
+            {
+                "benchmark_case_prefix": "react_packages_react-devtools-shared_src_backend_views_TraceUpdates_canvas.js",
+                "original_filename": "packages/react-devtools-shared/src/backend/views/TraceUpdates/canvas.js",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 7064,
+                "expected_tokens": 1412,
+                "num_commits": 7
+            },
+            {
+                "benchmark_case_prefix": "react_packages_react-reconciler_src___tests___ReactCache-test.js",
+                "original_filename": "packages/react-reconciler/src/__tests__/ReactCache-test.js",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 75947,
+                "expected_tokens": 1547,
+                "num_commits": 26
+            },
+            {
+                "benchmark_case_prefix": "react_packages_react-reconciler_src___tests___ReactIncrementalUpdates-test.js",
+                "original_filename": "packages/react-reconciler/src/__tests__/ReactIncrementalUpdates-test.js",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 70910,
+                "expected_tokens": 4439,
+                "num_commits": 53
+            },
+            {
+                "benchmark_case_prefix": "react_packages_react-devtools-shared_src_backendAPI.js",
+                "original_filename": "packages/react-devtools-shared/src/backendAPI.js",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 12115,
+                "expected_tokens": 1723,
+                "num_commits": 19
+            },
+            {
+                "benchmark_case_prefix": "react_packages_react-dom_src___tests___ReactDOMServerIntegrationHooks-test.js",
+                "original_filename": "packages/react-dom/src/__tests__/ReactDOMServerIntegrationHooks-test.js",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 75539,
+                "expected_tokens": 6277,
+                "num_commits": 40
+            },
+            {
+                "benchmark_case_prefix": "react_compiler_packages_babel-plugin-react-compiler_src_HIR_PropagateScopeDependenciesHIR.ts",
+                "original_filename": "compiler/packages/babel-plugin-react-compiler/src/HIR/PropagateScopeDependenciesHIR.ts",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 22200,
+                "expected_tokens": 5883,
+                "num_commits": 16
+            },
+            {
+                "benchmark_case_prefix": "react_packages_react-dom_src___tests___ReactServerRendering-test.js",
+                "original_filename": "packages/react-dom/src/__tests__/ReactServerRendering-test.js",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 72949,
+                "expected_tokens": 6888,
+                "num_commits": 76
+            },
+            {
+                "benchmark_case_prefix": "react_packages_react-reconciler_src___tests___ReactFragment-test.js",
+                "original_filename": "packages/react-reconciler/src/__tests__/ReactFragment-test.js",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 72789,
+                "expected_tokens": 5455,
+                "num_commits": 33
+            },
+            {
+                "benchmark_case_prefix": "react_packages_react-dom_src___tests___findDOMNodeFB-test.js",
+                "original_filename": "packages/react-dom/src/__tests__/findDOMNodeFB-test.js",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 3821,
+                "expected_tokens": 1220,
+                "num_commits": 4
+            },
+            {
+                "benchmark_case_prefix": "react_packages_react-reconciler_src_ReactFiberNewContext.js",
+                "original_filename": "packages/react-reconciler/src/ReactFiberNewContext.js",
+                "repo_name": "facebook/react",
+                "repo_commit_hash": "f739642745577a8e4dcb9753836ac3589b9c590a",
+                "prompt_tokens": 56577,
+                "expected_tokens": 4255,
+                "num_commits": 60
+            }
+        ]
+    }
+]

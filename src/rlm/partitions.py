@@ -35,7 +35,7 @@ def partition_text(
     strategy: PartitionStrategy = "token",
     max_tokens: int = 4000,
     overlap_tokens: int = 200,
-    model_name: str = "gpt-4",
+    model_name: str = "gpt-5-mini",
     **kwargs: Any
 ) -> List[Partition]:
     """
@@ -601,7 +601,7 @@ def _create_semantic_partition(
     )
 
 
-def count_tokens(text: str, model_name: str = "gpt-4") -> int:
+def count_tokens(text: str, model_name: str = "gpt-5-mini") -> int:
     """
     Count tokens in text for a given model.
 

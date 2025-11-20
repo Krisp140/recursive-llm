@@ -1,0 +1,49 @@
+
+index 7746ea03..97191fda 100644
+--- a/tldraw_packages_validate_src_lib_validation.ts_expectedoutput.txt (expected):tmp/tmp4ikb9hr3_expected.txt	
++++ b/tldraw_packages_validate_src_lib_validation.ts_extracted.txt (actual):tmp/tmpwbiawwv0_actual.txt	
+@@ -679,17 +679,6 @@ export const unknownObject = new Validator<Record<string, unknown>>((value) => {
+ 	return value as Record<string, unknown>
+ })
+ 
+-/**
+- * Validate an object has a particular shape.
+- *
+- * @public
+- */
+-export function object<Shape extends object>(config: {
+-	readonly [K in keyof Shape]: Validatable<Shape[K]>
+-}): ObjectValidator<MakeUndefinedOptional<Shape>> {
+-	return new ObjectValidator(config) as any
+-}
+-
+ function isPlainObject(value: unknown): value is Record<string, unknown> {
+ 	return (
+ 		typeof value === 'object' &&
+@@ -790,12 +779,14 @@ export const jsonValue: Validator<JsonValue> = new Validator<JsonValue>(
+  *
+  * @public
+  */
+-export function jsonDict(): DictValidator<string, JsonValue> {
+-	return dict(string, jsonValue)
++export function object<Shape extends object>(config: {
++	readonly [K in keyof Shape]: Validatable<Shape[K]>
++}): ObjectValidator<MakeUndefinedOptional<Shape>> {
++	return new ObjectValidator(config) as any
+ }
+ 
+ /**
+- * Validation that an option is a dict with particular keys and values.
++ * Validate an option is a dict with particular keys and values.
+  *
+  * @public
+  */
+@@ -849,7 +840,7 @@ export function numberUnion<Key extends string, Config extends UnionValidatorCon
+ 	return new UnionValidator(
+ 		key,
+ 		config,
+-		(unknownValue, unknownVariant) => {
++		(_unknownValue, unknownVariant) => {
+ 			throw new ValidationError(
+ 				`Expected one of ${Object.keys(config)
+ 					.map((key) => JSON.stringify(key))

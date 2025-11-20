@@ -1,0 +1,13 @@
+
+index 285cd804..2aeabf5c 100644
+--- a/react_packages_react-reconciler_src___tests___ReactFragment-test.js_expectedoutput.txt (expected):tmp/tmpf112p_zc_expected.txt	
++++ b/react_packages_react-reconciler_src___tests___ReactFragment-test.js_extracted.txt (actual):tmp/tmp1vw5p4rg_actual.txt	
+@@ -654,7 +654,7 @@ describe('ReactFragment', () => {
+     function Foo({condition}) {
+       return condition ? (
+         <div>
+-          <React.Fragment key="c">
++          <React.FFragment key="c">
+             <span>foo</span>
+             <div key="b">
+               <Stateful key="a" />

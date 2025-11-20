@@ -1,0 +1,15 @@
+
+index 465e9d98..b3364a71 100644
+--- a/aider_aider_sendchat.py_expectedoutput.txt (expected):tmp/tmpwtq0jcjj_expected.txt	
++++ b/aider_aider_sendchat.py_extracted.txt (actual):tmp/tmpaowj8m9e_actual.txt	
+@@ -17,7 +17,9 @@ def sanity_check_messages(messages):
+ 
+         if last_role and role == last_role:
+             turns = format_messages(messages)
+-            raise ValueError("Messages don't properly alternate user/assistant:\n\n" + turns)
++            raise ValueError(
++                "Messages don't properly alternate user/assistant:\n\n" + turns
++            )
+ 
+         last_role = role
+         last_non_system_role = role

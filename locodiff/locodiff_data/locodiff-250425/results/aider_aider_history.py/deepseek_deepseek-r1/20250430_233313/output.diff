@@ -1,0 +1,13 @@
+
+index ce6172c9..0b29ee26 100644
+--- a/aider_aider_history.py_expectedoutput.txt (expected):tmp/tmpj83okioq_expected.txt	
++++ b/aider_aider_history.py_extracted.txt (actual):tmp/tmpcd3657ya_actual.txt	
+@@ -57,7 +57,7 @@ class ChatSummary:
+                 break
+ 
+         # Ensure the head ends with an assistant message
+-        while messages[split_index - 1]["role"] != "assistant" and split_index > 1:
++        while split_index > 1 and messages[split_index - 1]["role"] != "assistant":
+             split_index -= 1
+ 
+         if split_index <= min_split:

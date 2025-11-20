@@ -1,0 +1,32 @@
+
+index 6902880d..6ecfe4aa 100644
+--- a/qdrant_lib_segment_benches_vector_search.rs_expectedoutput.txt (expected):tmp/tmp2cmynbee_expected.txt	
++++ b/qdrant_lib_segment_benches_vector_search.rs_extracted.txt (actual):tmp/tmpoes7npbc_actual.txt	
+@@ -1,22 +1,20 @@
+ use std::path::Path;
+-use std::sync::Arc;
+ use std::sync::atomic::AtomicBool;
++use std::sync::Arc;
+ 
+ use atomic_refcell::AtomicRefCell;
+ use common::counter::hardware_counter::HardwareCounterCell;
+ use common::types::PointOffsetType;
+-use criterion::{Criterion, criterion_group, criterion_main};
+-use rand::Rng;
++use criterion::{criterion_group, criterion_main, Criterion};
+ use rand::distr::StandardUniform;
+-use segment::common::rocksdb_wrapper::{DB_VECTOR_CF, open_db};
++use rand::Rng;
++use segment::common::rocksdb_wrapper::{open_db, DB_VECTOR_CF};
+ use segment::data_types::vectors::{DenseVector, VectorInternal, VectorRef};
+ use segment::fixtures::payload_context_fixture::FixtureIdTracker;
+ use segment::id_tracker::IdTrackerSS;
+ use segment::types::Distance;
+ use segment::vector_storage::dense::simple_dense_vector_storage::open_simple_dense_vector_storage;
+-use segment::vector_storage::{
+-    DEFAULT_STOPPED, VectorStorage, VectorStorageEnum, new_raw_scorer_for_test,
+-};
++use segment::vector_storage::{new_raw_scorer_for_test, VectorStorage, VectorStorageEnum, DEFAULT_STOPPED};
+ use tempfile::Builder;
+ 
+ const NUM_VECTORS: usize = 100000;

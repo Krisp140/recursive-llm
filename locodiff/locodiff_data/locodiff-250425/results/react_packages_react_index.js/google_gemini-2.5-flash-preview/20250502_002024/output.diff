@@ -1,0 +1,13 @@
+
+index 8d2de2d2..e8264294 100644
+--- a/react_packages_react_index.js_expectedoutput.txt (expected):tmp/tmpyp3gm836_expected.txt	
++++ b/react_packages_react_index.js_extracted.txt (actual):tmp/tmpy71g1hcb_actual.txt	
+@@ -25,7 +25,7 @@ export type Config<Props, DefaultProps> = React$Config<Props, DefaultProps>;
+ export type ChildrenArray<+T> = $ReadOnlyArray<ChildrenArray<T>> | T;
+ 
+ export {
+-  __CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE,
++  __CLIENT_INTERNALS_DO_DO NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE,
+   __COMPILER_RUNTIME,
+   Children,
+   Component,

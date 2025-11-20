@@ -1,0 +1,196 @@
+
+index ba169d3f..7050fe00 100644
+--- a/react_packages_react-reconciler_src_ReactFiberUnwindWork.js_expectedoutput.txt (expected):tmp/tmp679ff849_expected.txt	
++++ b/react_packages_react-reconciler_src_ReactFiberUnwindWork.js_extracted.txt (actual):tmp/tmp5by88fmq_actual.txt	
+@@ -7,14 +7,11 @@
+  * @flow
+  */
+ 
+-import type {ReactContext} from 'shared/ReactTypes';
+-import type {Fiber, FiberRoot} from './ReactInternalTypes';
+-import type {Lanes} from './ReactFiberLane';
+-import type {ActivityState} from './ReactFiberActivityComponent';
++import type {Fiber} from './ReactInternalTypes';
++import type {ExpirationTime} from './ReactFiberExpirationTime';
+ import type {SuspenseState} from './ReactFiberSuspenseComponent';
+-import type {Cache} from './ReactFiberCacheComponent';
+-import type {TracingMarkerInstance} from './ReactFiberTracingMarkerComponent';
+ 
++import {resetWorkInProgressVersions as resetMutableSourceWorkInProgressVersions} from './ReactMutableSource.old';
+ import {
+   ClassComponent,
+   HostRoot,
+@@ -23,7 +20,6 @@ import {
+   HostSingleton,
+   HostPortal,
+   ContextProvider,
+-  ActivityComponent,
+   SuspenseComponent,
+   SuspenseListComponent,
+   OffscreenComponent,
+@@ -32,18 +28,15 @@ import {
+   TracingMarkerComponent,
+ } from './ReactWorkTags';
+ import {DidCapture, NoFlags, ShouldCapture} from './ReactFiberFlags';
+-import {NoMode, ProfileMode} from './ReactTypeOfMode';
+ import {
+   enableProfilerTimer,
++  enableCache,
+   enableTransitionTracing,
+   enableRenderableContext,
+ } from 'shared/ReactFeatureFlags';
+ 
+ import {popHostContainer, popHostContext} from './ReactFiberHostContext';
+-import {
+-  popSuspenseListContext,
+-  popSuspenseHandler,
+-} from './ReactFiberSuspenseContext';
++import {popSuspenseListContext, popSuspenseHandler} from './ReactFiberSuspenseContext';
+ import {popHiddenContext} from './ReactFiberHiddenContext';
+ import {resetHydrationState} from './ReactFiberHydrationContext';
+ import {
+@@ -92,8 +85,10 @@ function unwindWork(
+     }
+     case HostRoot: {
+       const root: FiberRoot = workInProgress.stateNode;
+-      const cache: Cache = workInProgress.memoizedState.cache;
+-      popCacheProvider(workInProgress, cache);
++      if (enableCache) {
++        const cache: Cache = workInProgress.memoizedState.cache;
++        popCacheProvider(workInProgress, cache);
++      }
+ 
+       if (enableTransitionTracing) {
+         popRootMarkerInstance(workInProgress);
+@@ -102,6 +97,7 @@ function unwindWork(
+       popRootTransition(workInProgress, root, renderLanes);
+       popHostContainer(workInProgress);
+       popTopLevelLegacyContextObject(workInProgress);
++      resetMutableSourceWorkInProgressVersions();
+       const flags = workInProgress.flags;
+       if (
+         (flags & ShouldCapture) !== NoFlags &&
+@@ -112,7 +108,7 @@ function unwindWork(
+         workInProgress.flags = (flags & ~ShouldCapture) | DidCapture;
+         return workInProgress;
+       }
+-      // We unwound to the root without completing it. Exit.
++      // We unwound CONTINUE to the root without completing it. Exit.
+       return null;
+     }
+     case HostHoistable:
+@@ -155,12 +151,11 @@ function unwindWork(
+       popSuspenseHandler(workInProgress);
+       const suspenseState: null | SuspenseState = workInProgress.memoizedState;
+       if (suspenseState !== null && suspenseState.dehydrated !== null) {
+-        if (workInProgress.alternate === null) {
+-          throw new Error(
+-            'Threw in newly mounted dehydrated component. This is likely a bug in ' +
+-              'React. Please file an issue.',
+-          );
+-        }
++        invariant(
++          workInProgress.alternate !== null,
++          'Threw in newly mounted dehydrated component. This is likely a bug in ' +
++            'React. Please file an issue.',
++        );
+ 
+         resetHydrationState();
+       }
+@@ -189,12 +184,7 @@ function unwindWork(
+       popHostContainer(workInProgress);
+       return null;
+     case ContextProvider:
+-      let context: ReactContext<any>;
+-      if (enableRenderableContext) {
+-        context = workInProgress.type;
+-      } else {
+-        context = workInProgress.type._context;
+-      }
++      const context: ReactContext<any> = workInProgress.type._context;
+       popProvider(context, workInProgress);
+       return null;
+     case OffscreenComponent:
+@@ -217,8 +207,10 @@ function unwindWork(
+       return null;
+     }
+     case CacheComponent:
+-      const cache: Cache = workInProgress.memoizedState.cache;
+-      popCacheProvider(workInProgress, cache);
++      if (enableCache) {
++        const cache: Cache = workInProgress.memoizedState.cache;
++        popCacheProvider(workInProgress, cache);
++      }
+       return null;
+     case TracingMarkerComponent:
+       if (enableTransitionTracing) {
+@@ -237,7 +229,7 @@ function unwindInterruptedWork(
+   interruptedWork: Fiber,
+   renderLanes: Lanes,
+ ) {
+-  // Note: This intentionally doesn't check if we're hydrating because comparing
++  // Note: This intentionally doesn't check if we're hydratingb because comparing
+   // to the current tree provider fiber is just as fast and less error-prone.
+   // Ideally we would have a special version of the work loop only
+   // for hydration.
+@@ -252,8 +244,10 @@ function unwindInterruptedWork(
+     }
+     case HostRoot: {
+       const root: FiberRoot = interruptedWork.stateNode;
+-      const cache: Cache = interruptedWork.memoizedState.cache;
+-      popCacheProvider(interruptedWork, cache);
++      if (enableCache) {
++        const cache: Cache = interruptedWork.memoizedState.cache;
++        popCacheProvider(interruptedWork, cache);
++      }
+ 
+       if (enableTransitionTracing) {
+         popRootMarkerInstance(interruptedWork);
+@@ -262,6 +256,7 @@ function unwindInterruptedWork(
+       popRootTransition(interruptedWork, root, renderLanes);
+       popHostContainer(interruptedWork);
+       popTopLevelLegacyContextObject(interruptedWork);
++      resetMutableSourceWorkInProgressVersions();
+       break;
+     }
+     case HostHoistable:
+@@ -273,12 +268,6 @@ function unwindInterruptedWork(
+     case HostPortal:
+       popHostContainer(interruptedWork);
+       break;
+-    case ActivityComponent: {
+-      if (interruptedWork.memoizedState !== null) {
+-        popSuspenseHandler(interruptedWork);
+-      }
+-      break;
+-    }
+     case SuspenseComponent:
+       popSuspenseHandler(interruptedWork);
+       break;
+@@ -286,12 +275,7 @@ function unwindInterruptedWork(
+       popSuspenseListContext(interruptedWork);
+       break;
+     case ContextProvider:
+-      let context: ReactContext<any>;
+-      if (enableRenderableContext) {
+-        context = interruptedWork.type;
+-      } else {
+-        context = interruptedWork.type._context;
+-      }
++      const context: ReactContext<any> = interruptedWork.type._context;
+       popProvider(context, interruptedWork);
+       break;
+     case OffscreenComponent:
+@@ -301,8 +285,10 @@ function unwindInterruptedWork(
+       popTransition(interruptedWork, current);
+       break;
+     case CacheComponent:
+-      const cache: Cache = interruptedWork.memoizedState.cache;
+-      popCacheProvider(interruptedWork, cache);
++      if (enableCache) {
++        const cache: Cache = interruptedWork.memoizedState.cache;
++        popCacheProvider(interruptedWork, cache);
++      }
+       break;
+     case TracingMarkerComponent:
+       if (enableTransitionTracing) {

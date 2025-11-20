@@ -1,0 +1,50 @@
+
+index ce88caa2..701abad1 100644
+--- a/tldraw_apps_dotcom_sync-worker_src_TLDrawDurableObject.ts_expectedoutput.txt (expected):tmp/tmpnnc_qayi_expected.txt	
++++ b/tldraw_apps_dotcom_sync-worker_src_TLDrawDurableObject.ts_extracted.txt (actual):tmp/tmp8ivydhtc_actual.txt	
+@@ -40,8 +40,8 @@ import { Kysely } from 'kysely'
+ import { AlarmScheduler } from './AlarmScheduler'
+ import { PERSIST_INTERVAL_MS } from './config'
+ import { createPostgresConnectionPool } from './postgres'
+-import { getR2KeyForRoom } from './r2'
+ import { getPublishedRoomSnapshot } from './routes/tla/tldraw_apps_dotcom_sync-worker_src_TLDrawDurableObject.ts_expectedoutput.txt (expected): 'room', roomId: slug, name: 'room_start' })
+ 						// Also associate file assets after we load the room
+ 						setTimeout(this.maybeAssociateFileAssets.bind(this), PERSIST_INTERVAL_MS)
+@@ -167,6 +166,10 @@ export class TLDrawDurableObject extends DurableObject {
+ 	readonly r2: {
+ 		readonly rooms: R2Bucket
+ 		readonly versionCache: R2Bucket
++		readonly ROOM_SNAPSHOTS: R2Bucket
++		readonly SNAPSHOT_SLUG_TO_PARENT_SLUG: KVNamespace
++		readonly ROOMS_HISTORY_EPHEMERAL: R2Bucket
++		readonly UPLOADS: R2Bucket
+ 	}
+ 
+ 	_documentInfo: DocumentInfo | null = null
+@@ -189,6 +192,10 @@ export class TLDrawDurableObject extends DurableObject {
+ 		this.r2 = {
+ 			rooms: env.ROOMS,
+ 			versionCache: env.ROOMS_HISTORY_EPHEMERAL,
++			ROOM_SNAPSHOTS: env.ROOM_SNAPSHOTS,
++			SNAPSHOT_SLUG_TO_PARENT_SLUG: env.SNAPSHOT_SLUG_TO_PARENT_SLUG,
++			ROOMS_HISTORY_EPHEMERAL: env.ROOMS_HISTORY_EPHEMERAL,
++			UPLOADS: env.UPLOADS,
+ 		}
+ 
+ 		state.blockConcurrencyWhile(async () => {
+@@ -350,7 +357,6 @@ export class TLDrawDurableObject extends DurableObject {
+ 		// handle legacy param names
+ 		sessionId ??= params.sessionKey ?? params.instanceId
+ 		storeId ??= params.localClientId
+-		const isNewSession = !this._room
+ 
+ 		// Create the websocket pair for the client
+ 		const { 0: clientWebSocket, 1: serverWebSocket } = new WebSocketPair()
+@@ -419,6 +425,7 @@ export class TLDrawDurableObject extends DurableObject {
+ 			}
+ 
+ 			// all good
++			const isNewSession = room.getNumActiveSessions() === 0
+ 			room.handleSocketConnect({
+ 				sessionId: sessionId,
+ 				socket: serverWebSocket,

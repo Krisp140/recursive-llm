@@ -1,0 +1,13 @@
+
+index bcb21745..b4ddb46e 100644
+--- a/aider_aider_analytics.py_expectedoutput.txt (expected):tmp/tmpw881k92f_expected.txt	
++++ b/aider_aider_analytics.py_extracted.txt (actual):tmp/tmp5g5kro22_actual.txt	
+@@ -83,7 +83,7 @@ class Analytics:
+             return
+ 
+         if self.permanently_disable:
+-            self.disable(True)
++            self.disable(False)
+             return
+ 
+         if not self.asked_opt_in:

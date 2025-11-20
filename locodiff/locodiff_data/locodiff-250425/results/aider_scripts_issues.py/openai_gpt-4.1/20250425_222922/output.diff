@@ -1,0 +1,23 @@
+
+index 1f6f3a94..3d7080b5 100644
+--- a/aider_scripts_issues.py_expectedoutput.txt (expected):tmp/tmprtg9t2ps_expected.txt	
++++ b/aider_scripts_issues.py_extracted.txt (actual):tmp/tmpbvru38b6_actual.txt	
+@@ -24,6 +24,7 @@ load_dotenv()
+ 
+ BOT_SUFFIX = """
+ 
++
+ Note: [A bot script](https://github.com/Aider-AI/aider/blob/aider_scripts_issues.py_extracted.txt (actual):
+         )
+ 
+         if not auto_yes:
++            # Confirmation prompt
+             confirm = input("Do you want to comment and close duplicate issues? (y/n): ")
+             if confirm.lower() != "y":
+                 print("Skipping this group of issues.")
+                 continue
+ 
++        # Comment and close duplicate issues
+         for issue in issues:
+             if issue["number"] != oldest_issue["number"]:
+                 comment_and_close_duplicate(issue, oldest_issue)

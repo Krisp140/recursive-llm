@@ -1,0 +1,49 @@
+
+index 0a4e2d76..292f79d6 100644
+--- a/qdrant_lib_segment_src_index_field_index_map_index_mod.rs_expectedoutput.txt (expected):tmp/tmpk4ad05sr_expected.txt	
++++ b/qdrant_lib_segment_src_index_field_index_map_index_mod.rs_extracted.txt (actual):tmp/tmph1ewu9oy_actual.txt	
+@@ -1,5 +1,8 @@
++pub mod immutable_map_index;
++pub mod mmap_map_index;
++pub mod mutable_map_index;
++
+ use std::borrow::Borrow;
+-use std::collections::hash_map::Entry;
+ use std::fmt::{Debug, Display};
+ use std::hash::{BuildHasher, Hash};
+ use std::iter;
+@@ -39,10 +42,6 @@ use crate::types::{
+     PayloadKeyType, UuidIntType, ValueVariants,
+ };
+ 
+-pub mod immutable_map_index;
+-pub mod mmap_map_index;
+-pub mod mutable_map_index;
+-
+ pub type IdRefIter<'a> = Box<dyn Iterator<Item = &'a PointOffsetType> + 'a>;
+ pub type IdIter<'a> = Box<dyn Iterator<Item = PointOffsetType> + 'a>;
+ 
+@@ -302,14 +301,6 @@ impl<N: MapIndexKey + ?Sized> MapIndex<N> {
+         }
+     }
+ 
+-    fn files(&self) -> Vec<PathBuf> {
+-        match self {
+-            MapIndex::Mutable(_) => Vec::new(),
+-            MapIndex::Immutable(_) => Vec::new(),
+-            MapIndex::Mmap(index) => index.files(),
+-        }
+-    }
+-
+     /// Estimates cardinality for `except` clause
+     ///
+     /// # Arguments
+@@ -549,7 +540,7 @@ where
+                 hw_cell_wb.incr_delta(size);
+             }
+ 
+-            hw_cell_wb.incr_delta(size_of_val(&id));
++            hw_cell_wb.incr_delta(std::mem::size_of_val(&id));
+             entry.or_default().push(id);
+         }
+ 

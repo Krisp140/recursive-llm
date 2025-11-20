@@ -1,0 +1,47 @@
+
+index 6f97774c..1269bd6f 100644
+--- a/aider_aider_watch.py_expectedoutput.txt (expected):tmp/tmp7vkndkp3_expected.txt	
++++ b/aider_aider_watch.py_extracted.txt (actual):tmp/tmpzvanb6uy_actual.txt	
+@@ -170,9 +170,8 @@ class FileWatcher:
+             self.watcher_thread = None
+             self.stop_event = None
+ 
+-    def process_changes(self):
++    def get_changes(self):
+         """Get any detected file changes"""
+-
+         has_action = None
+         added = False
+         for fname in self.changed_files:
+@@ -220,9 +219,7 @@ class FileWatcher:
+             rel_fname = self.coder.get_rel_fname(fname)
+             res += f"\n{rel_fname}:\n"
+ 
+-            # Convert comment line numbers to line indices (0-based)
+             lois = [ln - 1 for ln, _ in zip(line_nums, comments) if ln > 0]
+-
+             try:
+                 context = TreeContext(
+                     rel_fname,
+@@ -287,12 +284,6 @@ def main():
+     args = parser.parse_args()
+ 
+     directory = args.directory
+-    print(f"Watching source files in {directory}...")
+-
+-    # Example ignore function that ignores files with "test" in the name
+-    def ignore_test_files(path):
+-        return "test" in path.name.lower()
+-
+     watcher = FileWatcher(directory, gitignores=args.gitignore)
+     try:
+         watcher.start()
+@@ -300,7 +291,7 @@ def main():
+             if changes := watcher.get_changes():
+                 for file in sorted(changes.keys()):
+                     print(file)
+-                watcher.changed_files = None
++                watcher.changed_files = set()
+     except KeyboardInterrupt:
+         print("\nStopped watching files")
+         watcher.stop()
