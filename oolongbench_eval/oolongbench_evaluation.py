@@ -22,8 +22,8 @@ class OOLONGBenchEvaluator:
     
     def __init__(
         self,
-        model: str = "gemini/gemini-2.5-pro",
-        recursive_model: str = "gemini/gemini-2.5-flash",
+        model: str = "gpt-5-mini",
+        recursive_model: str = "gpt-5-mini",
         output_dir: str = "oolongbench_results"
     ):
         """
@@ -65,6 +65,40 @@ class OOLONGBenchEvaluator:
             print("Tip: Use 'toy_dnd' for faster testing")
             raise
     
+    def calculate_f1(self, prediction: str, ground_truth: str) -> float:
+        """
+        Calculate F1 score between prediction and ground truth.
+        Simple token overlap F1.
+        """
+        def normalize_text(s):
+            import re
+            import string
+            if not s:
+                return ""
+            s = s.lower()
+            # Remove punctuation
+            s = "".join(c for c in s if c not in string.punctuation)
+            # Remove extra whitespace
+            s = " ".join(s.split())
+            return s
+
+        pred_tokens = normalize_text(prediction).split()
+        truth_tokens = normalize_text(ground_truth).split()
+        
+        if not pred_tokens or not truth_tokens:
+            return 0.0
+            
+        common = set(pred_tokens) & set(truth_tokens)
+        num_same = len(common)
+        
+        if num_same == 0:
+            return 0.0
+            
+        precision = num_same / len(pred_tokens)
+        recall = num_same / len(truth_tokens)
+        
+        return 2 * (precision * recall) / (precision + recall)
+
     async def evaluate_single_example(
         self,
         example: Dict[str, Any],
@@ -85,16 +119,15 @@ class OOLONGBenchEvaluator:
             Results dictionary with metrics
         """
         # Initialize RLM with partition strategy
-        # Note: These parameters will be available once your friend's implementation is merged
         rlm = RLM(
             model=self.model,
             recursive_model=self.recursive_model,
-            # partition_strategy=partition_strategy,  # Uncomment when implemented
-            # retrieval_method=retrieval_method,      # Uncomment when implemented
-            # parallel_subqueries=parallel_subqueries, # Uncomment when implemented
+            partition_strategy=partition_strategy,
+            retrieval_method=retrieval_method,
+            parallel_subqueries=parallel_subqueries,
             max_iterations=30,
             max_depth=5,
-            temperature=0.0  # Use 0 for deterministic evaluation
+            temperature=1.0  # GPT-5 models require temperature=1
         )
         
         # Extract context and question from example
@@ -111,7 +144,9 @@ class OOLONGBenchEvaluator:
                 'question': question,
                 'partition_strategy': partition_strategy,
                 'retrieval_method': retrieval_method,
-                'parallel_subqueries': parallel_subqueries
+                'parallel_subqueries': parallel_subqueries,
+                'f1_score': 0.0,
+                'exact_match': False
             }
         
         # Measure time and tokens
@@ -123,6 +158,10 @@ class OOLONGBenchEvaluator:
             
             elapsed_time = time.time() - start_time
             
+            # Calculate scores
+            f1_score = self.calculate_f1(answer, ground_truth)
+            exact_match = answer.strip().lower() == ground_truth.strip().lower() if ground_truth else False
+
             # Get stats
             stats = rlm.stats
             
@@ -130,6 +169,8 @@ class OOLONGBenchEvaluator:
                 'success': True,
                 'answer': answer,
                 'ground_truth': ground_truth,
+                'f1_score': f1_score,
+                'exact_match': exact_match,
                 'context_length': len(context),
                 'question': question,
                 'llm_calls': stats['llm_calls'],
@@ -148,7 +189,9 @@ class OOLONGBenchEvaluator:
                 'question': question,
                 'partition_strategy': partition_strategy,
                 'retrieval_method': retrieval_method,
-                'parallel_subqueries': parallel_subqueries
+                'parallel_subqueries': parallel_subqueries,
+                'f1_score': 0.0,
+                'exact_match': False
             }
     
     async def evaluate_dataset(
@@ -310,8 +353,8 @@ async def main():
     
     # Initialize evaluator
     evaluator = OOLONGBenchEvaluator(
-        model="gemini/gemini-2.5-pro",           # Or "gpt-4o" for OpenAI
-        recursive_model="gemini/gemini-2.5-flash",  # Or "gpt-4o-mini" for OpenAI
+        model="gpt-5-mini",
+        recursive_model="gpt-5-mini",
         output_dir="oolongbench_results"
     )
     
@@ -324,23 +367,22 @@ async def main():
     print(dataset)
     
     # Define configurations to test
-    # These will be available once your friend's implementation is merged
     partition_strategies = [
         "token",        # Baseline: fixed-size chunks
-        # "structural",   # Uncomment when implemented
-        # "semantic",     # Uncomment when implemented
-        # "learned"       # Uncomment when implemented (stretch goal)
+        "structural",   # Now implemented
+        "semantic",     # Now implemented (requires embedding model)
+        # "learned"       # Not yet implemented
     ]
     
     retrieval_methods = [
         "unfiltered",  # No retrieval (baseline)
-        # "regex",       # Uncomment when implemented
-        # "embedding"    # Uncomment when implemented
+        "regex",       # Now implemented
+        "embedding"    # Now implemented
     ]
     
     parallel_options = [
         False,  # Sequential processing
-        # True    # Uncomment when parallel subqueries are implemented
+        # True    # Parallel not fully implemented in core yet
     ]
     
     # Run evaluation
