@@ -1,5 +1,0 @@
-interface TlaEditorProps {
-  fileSlug: string
-  isEmbed?: boolean
-  deepLinks?: boolean
-}
