@@ -152,6 +152,10 @@ class OOLONGBenchEvaluator:
         # Measure time and tokens
         start_time = time.time()
         
+        # Log what we're processing
+        print(f"  → Question: {question[:80]}{'...' if len(question) > 80 else ''}")
+        print(f"  → Context: {len(context):,} chars")
+        
         try:
             # Run RLM completion
             answer = await rlm.acompletion(query=question, context=context)
@@ -165,6 +169,12 @@ class OOLONGBenchEvaluator:
             # Get stats
             stats = rlm.stats
             
+            # Log summary
+            total_calls = stats['llm_calls'] + stats.get('child_llm_calls', 0)
+            print(f"  → Answer: {answer[:50]}{'...' if len(answer) > 50 else ''}")
+            print(f"  → F1: {f1_score:.3f}, EM: {exact_match}, Time: {elapsed_time:.1f}s")
+            print(f"  → LLM calls: {stats['llm_calls']} root + {stats.get('child_llm_calls', 0)} child = {total_calls} total")
+            
             return {
                 'success': True,
                 'answer': answer,
@@ -174,6 +184,8 @@ class OOLONGBenchEvaluator:
                 'context_length': len(context),
                 'question': question,
                 'llm_calls': stats['llm_calls'],
+                'child_llm_calls': stats.get('child_llm_calls', 0),
+                'total_llm_calls': stats['llm_calls'] + stats.get('child_llm_calls', 0),
                 'iterations': stats['iterations'],
                 'depth': stats['depth'],
                 'elapsed_time': elapsed_time,
@@ -253,11 +265,9 @@ class OOLONGBenchEvaluator:
                         
                         config_results.append(result)
                         
-                        if result['success']:
-                            print(f"  ✓ Success - Time: {result['elapsed_time']:.2f}s, "
-                                  f"LLM calls: {result['llm_calls']}")
-                        else:
+                        if not result['success']:
                             print(f"  ✗ Failed - {result['error']}")
+                        print()  # Blank line between examples
                     
                     # Save configuration results
                     self.save_results(config_name, config_results)

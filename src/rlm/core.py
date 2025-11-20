@@ -90,6 +90,7 @@ class RLM:
 
         # Stats
         self._llm_calls = 0
+        self._child_llm_calls = 0
         self._iterations = 0
 
     def completion(
@@ -274,6 +275,8 @@ class RLM:
             try:
                 answer = await child_rlm.acompletion(query, partition.text, **kwargs)
                 partial_answers.append(answer)
+                # Track child RLM calls
+                self._child_llm_calls += child_rlm.stats['llm_calls']
             except Exception as e:
                 # Record error but continue with other partitions
                 partial_answers.append(f"[Error processing partition {partition.index}: {str(e)}]")
@@ -455,6 +458,7 @@ Provide a comprehensive answer that combines the information from all partitions
         """Get execution statistics."""
         return {
             'llm_calls': self._llm_calls,
+            'child_llm_calls': self._child_llm_calls,
             'iterations': self._iterations,
             'depth': self._current_depth,
         }
