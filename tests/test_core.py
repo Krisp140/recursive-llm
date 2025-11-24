@@ -175,3 +175,144 @@ async def test_api_base_and_key(mock_litellm):
     call_kwargs = mock_litellm.call_args[1]
     assert call_kwargs['api_base'] == "http://localhost:8000"
     assert call_kwargs['api_key'] == "test-key"
+
+
+@pytest.mark.asyncio
+async def test_parallel_subqueries(mock_litellm):
+    """Test parallel sub-query execution produces same results as sequential."""
+    # Mock responses for partitioned execution
+    # First 3 calls: child RLM for partitions (with FINAL())
+    # Fourth call: stitching call (direct text, no FINAL())
+    child_responses = [
+        MockResponse('FINAL("Answer from partition 1")'),
+        MockResponse('FINAL("Answer from partition 2")'),
+        MockResponse('FINAL("Answer from partition 3")'),
+        MockResponse('Stitched final answer'),  # Stitching returns plain text
+    ]
+    mock_litellm.side_effect = child_responses
+
+    # Create long context to trigger partitioning
+    long_context = "Section 1: " + "content " * 1000 + "\n" + \
+                   "Section 2: " + "content " * 1000 + "\n" + \
+                   "Section 3: " + "content " * 1000
+
+    # Test with parallel execution
+    rlm_parallel = RLM(
+        model="test-model",
+        partition_strategy="token",
+        max_partition_tokens=1000,
+        parallel_subqueries=True,
+        max_parallel_subqueries=3
+    )
+
+    result = await rlm_parallel.acompletion("Test query", long_context)
+
+    assert result == "Stitched final answer"
+    # Should have 4 LLM calls: 3 child calls + 1 stitching call
+    assert mock_litellm.call_count == 4
+
+
+@pytest.mark.asyncio
+async def test_sequential_vs_parallel_same_results(mock_litellm):
+    """Test that sequential and parallel execution produce the same results."""
+    long_context = "Part 1 content " * 500 + "\n" + "Part 2 content " * 500
+
+    # Sequential execution
+    sequential_responses = [
+        MockResponse('FINAL("Answer 1")'),
+        MockResponse('FINAL("Answer 2")'),
+        MockResponse('Combined answer'),  # Stitching call
+    ]
+    mock_litellm.side_effect = sequential_responses
+
+    rlm_sequential = RLM(
+        model="test-model",
+        partition_strategy="token",
+        max_partition_tokens=1000,
+        parallel_subqueries=False,
+        max_parallel_subqueries=2
+    )
+
+    result_sequential = await rlm_sequential.acompletion("Test", long_context)
+
+    # Parallel execution
+    parallel_responses = [
+        MockResponse('FINAL("Answer 1")'),
+        MockResponse('FINAL("Answer 2")'),
+        MockResponse('Combined answer'),  # Stitching call
+    ]
+    mock_litellm.side_effect = parallel_responses
+
+    rlm_parallel = RLM(
+        model="test-model",
+        partition_strategy="token",
+        max_partition_tokens=1000,
+        parallel_subqueries=True,
+        max_parallel_subqueries=2
+    )
+
+    result_parallel = await rlm_parallel.acompletion("Test", long_context)
+
+    # Both should produce the same result
+    assert result_sequential == result_parallel
+    assert result_parallel == "Combined answer"
+
+
+@pytest.mark.asyncio
+async def test_parallel_error_handling(mock_litellm):
+    """Test error handling in parallel execution."""
+    # First partition succeeds, second fails, third succeeds
+    async def side_effect_with_error(*args, **kwargs):
+        """Side effect that raises error on second call."""
+        if not hasattr(side_effect_with_error, 'call_count'):
+            side_effect_with_error.call_count = 0
+        side_effect_with_error.call_count += 1
+
+        if side_effect_with_error.call_count == 2:
+            raise Exception("Simulated partition error")
+        elif side_effect_with_error.call_count == 4:
+            # Stitching call (returns plain text)
+            return MockResponse('Stitched with errors')
+        else:
+            return MockResponse('FINAL("Success")')
+
+    mock_litellm.side_effect = side_effect_with_error
+
+    long_context = "A " * 1000 + "B " * 1000 + "C " * 1000
+
+    rlm = RLM(
+        model="test-model",
+        partition_strategy="token",
+        max_partition_tokens=1000,
+        parallel_subqueries=True,
+        max_parallel_subqueries=3
+    )
+
+    # Should not raise, but handle error gracefully
+    result = await rlm.acompletion("Test", long_context)
+
+    # Final result should still be returned
+    assert result == "Stitched with errors"
+
+
+@pytest.mark.asyncio
+async def test_parallel_stats_tracking(mock_litellm):
+    """Test that stats are tracked correctly in parallel mode."""
+    mock_litellm.return_value = MockResponse('FINAL("Answer")')
+
+    long_context = "Content " * 2000
+
+    rlm = RLM(
+        model="test-model",
+        partition_strategy="token",
+        max_partition_tokens=1000,
+        parallel_subqueries=True,
+        max_parallel_subqueries=3
+    )
+
+    await rlm.acompletion("Test", long_context)
+
+    stats = rlm.stats
+    # Should track child LLM calls
+    assert stats['child_llm_calls'] > 0
+    assert stats['depth'] == 0

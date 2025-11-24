@@ -267,19 +267,37 @@ class RLM:
             **self.llm_kwargs
         )
 
-        # Process partitions (sequentially for now, parallel in Phase 4)
+        # Process partitions (Phase 4: parallel or sequential)
         partial_answers: List[str] = []
 
-        for partition in partitions:
-            # Make recursive call on this partition
-            try:
-                answer = await child_rlm.acompletion(query, partition.text, **kwargs)
-                partial_answers.append(answer)
-                # Track child RLM calls
-                self._child_llm_calls += child_rlm.stats['llm_calls']
-            except Exception as e:
-                # Record error but continue with other partitions
-                partial_answers.append(f"[Error processing partition {partition.index}: {str(e)}]")
+        if self.parallel_subqueries:
+            # Parallel execution using asyncio.gather
+            async def process_partition(partition: Any) -> str:
+                """Process a single partition and return its answer."""
+                try:
+                    answer = await child_rlm.acompletion(query, partition.text, **kwargs)
+                    return answer
+                except Exception as e:
+                    return f"[Error processing partition {partition.index}: {str(e)}]"
+
+            # Create tasks for all partitions
+            tasks = [process_partition(partition) for partition in partitions]
+
+            # Execute in parallel
+            partial_answers = await asyncio.gather(*tasks)
+        else:
+            # Sequential execution (original behavior)
+            for partition in partitions:
+                # Make recursive call on this partition
+                try:
+                    answer = await child_rlm.acompletion(query, partition.text, **kwargs)
+                    partial_answers.append(answer)
+                except Exception as e:
+                    # Record error but continue with other partitions
+                    partial_answers.append(f"[Error processing partition {partition.index}: {str(e)}]")
+
+        # Track child RLM calls (after all partitions are processed)
+        self._child_llm_calls += child_rlm.stats['llm_calls']
 
         # Stitch answers together
         # For Phase 1, use simple concatenation
