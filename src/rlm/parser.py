@@ -14,18 +14,51 @@ def extract_final(response: str) -> Optional[str]:
     Returns:
         Extracted answer or None if not found
     """
-    # Look for FINAL("answer") or FINAL('answer')
+    # Try triple quotes first (best for long multiline strings)
     patterns = [
         r'FINAL\s*\(\s*"""(.*)"""',  # FINAL("""answer""") - triple double quotes
         r"FINAL\s*\(\s*'''(.*)'''",  # FINAL('''answer''') - triple single quotes
-        r'FINAL\s*\(\s*"([^"]*)"',  # FINAL("answer") - double quotes
-        r"FINAL\s*\(\s*'([^']*)'",  # FINAL('answer') - single quotes
     ]
 
     for pattern in patterns:
         match = re.search(pattern, response, re.DOTALL)
         if match:
             return match.group(1).strip()
+
+    # Fallback: Manual parsing for complex/long strings
+    # Find FINAL( and then match quotes manually
+    final_match = re.search(r'FINAL\s*\(\s*(["\'])', response)
+    if final_match:
+        quote_char = final_match.group(1)
+        start_pos = final_match.end() - 1  # Position of opening quote
+
+        # Find matching closing quote (handle escapes)
+        i = start_pos + 1
+        result = []
+        while i < len(response):
+            char = response[i]
+            if char == '\\' and i + 1 < len(response):
+                # Escaped character
+                next_char = response[i + 1]
+                if next_char == 'n':
+                    result.append('\n')
+                elif next_char == 't':
+                    result.append('\t')
+                elif next_char == 'r':
+                    result.append('\r')
+                elif next_char == '\\':
+                    result.append('\\')
+                elif next_char == quote_char:
+                    result.append(quote_char)
+                else:
+                    result.append(next_char)
+                i += 2
+            elif char == quote_char:
+                # Found closing quote
+                return ''.join(result)
+            else:
+                result.append(char)
+                i += 1
 
     return None
 

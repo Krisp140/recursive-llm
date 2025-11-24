@@ -150,6 +150,7 @@ class REPLExecutor:
         restricted_globals['_getitem_'] = lambda obj, index: obj[index]
         restricted_globals['_getiter_'] = iter
         restricted_globals['_print_'] = PrintCollector
+        restricted_globals['_inplacevar_'] = lambda op, x, y: op(x, y)  # For +=, -=, etc.
 
         # Add additional safe builtins
         restricted_globals.update({
