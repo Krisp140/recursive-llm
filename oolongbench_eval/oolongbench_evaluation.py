@@ -56,11 +56,11 @@ class OOLONGBenchEvaluator:
         try:
             # OOLONGBench requires a config name: 'dnd' or 'toy_dnd'
             dataset = load_dataset("oolongbench/oolong-real", config)
-            print(f"✓ Loaded OOLONGBench successfully (config: {config})")
+            print(f"[OK] Loaded OOLONGBench successfully (config: {config})")
             print(f"  Available splits: {list(dataset.keys())}")
             return dataset
         except Exception as e:
-            print(f"❌ Error loading dataset: {e}")
+            print(f"[ERROR] Error loading dataset: {e}")
             print("\nAvailable configs: 'dnd', 'toy_dnd'")
             print("Tip: Use 'toy_dnd' for faster testing")
             raise
@@ -153,8 +153,8 @@ class OOLONGBenchEvaluator:
         start_time = time.time()
         
         # Log what we're processing
-        print(f"  → Question: {question[:80]}{'...' if len(question) > 80 else ''}")
-        print(f"  → Context: {len(context):,} chars")
+        print(f"  -> Question: {question[:80]}{'...' if len(question) > 80 else ''}")
+        print(f"  -> Context: {len(context):,} chars")
         
         try:
             # Run RLM completion
@@ -171,9 +171,9 @@ class OOLONGBenchEvaluator:
             
             # Log summary
             total_calls = stats['llm_calls'] + stats.get('child_llm_calls', 0)
-            print(f"  → Answer: {answer[:50]}{'...' if len(answer) > 50 else ''}")
-            print(f"  → F1: {f1_score:.3f}, EM: {exact_match}, Time: {elapsed_time:.1f}s")
-            print(f"  → LLM calls: {stats['llm_calls']} root + {stats.get('child_llm_calls', 0)} child = {total_calls} total")
+            print(f"  -> Answer: {answer[:50]}{'...' if len(answer) > 50 else ''}")
+            print(f"  -> F1: {f1_score:.3f}, EM: {exact_match}, Time: {elapsed_time:.1f}s")
+            print(f"  -> LLM calls: {stats['llm_calls']} root + {stats.get('child_llm_calls', 0)} child = {total_calls} total")
             
             return {
                 'success': True,
@@ -266,7 +266,7 @@ class OOLONGBenchEvaluator:
                         config_results.append(result)
                         
                         if not result['success']:
-                            print(f"  ✗ Failed - {result['error']}")
+                            print(f"  [FAILED] {result['error']}")
                         print()  # Blank line between examples
                     
                     # Save configuration results
@@ -285,7 +285,7 @@ class OOLONGBenchEvaluator:
         with open(output_file, 'w') as f:
             json.dump(results, f, indent=2)
         
-        print(f"\n✓ Saved results to {output_file}")
+        print(f"\n[OK] Saved results to {output_file}")
     
     def generate_summary_report(self, all_results: List[Dict[str, Any]]):
         """Generate and save summary statistics."""
@@ -355,7 +355,7 @@ class OOLONGBenchEvaluator:
             print(f"  Avg Iterations: {metrics['avg_iterations']:.1f}")
             print()
         
-        print(f"✓ Saved summary to {summary_file}")
+        print(f"[OK] Saved summary to {summary_file}")
 
 
 async def main():
@@ -405,7 +405,7 @@ async def main():
         max_examples=5  # Change to 10, 20, or None (all examples)
     )
     
-    print("\n✓ Evaluation complete!")
+    print("\n[OK] Evaluation complete!")
     print(f"Results saved to {evaluator.output_dir}")
 
 
@@ -414,13 +414,13 @@ if __name__ == "__main__":
     load_dotenv()
     
     # Check for API key
-    if not os.getenv("GEMINI_API_KEY"):
-        print("❌ Error: GEMINI_API_KEY not found!")
+    if not os.getenv("OPENAI_API_KEY"):
+        print("[ERROR] OPENAI_API_KEY not found!")
         print("\nPlease set your API key:")
         print("  1. Create a .env file in the project root with:")
-        print("     GEMINI_API_KEY=your-key-here")
+        print("     OPENAI_API_KEY=your-key-here")
         print("  2. Or export it in your shell:")
-        print("     export GEMINI_API_KEY='your-key-here'")
+        print("     export OPENAI_API_KEY='your-key-here'")
         exit(1)
     
     # Install required packages if needed
