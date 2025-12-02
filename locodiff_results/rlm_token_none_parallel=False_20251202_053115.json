@@ -1,0 +1,62 @@
+[
+  {
+    "success": false,
+    "id": "aider_aider___init__.py",
+    "error": "Unknown retrieval method: none",
+    "repo": "aider",
+    "language": "Python",
+    "prompt_tokens": 59517,
+    "partition_strategy": "token",
+    "retrieval_method": "none",
+    "parallel_subqueries": false,
+    "method": "rlm"
+  },
+  {
+    "success": false,
+    "id": "aider_aider_analytics.py",
+    "error": "Unknown retrieval method: none",
+    "repo": "aider",
+    "language": "Python",
+    "prompt_tokens": 24542,
+    "partition_strategy": "token",
+    "retrieval_method": "none",
+    "parallel_subqueries": false,
+    "method": "rlm"
+  },
+  {
+    "success": false,
+    "id": "aider_aider_args.py",
+    "error": "Unknown retrieval method: none",
+    "repo": "aider",
+    "language": "Python",
+    "prompt_tokens": 61543,
+    "partition_strategy": "token",
+    "retrieval_method": "none",
+    "parallel_subqueries": false,
+    "method": "rlm"
+  },
+  {
+    "success": false,
+    "id": "aider_aider_coders_editblock_coder.py",
+    "error": "Unknown retrieval method: none",
+    "repo": "aider",
+    "language": "Python",
+    "prompt_tokens": 56338,
+    "partition_strategy": "token",
+    "retrieval_method": "none",
+    "parallel_subqueries": false,
+    "method": "rlm"
+  },
+  {
+    "success": false,
+    "id": "aider_aider_coders_patch_coder.py",
+    "error": "Unknown retrieval method: none",
+    "repo": "aider",
+    "language": "Python",
+    "prompt_tokens": 22441,
+    "partition_strategy": "token",
+    "retrieval_method": "none",
+    "parallel_subqueries": false,
+    "method": "rlm"
+  }
+]
