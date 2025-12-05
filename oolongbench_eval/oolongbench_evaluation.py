@@ -99,6 +99,28 @@ class OOLONGBenchEvaluator:
         
         return 2 * (precision * recall) / (precision + recall)
 
+    def calculate_numeric_error(self, prediction: str, ground_truth: str) -> float:
+        """
+        Calculate percentage error if both prediction and ground truth are numeric.
+        Returns -1.0 if non-numeric.
+        """
+        try:
+            # Remove commas and handle basic cleaning
+            import re
+            def clean_num(s):
+                return float(re.sub(r'[^\d.]', '', s.split()[0] if s else ''))
+
+            pred_val = clean_num(prediction)
+            truth_val = clean_num(ground_truth)
+            
+            if truth_val == 0:
+                return 0.0 if pred_val == 0 else float('inf')
+                
+            error = abs(pred_val - truth_val) / truth_val
+            return error
+        except:
+            return -1.0
+
     async def evaluate_single_example(
         self,
         example: Dict[str, Any],
@@ -165,6 +187,7 @@ class OOLONGBenchEvaluator:
             # Calculate scores
             f1_score = self.calculate_f1(answer, ground_truth)
             exact_match = answer.strip().lower() == ground_truth.strip().lower() if ground_truth else False
+            numeric_error = self.calculate_numeric_error(answer, ground_truth)
 
             # Get stats
             stats = rlm.stats
@@ -172,7 +195,13 @@ class OOLONGBenchEvaluator:
             # Log summary
             total_calls = stats['llm_calls'] + stats.get('child_llm_calls', 0)
             print(f"  -> Answer: {answer[:50]}{'...' if len(answer) > 50 else ''}")
-            print(f"  -> F1: {f1_score:.3f}, EM: {exact_match}, Time: {elapsed_time:.1f}s")
+            
+            log_msg = f"  -> F1: {f1_score:.3f}, EM: {exact_match}"
+            if numeric_error >= 0:
+                log_msg += f", Num Error: {numeric_error:.1%}"
+            log_msg += f", Time: {elapsed_time:.1f}s"
+            print(log_msg)
+            
             print(f"  -> LLM calls: {stats['llm_calls']} root + {stats.get('child_llm_calls', 0)} child = {total_calls} total")
             
             return {
@@ -181,6 +210,7 @@ class OOLONGBenchEvaluator:
                 'ground_truth': ground_truth,
                 'f1_score': f1_score,
                 'exact_match': exact_match,
+                'numeric_error': numeric_error,
                 'context_length': len(context),
                 'question': question,
                 'llm_calls': stats['llm_calls'],
@@ -402,7 +432,7 @@ async def main():
         partition_strategies,
         retrieval_methods,
         parallel_options,
-        max_examples=5  # Change to 10, 20, or None (all examples)
+        max_examples=1  # Change to 10, 20, or None (all examples)
     )
     
     print("\n[OK] Evaluation complete!")

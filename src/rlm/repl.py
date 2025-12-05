@@ -7,6 +7,8 @@ from RestrictedPython import compile_restricted_exec, safe_globals, limited_buil
 from RestrictedPython.Guards import guarded_iter_unpack_sequence, safer_getattr
 from RestrictedPython.PrintCollector import PrintCollector
 
+from .exceptions import FinalAnswer
+
 
 class REPLError(Exception):
     """Error during REPL execution."""
@@ -98,6 +100,10 @@ class REPLExecutor:
                 return f"{truncated}\n\n[Output truncated: {len(output)} chars total, showing first {self.max_output_chars}]"
 
             return output.strip()
+
+        except FinalAnswer:
+            # Re-raise FinalAnswer to be handled by caller
+            raise
 
         except Exception as e:
             raise REPLError(f"Execution error: {str(e)}")

@@ -30,7 +30,7 @@ Examples:
 - errors = re.findall(r'ERROR', context)  # Find all ERROR
 - count = len(errors); print(count)  # Count and show
 
-When you have the answer, use FINAL("answer") - this is NOT a function, just write it as text.
+When you have the answer, use FINAL("answer") or FINAL(variable_name).
 
 Depth: {depth}"""
 

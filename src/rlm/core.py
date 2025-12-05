@@ -8,6 +8,7 @@ import litellm
 
 from .types import Message
 from .repl import REPLExecutor, REPLError
+from .exceptions import FinalAnswer
 from .prompts import build_system_prompt
 from .parser import parse_response, is_final
 from .partitions import partition_text, Partition
@@ -187,19 +188,21 @@ class RLM:
             # Call LLM
             response = await self._call_llm(messages, **kwargs)
 
-            # Check for FINAL
-            if is_final(response):
-                answer = parse_response(response, repl_env)
-                if answer is not None:
-                    return answer
-
             # Execute code in REPL
             try:
                 exec_result = self.repl.execute(response, repl_env)
+            except FinalAnswer as e:
+                return str(e.value)
             except REPLError as e:
                 exec_result = f"Error: {str(e)}"
             except Exception as e:
                 exec_result = f"Unexpected error: {str(e)}"
+
+            # Check for FINAL (fallback for non-code responses)
+            if is_final(response):
+                answer = parse_response(response, repl_env)
+                if answer is not None:
+                    return answer
 
             # Add to conversation
             messages.append({"role": "assistant", "content": response})
@@ -332,17 +335,21 @@ class RLM:
             for i, answer in enumerate(partial_answers)
         ])
 
-        stitching_prompt = f"""You received partial answers from different parts of a document. Synthesize them into a single coherent answer.
+        stitching_prompt = f"""You received partial answers from different parts of a document. Synthesize them into a single final answer.
 
 Original question: {query}
 
 {answers_text}
 
-Provide a comprehensive answer that combines the information from all partitions."""
+Instructions:
+1. If the answers are partial counts or lists from different sections, combine them (e.g. sum them up or concatenate lists).
+2. If they are attempts to answer the same question from different contexts, synthesize the key information.
+3. Answer the Original Question directly. Do NOT provide a meta-summary of what each partition said.
+4. If the answer is a number, provide just the number or the number with units."""
 
         # Call LLM to synthesize
         messages: List[Message] = [
-            {"role": "system", "content": "You are a helpful assistant that synthesizes information from multiple sources."},
+            {"role": "system", "content": "You are a helpful assistant that synthesizes information from multiple sources into a direct answer."},
             {"role": "user", "content": stitching_prompt}
         ]
 
@@ -400,11 +407,17 @@ Provide a comprehensive answer that combines the information from all partitions
         Returns:
             Environment dict
         """
+        def final_func(answer: Any) -> None:
+            """Capture final answer."""
+            raise FinalAnswer(answer)
+
         env: Dict[str, Any] = {
             'context': context,
             'query': query,
             'recursive_llm': self._make_recursive_fn(),
             're': re,  # Whitelist re module
+            'FINAL': final_func,
+            'FINAL_VAR': final_func,
         }
         return env
 
