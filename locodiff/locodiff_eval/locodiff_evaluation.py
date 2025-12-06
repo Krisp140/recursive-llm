@@ -31,8 +31,8 @@ class LoCoDiffEvaluator:
 
     def __init__(
         self,
-        model: str = "gpt-5-mini",
-        recursive_model: str = "gpt-5-mini",
+        model: str = "gpt-4o-mini",
+        recursive_model: str = "gpt-4o-mini",
         output_dir: str = "locodiff/locodiff_results",
         dataset_dir: str = "locodiff/locodiff_data/locodiff-250425"
     ):
@@ -307,13 +307,14 @@ class LoCoDiffEvaluator:
         # Convert to RLM format
         query, context = self._convert_prompt_to_rlm_format(example['prompt'])
 
-        # Initialize RLM
+        # Initialize RLM with LoCoDiff-specific prompt
         rlm_kwargs = {
             'model': self.model,
             'recursive_model': self.recursive_model,
-            'max_iterations': 30,
+            'max_iterations': 20,  # Large files need more iterations
             'max_depth': 5,
-            'temperature': 1.0  # Deterministic
+            'temperature': 0.0,  # Deterministic for reproducibility
+            'task': 'locodiff'  # Use LoCoDiff-specific prompt
         }
 
         # Add partition/retrieval config if specified
@@ -512,9 +513,17 @@ class LoCoDiffEvaluator:
             for retrieval_method in retrieval_methods:
                 for parallel in parallel_options:
 
-                    # Skip invalid combinations
-                    if partition_strategy is None and retrieval_method != 'none':
-                        continue
+                    # Skip invalid combinations:
+                    # - No partitioning: only run once (skip if retrieval_method != 'unfiltered')
+                    # - With partitioning: retrieval_method must be valid (not 'none')
+                    if partition_strategy is None:
+                        # For no partitioning, just run once with first retrieval method
+                        if retrieval_method != retrieval_methods[0]:
+                            continue
+                    else:
+                        # With partitioning, skip 'none' retrieval method
+                        if retrieval_method == 'none':
+                            continue
 
                     config_name = f"rlm_{partition_strategy or 'none'}_{retrieval_method}_parallel={parallel}"
                     print(f"\n{'='*60}")
@@ -644,9 +653,9 @@ async def main():
     # Initialize evaluator
     # Change models based on your API keys (OpenAI, Anthropic, or Gemini)
     evaluator = LoCoDiffEvaluator(
-        model="gpt-5-mini",                    # Or "claude-sonnet-4", "gemini/gemini-2.5-pro"
-        recursive_model="gpt-5-mini",     # Or "claude-haiku-4", "gemini/gemini-2.5-flash"
-        output_dir="locodiff_results",
+        model="gpt-4o-mini",                  # Or "claude-sonnet-4", "gemini/gemini-2.0-flash"
+        recursive_model="gpt-4o-mini",        # Or "claude-haiku-4", "gemini/gemini-2.0-flash"
+        output_dir="locodiff/locodiff_results",
         dataset_dir="locodiff/locodiff_data/locodiff-250425"
     )
 
@@ -656,21 +665,21 @@ async def main():
     # Define configurations to test
     partition_strategies = [
         None,  # No partitioning (traditional RLM)
-        "token",
-        "structural",
-        "semantic"
+         #"token",      # Uncomment to test partitioning strategies
+         #"structural",
+         #"semantic"
     ]
 
+    # Note: "unfiltered", "regex", "embedding" are only used with partitioning
     retrieval_methods = [
-        "none",
-        "unfiltered",
-        "regex",
-        "embedding"
+        "unfiltered",  # Use all partitions
+        #"regex",     # Filter by regex match
+        #"embedding"  # Filter by embedding similarity
     ]
 
     parallel_options = [
         False,  # Sequential
-        # True  # Parallel (uncomment when ready to test)
+        #True  # Parallel (uncomment when ready to test)
     ]
 
     # Run evaluation
@@ -681,7 +690,7 @@ async def main():
         retrieval_methods,
         parallel_options,
         include_baseline=True,
-        max_examples=5  # Change to None for full evaluation
+        max_examples=100  # Change to None for full evaluation
     )
 
     print("\n✓ Evaluation complete!")

@@ -31,14 +31,25 @@ pip install matplotlib
 
 ### 2. Download Dataset
 
-The dataset has already been downloaded to `locodiff_data/locodiff-250425/` as part of the integration. If you need to re-download:
+**Important:** The dataset is NOT included in the repository (323MB). Use the download script:
 
+```bash
+# Run the download script
+bash locodiff/scripts/download_dataset.sh
+```
+
+This will:
+- Clone the LoCoDiff-bench repository to `external/`
+- Copy the dataset (200 files, ~323MB) to `locodiff/locodiff_data/`
+- Verify the download with statistics
+
+**Manual download** (alternative):
 ```bash
 # Clone LoCoDiff-bench repository
 git clone https://github.com/AbanteAI/LoCoDiff-bench external/LoCoDiff-bench
 
 # Copy dataset to project
-cp -r external/LoCoDiff-bench/locodiff-250425 locodiff_data/
+cp -r external/LoCoDiff-bench/locodiff-250425 locodiff/locodiff_data/
 ```
 
 ### 3. Configure API Keys
