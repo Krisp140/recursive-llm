@@ -8,7 +8,7 @@ import litellm
 
 from .types import Message
 from .repl import REPLExecutor, REPLError
-from .prompts import build_system_prompt
+from .prompts import build_system_prompt, build_locodiff_prompt
 from .parser import parse_response, is_final
 from .partitions import partition_text, Partition
 from .retrieval import PartitionRetriever
@@ -48,6 +48,8 @@ class RLM:
         max_parallel_subqueries: int = 5,
         max_partition_tokens: int = 4000,
         partition_overlap_tokens: int = 200,
+        # Task-specific prompt
+        task: Optional[str] = None,
         **llm_kwargs: Any
     ):
         """
@@ -67,6 +69,7 @@ class RLM:
             max_parallel_subqueries: Maximum number of parallel recursive calls
             max_partition_tokens: Maximum tokens per partition
             partition_overlap_tokens: Token overlap between partitions
+            task: Task-specific prompt type ("locodiff" for git diff reconstruction)
             **llm_kwargs: Additional LiteLLM parameters
         """
         self.model = model
@@ -85,6 +88,9 @@ class RLM:
         self.max_parallel_subqueries = max_parallel_subqueries
         self.max_partition_tokens = max_partition_tokens
         self.partition_overlap_tokens = partition_overlap_tokens
+
+        # Task-specific prompt
+        self.task = task
 
         self.repl = REPLExecutor()
 
@@ -173,11 +179,17 @@ class RLM:
         # Initialize REPL environment
         repl_env = self._build_repl_env(query, context)
 
-        # Build initial messages
-        system_prompt = build_system_prompt(len(context), self._current_depth)
+        # Build initial messages (use task-specific prompt if specified)
+        if self.task == "locodiff":
+            from .prompts import build_iteration_prompt
+            system_prompt = build_locodiff_prompt(len(context), self._current_depth)
+            initial_user_prompt = build_iteration_prompt(query, iteration=0)
+        else:
+            system_prompt = build_system_prompt(len(context), self._current_depth)
+            initial_user_prompt = query
         messages: List[Message] = [
             {"role": "system", "content": system_prompt},
-            {"role": "user", "content": query}
+            {"role": "user", "content": initial_user_prompt}
         ]
 
         # Main loop
@@ -201,9 +213,14 @@ class RLM:
             except Exception as e:
                 exec_result = f"Unexpected error: {str(e)}"
 
-            # Add to conversation
+            # Add to conversation with iteration-aware prompts for locodiff
             messages.append({"role": "assistant", "content": response})
-            messages.append({"role": "user", "content": exec_result})
+            if self.task == "locodiff":
+                from .prompts import build_iteration_prompt
+                user_content = f"REPL Output:\n{exec_result}\n\n{build_iteration_prompt(query, iteration + 1)}"
+            else:
+                user_content = exec_result
+            messages.append({"role": "user", "content": user_content})
 
         raise MaxIterationsError(
             f"Max iterations ({self.max_iterations}) exceeded without FINAL()"
@@ -400,10 +417,29 @@ Provide a comprehensive answer that combines the information from all partitions
         Returns:
             Environment dict
         """
+        recursive_fn = self._make_recursive_fn()
+        llm_query_fn = self._make_llm_query_fn()
+        
+        def strip_markdown(text: str) -> str:
+            """Remove markdown code block wrappers from text."""
+            text = text.strip()
+            # Remove ```language ... ``` wrappers
+            if text.startswith('```'):
+                # Find end of first line (language identifier)
+                first_newline = text.find('\n')
+                if first_newline != -1:
+                    text = text[first_newline + 1:]
+                # Remove trailing ```
+                if text.rstrip().endswith('```'):
+                    text = text.rstrip()[:-3].rstrip()
+            return text
+        
         env: Dict[str, Any] = {
             'context': context,
             'query': query,
-            'recursive_llm': self._make_recursive_fn(),
+            'recursive_llm': recursive_fn,
+            'llm_query': llm_query_fn,  # Simple single-argument LLM query
+            'strip_markdown': strip_markdown,  # Helper to clean LLM output
             're': re,  # Whitelist re module
         }
         return env
@@ -470,6 +506,55 @@ Provide a comprehensive answer that combines the information from all partitions
                 return asyncio.run(recursive_llm(sub_query, sub_context))
 
         return sync_recursive_llm
+
+    def _make_llm_query_fn(self) -> Any:
+        """
+        Create simple LLM query function for REPL (single-argument version).
+
+        Returns:
+            Sync function that takes a prompt and returns LLM response
+        """
+        async def async_llm_query(prompt: str) -> str:
+            """
+            Query LLM with a single prompt.
+
+            Args:
+                prompt: The prompt to send to the LLM
+
+            Returns:
+                LLM response text
+            """
+            if self._current_depth + 1 >= self.max_depth:
+                return f"Max recursion depth ({self.max_depth}) reached"
+
+            # Direct LLM call without REPL loop
+            messages = [{"role": "user", "content": prompt}]
+            
+            try:
+                response = await litellm.acompletion(
+                    model=self.recursive_model,
+                    messages=messages,
+                    api_base=self.api_base,
+                    api_key=self.api_key,
+                    **self.llm_kwargs
+                )
+                self._child_llm_calls += 1
+                return response.choices[0].message.content
+            except Exception as e:
+                return f"Error querying LLM: {str(e)}"
+
+        def sync_llm_query(prompt: str) -> str:
+            """Sync wrapper for llm_query."""
+            try:
+                loop = asyncio.get_running_loop()
+                import concurrent.futures
+                with concurrent.futures.ThreadPoolExecutor() as executor:
+                    future = executor.submit(asyncio.run, async_llm_query(prompt))
+                    return future.result()
+            except RuntimeError:
+                return asyncio.run(async_llm_query(prompt))
+
+        return sync_llm_query
 
     @property
     def stats(self) -> Dict[str, int]:

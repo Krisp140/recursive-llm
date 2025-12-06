@@ -145,8 +145,6 @@ oolongbench_results/
 
 # LoCoDiff benchmark data and results (use download script)
 locodiff/locodiff_data/
-locodiff/locodiff_results/
 locodiff_data/
-locodiff_results/
 external/LoCoDiff-bench/
 

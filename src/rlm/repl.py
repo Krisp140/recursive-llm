@@ -16,7 +16,7 @@ class REPLError(Exception):
 class REPLExecutor:
     """Safe Python code executor."""
 
-    def __init__(self, timeout: int = 5, max_output_chars: int = 2000):
+    def __init__(self, timeout: int = 5, max_output_chars: int = 10000):
         """
         Initialize REPL executor.
 
@@ -115,12 +115,13 @@ class REPLExecutor:
         Returns:
             Extracted code
         """
-        # Check for markdown code blocks
-        if '```python' in text:
-            start = text.find('```python') + len('```python')
-            end = text.find('```', start)
-            if end != -1:
-                return text[start:end].strip()
+        # Check for markdown code blocks (support both ```python and ```repl)
+        for lang in ['```python', '```repl']:
+            if lang in text:
+                start = text.find(lang) + len(lang)
+                end = text.find('```', start)
+                if end != -1:
+                    return text[start:end].strip()
 
         if '```' in text:
             start = text.find('```') + 3
@@ -151,6 +152,9 @@ class REPLExecutor:
         restricted_globals['_getiter_'] = iter
         restricted_globals['_print_'] = PrintCollector
         restricted_globals['_inplacevar_'] = lambda op, x, y: op(x, y)  # For +=, -=, etc.
+        
+        # Guard for list/dict modification (insert, append, pop, etc.)
+        restricted_globals['_write_'] = lambda obj: obj  # Allow writes to containers
 
         # Add additional safe builtins
         restricted_globals.update({

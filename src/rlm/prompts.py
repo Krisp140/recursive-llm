@@ -37,6 +37,40 @@ Depth: {depth}"""
     return prompt
 
 
+def build_locodiff_prompt(context_size: int, depth: int = 0) -> str:
+    """
+    Build system prompt optimized for LoCoDiff file reconstruction from git history.
+
+    Args:
+        context_size: Size of context in characters
+        depth: Current recursion depth
+
+    Returns:
+        System prompt string
+    """
+    
+    return f"""Reconstruct a file from git history.
+
+AVAILABLE:
+- context: git log output ({context_size:,} chars) 
+- llm_query(prompt): call sub-LLM
+- strip_markdown(s): clean output
+- FINAL_VAR(x): return result
+
+DO THIS:
+```repl
+r = llm_query(f\"\"\"Reconstruct the file from git log. Output ONLY the file, no markdown.
+{{context}}\"\"\")
+result = strip_markdown(r)
+```
+
+```repl
+FINAL_VAR(result)
+```
+
+Depth: {depth}"""
+
+
 def build_user_prompt(query: str) -> str:
     """
     Build user prompt.
@@ -48,3 +82,20 @@ def build_user_prompt(query: str) -> str:
         User prompt string
     """
     return query
+
+
+def build_iteration_prompt(query: str, iteration: int = 0) -> str:
+    """
+    Build iteration-aware user prompt for LoCoDiff.
+
+    Args:
+        query: User's question
+        iteration: Current iteration number
+
+    Returns:
+        User prompt string
+    """
+    if iteration == 0:
+        return f"Task: {query}\n\nUse the REPL to call llm_query with the full context. Execute the strategy shown above."
+    else:
+        return "Continue. If you have the result, use FINAL_VAR(result) to return it."
