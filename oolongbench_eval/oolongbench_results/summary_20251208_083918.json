@@ -1,0 +1,126 @@
+{
+  "timestamp": "2025-12-08T08:39:18.001697",
+  "configurations": {
+    "gpt-5-mini_Direct": {
+      "num_examples": 19,
+      "avg_oolong_score": 3.374592770651671e-118,
+      "avg_f1_score": 0.3361539045749572,
+      "exact_match_count": 0,
+      "exact_match_rate": 0.0,
+      "avg_time": 25.976443654612492,
+      "avg_llm_calls": 1.0,
+      "avg_iterations": 0.0,
+      "total_time": 493.55242943763733
+    },
+    "RLM_gpt-5-mini_REPL_Default": {
+      "num_examples": 18,
+      "avg_oolong_score": 1.1270612094606255e-118,
+      "avg_f1_score": 0.054390054390054385,
+      "exact_match_count": 0,
+      "exact_match_rate": 0.0,
+      "avg_time": 44.33947094281515,
+      "avg_llm_calls": 2.611111111111111,
+      "avg_iterations": 2.611111111111111,
+      "total_time": 798.1104769706726
+    },
+    "RLM_gpt-5-mini_token_unfiltered": {
+      "num_examples": 20,
+      "avg_oolong_score": 2.9159223815968956e-34,
+      "avg_f1_score": 0.015384615384615382,
+      "exact_match_count": 0,
+      "exact_match_rate": 0.0,
+      "avg_time": 130.67909523248673,
+      "avg_llm_calls": 13.1,
+      "avg_iterations": 0.0,
+      "total_time": 2613.5819046497345
+    },
+    "RLM_gpt-5-mini_token_regex": {
+      "num_examples": 20,
+      "avg_oolong_score": 2.9159223815968956e-34,
+      "avg_f1_score": 0.015384615384615382,
+      "exact_match_count": 0,
+      "exact_match_rate": 0.0,
+      "avg_time": 137.55178797245026,
+      "avg_llm_calls": 15.6,
+      "avg_iterations": 0.0,
+      "total_time": 2751.035759449005
+    },
+    "RLM_gpt-5-mini_token_embedding": {
+      "num_examples": 20,
+      "avg_oolong_score": 2.9159223815968956e-34,
+      "avg_f1_score": 0.04538461538461538,
+      "exact_match_count": 0,
+      "exact_match_rate": 0.0,
+      "avg_time": 122.60939131975174,
+      "avg_llm_calls": 11.75,
+      "avg_iterations": 0.0,
+      "total_time": 2452.187826395035
+    },
+    "RLM_gpt-5-mini_structural_unfiltered": {
+      "num_examples": 20,
+      "avg_oolong_score": 2.9159223815968956e-34,
+      "avg_f1_score": 0.015384615384615382,
+      "exact_match_count": 0,
+      "exact_match_rate": 0.0,
+      "avg_time": 132.09421577453614,
+      "avg_llm_calls": 13.55,
+      "avg_iterations": 0.0,
+      "total_time": 2641.8843154907227
+    },
+    "RLM_gpt-5-mini_structural_regex": {
+      "num_examples": 20,
+      "avg_oolong_score": 2.9159223815968956e-34,
+      "avg_f1_score": 0.04538461538461538,
+      "exact_match_count": 0,
+      "exact_match_rate": 0.0,
+      "avg_time": 199.46601380109786,
+      "avg_llm_calls": 15.7,
+      "avg_iterations": 0.0,
+      "total_time": 3989.3202760219574
+    },
+    "RLM_gpt-5-mini_structural_embedding": {
+      "num_examples": 20,
+      "avg_oolong_score": 2.9159223815968956e-34,
+      "avg_f1_score": 0.02727272727272727,
+      "exact_match_count": 0,
+      "exact_match_rate": 0.0,
+      "avg_time": 137.19793257713317,
+      "avg_llm_calls": 11.6,
+      "avg_iterations": 0.0,
+      "total_time": 2743.9586515426636
+    },
+    "RLM_gpt-5-mini_semantic_unfiltered": {
+      "num_examples": 20,
+      "avg_oolong_score": 2.9159223815968956e-34,
+      "avg_f1_score": 0.02727272727272727,
+      "exact_match_count": 0,
+      "exact_match_rate": 0.0,
+      "avg_time": 79.57485673427581,
+      "avg_llm_calls": 9.5,
+      "avg_iterations": 0.0,
+      "total_time": 1591.4971346855164
+    },
+    "RLM_gpt-5-mini_semantic_regex": {
+      "num_examples": 20,
+      "avg_oolong_score": 2.9159223815968956e-34,
+      "avg_f1_score": 0.02727272727272727,
+      "exact_match_count": 0,
+      "exact_match_rate": 0.0,
+      "avg_time": 67.70086839199067,
+      "avg_llm_calls": 8.55,
+      "avg_iterations": 0.0,
+      "total_time": 1354.0173678398132
+    },
+    "RLM_gpt-5-mini_semantic_embedding": {
+      "num_examples": 20,
+      "avg_oolong_score": 3.8878965087958605e-34,
+      "avg_f1_score": 0.057272727272727274,
+      "exact_match_count": 0,
+      "exact_match_rate": 0.0,
+      "avg_time": 69.9400649189949,
+      "avg_llm_calls": 8.6,
+      "avg_iterations": 0.0,
+      "total_time": 1398.801298379898
+    }
+  }
+}

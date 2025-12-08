@@ -140,7 +140,6 @@ benchmarks/
 docs/
 
 # OOLONGBench evaluation results
-oolongbench_results/
 *.log
 
 # LoCoDiff benchmark data and results (use download script)
