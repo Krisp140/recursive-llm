@@ -14,10 +14,12 @@ huggingface-hub>=0.16.0
 matplotlib>=3.7.0
 numpy>=1.24.0
 
+# Google Gemini support
+google-generativeai>=0.3.0
+
 # Optional: For better embeddings (if using semantic partitioning)
 sentence-transformers>=2.2.0  # Uncomment if needed
 # torch>=2.0.0  # Required for sentence-transformers
 
 # Optional: For progress bars
 tqdm>=4.65.0
-

@@ -393,8 +393,8 @@ async def main():
     
     # Initialize evaluator
     evaluator = OOLONGBenchEvaluator(
-        model="gpt-5-mini",
-        recursive_model="gpt-5-mini",
+        model="gemini/gemini-2.5-flash-lite",
+        recursive_model="gemini/gemini-2.5-flash-lite",
         output_dir="oolongbench_results"
     )
     
@@ -422,7 +422,7 @@ async def main():
     
     parallel_options = [
         False,  # Sequential processing
-        # True    # Parallel not fully implemented in core yet
+        True    # Parallel not fully implemented in core yet
     ]
     
     # Run evaluation
@@ -432,7 +432,7 @@ async def main():
         partition_strategies,
         retrieval_methods,
         parallel_options,
-        max_examples=1  # Change to 10, 20, or None (all examples)
+        max_examples=10  # Change to 10, 20, or None (all examples)
     )
     
     print("\n[OK] Evaluation complete!")
@@ -444,13 +444,13 @@ if __name__ == "__main__":
     load_dotenv()
     
     # Check for API key
-    if not os.getenv("OPENAI_API_KEY"):
-        print("[ERROR] OPENAI_API_KEY not found!")
+    if not os.getenv("OPENAI_API_KEY") and not os.getenv("GEMINI_API_KEY"):
+        print("[ERROR] API key not found!")
         print("\nPlease set your API key:")
         print("  1. Create a .env file in the project root with:")
-        print("     OPENAI_API_KEY=your-key-here")
+        print("     OPENAI_API_KEY=your-key-here OR GEMINI_API_KEY=your-key-here")
         print("  2. Or export it in your shell:")
-        print("     export OPENAI_API_KEY='your-key-here'")
+        print("     export OPENAI_API_KEY='your-key-here' OR GEMINI_API_KEY='your-key-here'")
         exit(1)
     
     # Install required packages if needed
